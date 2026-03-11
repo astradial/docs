@@ -1,0 +1,66 @@
+---
+title: Integrations
+description: Connect Astra Dial with third-party services and CRM platforms
+icon: "plug"
+---
+
+Astra Dial integrates with third-party services to extend your workflow. View available integrations, connect active services, and request new ones.
+
+## Available integrations
+
+| Integration | Description | Status |
+|-------------|-------------|--------|
+| **Advertisement** | Connect ad platforms for lead capture | Active |
+| **WhatsApp** | Send messages and collect payments | Available |
+| **Google Calendar** | Book appointments from calls | Available |
+| **Zoho CRM** | Sync leads and campaigns with Zoho Bigin | Available |
+| **Cloud Function** | Build custom automations | Available |
+| **Gmail** | Email management and follow-ups | Available |
+
+## Requesting an integration
+
+Click the **Request** button on any available integration to submit a request to the Astra Dial team. You can also request custom integrations not listed on the page.
+
+## Zoho Bigin
+
+The Zoho Bigin integration connects your CRM data with Astra Dial for automated outreach.
+
+### Connecting
+
+<Steps>
+  <Step title="Open settings">
+    Navigate to the Zoho Bigin page and click the settings icon.
+  </Step>
+  <Step title="Enter credentials">
+    Provide your Zoho Client ID, API credentials, and domain name in the connection tab.
+  </Step>
+  <Step title="Authenticate">
+    Complete the OAuth flow. Your connection status and last updated timestamp are displayed.
+  </Step>
+</Steps>
+
+### Automations
+
+Once connected, configure three types of automations:
+
+#### Holiday and special day wishes
+Schedule automated messages for holidays and special occasions.
+- Set the holiday name and date
+- Select communication channels (WhatsApp and/or Voice)
+- Choose a WhatsApp template or voice bot for each channel
+
+#### Pipeline deal reminders
+Trigger messages when deals reach a specific stage in your pipeline.
+- Enter the deal stage name (must match your Zoho pipeline exactly)
+- Enable or disable the automation
+- Select channels and templates
+
+#### Monthly campaigns
+Run recurring outreach on a specific day each month.
+- Pick the day of month (1–28)
+- Enable or disable the automation
+- Select channels and templates
+
+### Testing queries
+
+Use the **Test Query** tab to run COQL (CRM Object Query Language) queries against your Zoho data before setting up automations.

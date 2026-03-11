@@ -1,0 +1,128 @@
+---
+title: SIP setup
+description: Connect your telephony infrastructure to Astra Dial using SIP trunks
+icon: "phone-volume"
+---
+
+Astra Dial connects to your telephony provider through SIP (Session Initiation Protocol) trunks. This guide walks you through configuring SIP trunks, DID numbers, extensions, and call queues.
+
+## Prerequisites
+
+Before setting up SIP, you need:
+
+- An active Astra Dial account with KYC approved
+- SIP trunk credentials from your telephony provider (IP/hostname, port, username, password)
+- DID numbers assigned by your provider
+
+<Info>
+  Contact your Astra Dial account manager if you need help sourcing a SIP trunk provider.
+</Info>
+
+## Connecting your SIP trunk
+
+<Steps>
+  <Step title="Navigate to telephony settings">
+    Open your Astra Dial dashboard and navigate to the telephony or PBX configuration section.
+  </Step>
+  <Step title="Add a new trunk">
+    Click **Add New** and provide the following details:
+
+    | Field | Description |
+    |-------|-------------|
+    | **Trunk name** | A descriptive name for this connection |
+    | **Host/IP** | Your provider's SIP server address |
+    | **Port** | SIP port (default: 5060) |
+    | **Username** | Authentication username from your provider |
+    | **Password** | Authentication password |
+    | **Transport** | Protocol: UDP, TCP, or TLS |
+  </Step>
+  <Step title="Save and verify">
+    Save the trunk configuration. The status badge shows whether the trunk is active or inactive.
+  </Step>
+</Steps>
+
+<Tip>
+  Use TLS transport for encrypted SIP signaling when your provider supports it.
+</Tip>
+
+## Configuring DID numbers
+
+DID (Direct Inward Dialing) numbers are your inbound phone numbers. Each DID routes incoming calls to a specific destination.
+
+### Adding a DID
+
+Provide the following when creating a DID:
+
+| Field | Description |
+|-------|-------------|
+| **Phone number** | The DID number from your provider |
+| **Description** | Label for this number (e.g., "Sales line") |
+| **SIP trunk** | Select the trunk this number belongs to |
+| **Routing type** | Where to route incoming calls |
+| **Routing destination** | The specific extension, queue, or bot |
+| **Call recording** | Enable or disable recording for this number |
+
+### Routing types
+
+| Type | Description |
+|------|-------------|
+| **Extension** | Route to a specific user extension |
+| **Queue** | Route to a call queue for distribution |
+| **IVR** | Route to an interactive voice response menu |
+| **AI agent** | Route to an Astra Dial voice bot |
+
+## Setting up extensions
+
+Extensions represent individual users or endpoints in your phone system.
+
+| Field | Description |
+|-------|-------------|
+| **Extension number** | A numeric identifier (e.g., 1001) |
+| **Full name** | The user's name |
+| **Username** | Login username |
+| **Email** | User's email address |
+| **Password** | Login password |
+| **Role** | Permission level (see below) |
+
+### Roles
+
+| Role | Description |
+|------|-------------|
+| **Admin** | Full system access |
+| **Supervisor** | Team management and monitoring |
+| **Agent** | Handle calls and view own data |
+| **User** | Basic access |
+
+## Setting up call queues
+
+Call queues distribute incoming calls across a group of agents.
+
+| Field | Description |
+|-------|-------------|
+| **Queue name** | A descriptive name (e.g., "Sales queue") |
+| **Queue number** | Numeric identifier (e.g., 5000) |
+| **Strategy** | How calls are distributed to agents |
+| **Timeout** | Seconds before the call moves to the next agent (default: 30) |
+
+### Distribution strategies
+
+| Strategy | Description |
+|----------|-------------|
+| **Ring all** | Ring all available agents at once |
+| **Least recent** | Ring the agent who has been idle the longest |
+| **Fewest calls** | Ring the agent with the fewest completed calls |
+| **Random** | Ring a random available agent |
+| **Round robin** | Cycle through agents in order (with memory) |
+| **Linear** | Ring agents in a fixed order |
+
+## Deploying configuration
+
+After making changes to trunks, DIDs, extensions, or queues, deploy the configuration to apply your changes to the live system.
+
+<Warning>
+  Deploying configuration applies changes immediately. Verify your settings before deploying to avoid call routing disruptions.
+</Warning>
+
+## Support
+
+Contact your Astra Dial account manager or reach out to [support@astradial.com](mailto:support@astradial.com) for assistance with SIP setup.

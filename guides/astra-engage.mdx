@@ -1,0 +1,63 @@
+---
+title: Astra Engage
+description: Build multi-day automation flows combining AI calls, WhatsApp, and agent handoffs
+icon: "arrows-spin"
+---
+
+Astra Engage is the automation engine. Create 7-day engagement flows that combine AI calls, WhatsApp messages, and agent handoffs to follow up with leads automatically.
+
+## Flows
+
+A flow is a 7-day schedule of automated tasks. Each day can have one or more tasks that execute at configured times.
+
+- **Create flow** — click the add button and name your flow
+- **Select flow** — use the dropdown to switch between flows
+- **Enable/Disable** — use the master toggle to activate or pause a flow
+- **Delete flow** — remove a flow with confirmation
+
+## Task types
+
+Add tasks to any day in the flow by selecting a task type:
+
+| Task type | Description |
+|-----------|-------------|
+| **AI call** | Call the lead using a selected voice bot (Astra GenAI, Astra Lite, or Astra Transcribe) |
+| **WhatsApp** | Send a WhatsApp template message |
+| **Agent call** | Transfer to a human agent with a specified caller ID |
+| **Quick WhatsApp** | Send a WhatsApp message with up to 7 dynamic body fields |
+
+## Configuring tasks
+
+Each task requires:
+
+- **Time of execution** — when during the day the task runs
+- **Purpose** — a description of the task's intent
+
+Additional fields depend on the task type:
+
+### AI call
+Select the bot type and specific bot to use for the call.
+
+### WhatsApp
+Choose a pre-configured WhatsApp template from your template library.
+
+### Agent call
+Provide the agent's phone number and select a caller ID.
+
+### Quick WhatsApp
+Define up to 7 body fields. Each field can reference CRM data (phone number, email, custom fields) for personalization.
+
+## Scheduling
+
+Tasks can be scheduled in two ways:
+
+- **Time-only** — executes at a specific time on the assigned day
+- **Fixed datetime** — executes at a specific date and time (configured via the edit day option)
+
+## Flow triggers
+
+Flows can be triggered by:
+
+- **Registration** — when a lead is first created
+- **Event** — on a specific date
+- **Before/After** — relative to an event date

@@ -1,0 +1,108 @@
+---
+title: Voice bot (Astra GenAI)
+description: Build and configure AI voice bots with full control over LLM, TTS, and STT settings
+icon: "robot"
+---
+
+Astra GenAI is the premium voice bot builder. Create conversational AI agents with configurable language models, text-to-speech voices, speech recognition, and call flow logic.
+
+## Bot dashboard
+
+The dashboard lists all your voice bots in a table with:
+
+- **Bot name** — display name
+- **Tag** — environment label (staging, testing, or production)
+- **Bot ID** — unique identifier
+
+Use the search bar to filter bots by name, tag, or ID. Toggle between **production** and **testing** environments using the header switch.
+
+### Actions
+
+- **Create bot** — click "New agent" and provide a name
+- **Edit bot** — click a row or use the three-dot menu
+- **Copy bot ID** — copy the identifier to clipboard
+- **Delete bot** — remove a bot with confirmation
+
+## Bot editor
+
+The editor has two panels: the main configuration on the left and advanced settings on the right.
+
+### Main configuration
+
+| Field | Description |
+|-------|-------------|
+| **Agent intercom** | Phone number for call transfers to a human agent |
+| **Greeting message** | The first message the bot speaks on a call |
+| **System prompt** | Instructions for the LLM defining the bot's role |
+| **System instruction** | Additional behavioral instructions |
+| **Handle user idle** | Messages sent when the caller is silent (add multiple) |
+| **Functions** | Callable functions the bot can trigger during a conversation |
+| **Departments** | Named departments with phone numbers for transfers |
+
+### Language
+
+Supported languages: English (IN), Tamil, Hindi, Telugu, Kannada, Malayalam, English (US).
+
+### Text-to-speech (TTS)
+
+| Setting | Options |
+|---------|---------|
+| **Provider** | Gemini or Google |
+| **Model** | gemini-2.5-flash-tts, gemini-2.5-pro-tts |
+| **Voice** | 30 voice styles (Aoede, Achernar, Algenib, etc.) |
+| **TTS prompt** | Tone and style instructions (Gemini only) |
+
+### Speech-to-text (STT)
+
+| Setting | Options |
+|---------|---------|
+| **Model** | latest_long, latest_short, chirp_2, chirp, telephony |
+| **Mute strategy** | first_speech, mute_until_first_bot_complete, function_call, always |
+
+### LLM model
+
+Choose from: `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-2.5-pro`, `gemini-2.0-flash-lite-001`.
+
+### Voice activity detection (VAD)
+
+Fine-tune how the bot detects speech:
+
+| Parameter | Range | Default |
+|-----------|-------|---------|
+| **Confidence** | 0.0–1.0 | 0.8 |
+| **Start secs** | 0.0–2.0 | 0.3 |
+| **Stop secs** | 0.0–3.0 | 0.8 |
+| **Min volume** | 0.0–1.0 | 0.6 |
+
+### Additional settings
+
+- **Music** — enable hold music
+- **Fetch data** — fetch caller data before the call
+- **Noise filter** — filter background noise
+
+### Webhook
+
+Configure a webhook to receive call events:
+
+- **URL** — your endpoint
+- **Method** — POST or GET
+- **Headers** — custom headers (key-value pairs)
+- **Params** — query parameters (key-value pairs)
+
+### Phonebook
+
+Manage a contact directory the bot can reference:
+
+- **Upload CSV** — replace or append contacts
+- **Lookup** — search by phone number
+- **Add entry** — add a single contact
+- **Delete** — clear the entire phonebook
+
+## Testing
+
+Click **Test** in the editor to open a voice tester. This connects via WebSocket to simulate a live call with the bot.
+
+## Import and export
+
+- **Download** — export the bot configuration as a JSON file
+- **Import** — upload a JSON file to apply a configuration

@@ -1,0 +1,91 @@
+---
+title: Call logs
+description: View call history, manage tags, initiate calls, and export data
+icon: "phone"
+---
+
+Call logs is where you manage your leads and call history. View detailed records, play back recordings, tag calls, initiate outbound calls, and export data as CSV.
+
+## Viewing call logs
+
+The main table displays your call history with the following columns:
+
+| Column | Description |
+|--------|-------------|
+| **Duration** | Call length in seconds, with a play button for recordings |
+| **Contact** | Phone number with copy-to-clipboard action |
+| **Count** | Number of calls with this contact |
+| **Tags** | Color-coded tag pills assigned to the call |
+| **Last contact** | Timestamp of the most recent interaction |
+| **Source** | Where the lead originated (website, call, ad, etc.) |
+
+<Info>
+  On mobile, columns are reduced to Duration, Contact, and Source for a cleaner layout.
+</Info>
+
+## Filtering
+
+Filters help you narrow down your call data.
+
+<Steps>
+  <Step title="Select a date range">
+    Click the date field to open the calendar picker. Select a start and end date. All other filters are disabled until a date range is set.
+  </Step>
+  <Step title="Search by phone number">
+    Type a phone number in the search field. Results filter in real time.
+  </Step>
+  <Step title="Filter by tags">
+    Start typing a tag name in the autocomplete field. Select one or more tags — calls must match **all** selected tags.
+  </Step>
+  <Step title="Filter by source">
+    Type a source name to filter by lead origin.
+  </Step>
+</Steps>
+
+<Info>
+  When a date range is set, all matching records are fetched at once. Without a date range, records load 25 at a time with infinite scroll.
+</Info>
+
+## Managing tags
+
+Click **Manage Tags** to open the tag manager where you can:
+
+- Add new tags
+- Delete existing tags
+- View all available tags
+
+Tags are color-coded automatically using a 12-color palette for visual distinction.
+
+## Initiating calls
+
+Click **Initiate Call** to start an outbound call. You need to provide:
+
+- **Agent number** — the agent's phone number (minimum 10 digits)
+- **Destination number** — the number to call (minimum 10 digits)
+- **Caller ID** — select from your available caller IDs
+
+You can also save frequently used agent numbers for quick reuse.
+
+<Tip>
+  Click the call icon on any row in the table to quickly initiate a call to that contact with pre-filled details.
+</Tip>
+
+### Call modes
+
+| Mode | Description |
+|------|-------------|
+| **Normal** | Uses the device's native phone dialer |
+| **Smartflo** | Routes through Smartflo with a custom caller ID |
+| **Exotel** | Routes through Exotel with API credentials |
+
+## Playing recordings
+
+Click the play icon in the duration column to open the audio player. Exotel recordings are authenticated automatically using your stored API credentials.
+
+## Exporting data
+
+Click **Download CSV** to export filtered call data. The export includes: Duration, Contact, Count, Tags, Last Contact, Source, and Type. All active filters are applied before export.
+
+<Warning>
+  If you see a "failed-precondition" error during export, a Firestore composite index may need to be created. Copy the provided URL and share it with your admin.
+</Warning>

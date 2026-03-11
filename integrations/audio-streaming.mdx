@@ -1,0 +1,238 @@
+---
+title: Audio streaming
+description: Bi-directional real-time audio streaming over WebSocket for voice bot integration
+icon: "waveform-lines"
+---
+
+Astra Dial supports bi-directional audio streaming over WebSocket, enabling real-time audio exchange between your telephony system and external endpoints. This is used to send caller voice data to a processing endpoint (e.g., a voice bot) and receive processed audio back for playback to the caller.
+
+## Audio specifications
+
+| Property | Value |
+|----------|-------|
+| **Encoding** | `audio/x-mulaw` (G.711 PCMU) |
+| **Sample rate** | 8000 Hz |
+| **Bit rate** | 64 kbps |
+| **Bit depth** | 8-bit |
+| **Format** | Base64-encoded PCM mono audio |
+| **Message frequency** | Every 100ms |
+
+<Warning>
+  Audio payloads must be at least 160 bytes or a multiple of 160 bytes (e.g., 320, 800, 4000). Payloads that are not a multiple of 160 bytes may cause audio gaps.
+</Warning>
+
+## Stream lifecycle
+
+```
+Client → Vendor:  connected → start → media → stop
+Vendor → Client:                       media → mark → clear
+```
+
+<Steps>
+  <Step title="Connection established">
+    A WebSocket connection is opened. The system sends a `connected` event as the initial handshake.
+  </Step>
+  <Step title="Stream initialized">
+    A `start` event is sent with stream metadata, caller information, and audio format details.
+  </Step>
+  <Step title="Audio streaming">
+    `media` events are exchanged bidirectionally — the system sends caller audio, the vendor returns processed audio for playback.
+  </Step>
+  <Step title="Stream terminated">
+    A `stop` event is sent when the call ends. `clear` events can interrupt buffered audio at any time.
+  </Step>
+</Steps>
+
+## Events sent to vendor
+
+### Connected
+
+First handshake message after WebSocket connection is established.
+
+```json
+{
+  "event": "connected"
+}
+```
+
+### Start
+
+Contains stream metadata. Sent once at stream initialization.
+
+```json
+{
+  "event": "start",
+  "sequenceNumber": "1",
+  "start": {
+    "accountSid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "callSid": "CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "from": "XXXXXXXXXX",
+    "to": "XXXXXXXXXX",
+    "direction": "outbound",
+    "mediaFormat": {
+      "encoding": "audio/x-mulaw",
+      "sampleRate": 8000,
+      "bitRate": 64,
+      "bitDepth": 8
+    },
+    "customParameters": {
+      "FirstName": "Jane",
+      "LastName": "Doe",
+      "RemoteParty": "Bob"
+    }
+  },
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `event` | string | Always `"start"` |
+| `sequenceNumber` | string | Message order tracking (starts at 1) |
+| `start.streamSid` | string | Unique stream identifier |
+| `start.accountSid` | string | Account identifier |
+| `start.callSid` | string | Call identifier |
+| `from` | string | Originating phone number |
+| `to` | string | Destination phone number |
+| `start.direction` | string | `"inbound"` or `"outbound"` |
+| `start.mediaFormat` | object | Audio format specifications |
+| `start.customParameters` | object | Custom key-value data passed with the stream |
+
+### Media
+
+Encapsulates raw audio data from the caller.
+
+```json
+{
+  "event": "media",
+  "sequenceNumber": "3",
+  "media": {
+    "chunk": "1",
+    "timestamp": "5",
+    "payload": "no+JhoaJjpz..."
+  },
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `media.chunk` | string | Sequential chunk number (starts at 1) |
+| `media.timestamp` | string | Presentation timestamp in milliseconds from stream start |
+| `media.payload` | string | Base64-encoded raw audio |
+
+### Stop
+
+Indicates stream termination or call end.
+
+```json
+{
+  "event": "stop",
+  "sequenceNumber": "5",
+  "stop": {
+    "accountSid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "callSid": "CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "reason": "The caller disconnected the call"
+  },
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `stop.accountSid` | string | Account identifier |
+| `stop.callSid` | string | Call identifier |
+| `stop.reason` | string | Reason for stream termination |
+
+### DTMF
+
+Sent when touch-tone digits are detected in the inbound audio stream.
+
+```json
+{
+  "event": "dtmf",
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "sequenceNumber": "5",
+  "dtmf": {
+    "digit": "1"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `dtmf.digit` | string | Detected digit (0–9, *, #) |
+
+### Mark
+
+Indicates completion of media playback. Used to synchronize audio delivery between client and vendor.
+
+```json
+{
+  "event": "mark",
+  "sequenceNumber": "4",
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "mark": {
+    "name": "mark label"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `mark.name` | string | Custom label for tracking playback completion |
+
+## Events received from vendor
+
+### Media
+
+The vendor sends audio data for playback to the caller. The payload must be `audio/x-mulaw` at 8000 Hz, Base64-encoded PCM mono.
+
+```json
+{
+  "event": "media",
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "media": {
+    "payload": "a3242sa...",
+    "chunk": 1
+  }
+}
+```
+
+### Mark
+
+The vendor signals that sent media has finished playing.
+
+```json
+{
+  "event": "mark",
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "mark": {
+    "name": "my label"
+  }
+}
+```
+
+### Clear
+
+Interrupts any buffered audio and resets the stream state. Use this to stop playback immediately (e.g., when the caller interrupts).
+
+```json
+{
+  "event": "clear",
+  "streamSid": "MZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+```
+
+## Implementation notes
+
+<Info>
+  The `streamSid` must be unique and consistent across all events for a given stream. Use the value from the `start` event for all subsequent messages.
+</Info>
+
+- Base64 encoding ensures compatibility and reliable transmission across systems
+- `mark` events synchronize playback completion between endpoints — use them to know when audio has finished playing before sending the next segment
+- `clear` events allow you to interrupt the current audio (e.g., for barge-in when the caller speaks over the bot)
+- Media messages are sent every 100ms; ensure your endpoint can process them at this rate
+- `sequenceNumber` tracks message order and increments with each event sent

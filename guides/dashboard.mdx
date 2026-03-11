@@ -1,0 +1,50 @@
+---
+title: Dashboard
+description: Monitor call center metrics and announcements in real time
+icon: "chart-line"
+---
+
+The dashboard gives you a real-time overview of your call center performance. View key metrics, daily call volume charts, and team announcements from a single screen.
+
+## Metrics
+
+Four metric cards are displayed at the top:
+
+| Metric | Description |
+|--------|-------------|
+| **Total calls** | Aggregate call volume across all channels |
+| **Avg duration** | Average call duration in seconds |
+| **Success rate** | Percentage of calls that connected |
+| **App version** | Current platform version and build number |
+
+## Period selection
+
+Toggle between **This week** and **This month** to change the time range for all displayed metrics.
+
+## Charts and tags
+
+- **Daily call volume** — a bar chart showing call counts for the last 7 days
+- **Tag breakdown** — a list of tags with their counts for the selected period
+
+## Refreshing data
+
+Click the refresh button in the header to trigger a manual data refresh. This calls a backend function to recalculate your metrics.
+
+<Info>
+  Metrics update in real time via Firestore streams. Use the refresh button only if you need to force a recalculation.
+</Info>
+
+## Announcements
+
+The dashboard displays up to 5 active announcements. Each announcement has a type indicator:
+
+| Type | Description |
+|------|-------------|
+| **Info** | General information |
+| **Update** | Platform updates |
+| **Fix** | Bug fixes and patches |
+| **Warning** | Alerts requiring attention |
+
+<Note>
+  Only admin users can create and delete announcements. Deleted announcements are soft-deleted and no longer appear in the list.
+</Note>

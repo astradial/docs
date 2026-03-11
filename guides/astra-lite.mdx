@@ -1,0 +1,71 @@
+---
+title: Astra Lite
+description: Create lightweight voice bots using your own recorded voice
+icon: "microphone"
+---
+
+Astra Lite lets you build voice bots that use your own recorded audio. The bot plays your audio to callers and listens for trigger words to determine the next action. Best suited for influencers and structured call flows.
+
+## Bot list
+
+The main screen shows all your Astra Lite bots. Each entry displays:
+
+- Bot name
+- Telephony provider (Smartflo or Exotel)
+- Agent intercom number
+- Language and trigger words
+
+Click **Create New** to add a bot.
+
+## Creating a bot
+
+<Steps>
+  <Step title="Set bot details">
+    Provide a bot name, select your telephony provider (Smartflo or Exotel), and choose the transcription language.
+  </Step>
+  <Step title="Configure call behavior">
+    Set the **agent intercom** number for call transfers. Define **trigger words** (comma-separated) that the bot listens for after playing audio.
+  </Step>
+  <Step title="Tune detection settings">
+    - **Max words** (1–10, default 3) — ignores utterances longer than this to prevent false triggers
+    - **Listening window** (3–30 seconds, default 8) — how long the bot listens after audio finishes
+    - **Transfer on timeout** — transfer to an agent or disconnect when listening times out
+  </Step>
+  <Step title="Configure webhook (optional)">
+    Set a webhook URL, method (POST/GET), custom headers, and query parameters to receive call events.
+  </Step>
+</Steps>
+
+## Supported languages
+
+Tamil, Hindi, Telugu, Kannada, Malayalam, English, Marathi, Bengali, Gujarati, Punjabi, and Urdu.
+
+## Managing audio
+
+Each bot requires an audio file that plays during the call. From the bot's menu:
+
+- **Upload audio** — select a file (MP3, WAV, OGG, FLAC, M4A, AAC, WMA, WebM, AMR)
+- **Play audio** — preview the uploaded recording
+- **Delete audio** — remove the audio file
+
+<Warning>
+  A bot without an uploaded audio file will have nothing to play during calls. Upload your audio before activating the bot.
+</Warning>
+
+## Testing
+
+Select **Test Bot** from the menu to open a voice tester. This connects via WebSocket to simulate a live interaction.
+
+## Bot actions
+
+From the three-dot menu on each bot:
+
+| Action | Description |
+|--------|-------------|
+| **Edit** | Modify bot configuration |
+| **Test** | Open voice tester |
+| **Copy bot ID** | Copy identifier to clipboard |
+| **Play audio** | Preview uploaded voice |
+| **Upload audio** | Upload a new audio file |
+| **Delete audio** | Remove the audio file |
+| **Delete bot** | Permanently remove the bot |
