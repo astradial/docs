@@ -47,6 +47,17 @@
         ]
       },
       {
+        "tab": "Capacity planning",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "guides/capacity-planning/call-capacity"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Integrations",
         "groups": [
           {
