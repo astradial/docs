@@ -1,0 +1,90 @@
+---
+title: "Create a call queue"
+description: "Set up a waiting line so callers hear hold music until an agent is free to answer. No more missed calls when your team is busy."
+icon: "users-line"
+---
+
+## What is a queue?
+
+Imagine a bakery. Customers walk in and there is a line. The person at the front gets served first, and everyone else waits their turn. A call queue works exactly the same way, but for phone calls.
+
+When all your agents are busy on calls, new callers join the queue. They hear hold music (instead of standing in a physical line) and wait until someone on your team is free. Then the system automatically connects the next caller in line to that agent.
+
+Without a queue, callers hear a busy tone or get sent to voicemail. With a queue, they wait and always reach a real person.
+
+<Info>
+  Queues are perfect for support teams, sales teams, or any group where multiple people answer calls for the same phone number.
+</Info>
+
+## How to create a queue
+
+<Steps>
+  <Step title="Open the Queues page">
+    In the left sidebar, click **Configure**, then click **Queues**.
+
+    You will see a list of all queues in your organisation. If this is your first queue, the list will be empty.
+  </Step>
+
+  <Step title="Click Add Queue">
+    Click the **+ Add Queue** button at the top of the page. A form will open up.
+  </Step>
+
+  <Step title="Give it a name and number">
+    Fill in these two fields:
+
+    - **Queue Name** -- a human-friendly name like "Support Team" or "Sales Line"
+    - **Queue Number** -- a short number like `5001` or `5002`
+
+    The queue number is what the system uses internally to route calls to this queue. Think of it like an extension, but for a group of people instead of one person.
+
+    <Tip>
+      Use numbers in the 5000 range for queues (5001, 5002, 5003) so you can easily tell them apart from user extensions (which are usually in the 1000 range).
+    </Tip>
+  </Step>
+
+  <Step title="Pick a ring strategy">
+    The ring strategy decides **who rings when a call comes in**. You have three options:
+
+    | Strategy | What it does | Good for |
+    | --- | --- | --- |
+    | **Ring All** | Every agent's phone rings at the same time. First person to pick up gets the call. | Small teams where speed matters |
+    | **Round Robin** | The system takes turns. Agent A gets the first call, Agent B gets the second, Agent C gets the third, then back to A. | Spreading the work evenly |
+    | **Least Recent** | The agent who has not answered a call in the longest time rings first. | Making sure nobody gets overloaded |
+
+    <Info>
+      Not sure which to pick? Start with **Ring All**. It is the simplest and makes sure calls get answered as fast as possible.
+    </Info>
+  </Step>
+
+  <Step title="Configure queue settings">
+    Set these options to control the caller's experience while they wait:
+
+    - **Timeout** -- how many seconds each agent's phone rings before moving on (e.g. 30 seconds)
+    - **Max Wait Time** -- the maximum time a caller stays in the queue before being dropped or sent to voicemail (e.g. 300 seconds = 5 minutes)
+    - **Music on Hold** -- the audio callers hear while waiting
+    - **Greeting** -- a short message callers hear when they first enter the queue (e.g. "All agents are busy. Please hold.")
+
+    <Warning>
+      If you set the max wait time too short, callers may get disconnected before an agent has time to answer. We recommend at least 120 seconds (2 minutes) as a minimum.
+    </Warning>
+  </Step>
+
+  <Step title="Save the queue">
+    Click **Save**. Your queue is now created.
+
+    You can now add agents to the queue and route a phone number to it.
+  </Step>
+</Steps>
+
+## What to do next
+
+Creating a queue is just step one. You still need to do two things:
+
+<CardGroup cols={2}>
+  <Card title="Add agents to the queue" icon="user-plus" href="/queues/manage-agents">
+    A queue without agents has nobody to answer calls. Add your team members so calls actually get picked up.
+  </Card>
+  <Card title="Route a number to this queue" icon="route" href="/phone-numbers/configure-routing">
+    Point one of your phone numbers at this queue so incoming calls land here.
+  </Card>
+</CardGroup>

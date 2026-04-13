@@ -1,0 +1,99 @@
+---
+title: "Configure call routing"
+description: "Set up where incoming calls go when someone dials your phone number."
+icon: "route"
+---
+
+## What is routing?
+
+Routing is the rule that tells the system: "When someone calls this number, send the call **here**."
+
+Without routing, a call to your number has nowhere to go. With routing, you decide exactly what happens — ring one person, ring a whole team, play a menu, connect to an AI bot, or forward to a mobile number.
+
+## How to set up routing
+
+<Steps>
+  <Step title="Open the Phone Numbers page">
+    In the left sidebar, click **Deploy**, then click **Phone Numbers**.
+
+    You will land on the **My Numbers** tab. This shows all your active phone numbers.
+  </Step>
+
+  <Step title="Find your number">
+    Look through the list for the number you want to configure.
+
+    Each row shows the number, its current routing (if any), and its status.
+  </Step>
+
+  <Step title="Open the routing menu">
+    Click the **three-dot menu** (⋯) on the right side of the number's row.
+
+    From the dropdown, click **Configure Routing**.
+  </Step>
+
+  <Step title="Choose a routing type">
+    You will see a list of routing types. Pick the one that matches what you want to happen when someone calls this number:
+
+    <AccordionGroup>
+      <Accordion title="Extension — ring one person">
+        The call rings a single person's extension. Use this when you want one specific person to answer calls to this number.
+
+        **Example:** You pick extension `1001`, which belongs to Ravi. Every call to this number rings Ravi's phone.
+      </Accordion>
+
+      <Accordion title="Queue — ring a group of agents">
+        The call goes to a queue, which rings a group of people one after another (or all at once, depending on queue settings). Use this when you have a team handling calls.
+
+        **Example:** You pick the "Support" queue. Calls ring all agents in that queue until someone picks up.
+      </Accordion>
+
+      <Accordion title="IVR — play a menu">
+        The caller hears a recorded menu with options. They press a number on their keypad to choose where to go. Use this when you want to let callers pick a department.
+
+        **Example:** "Press 1 for Sales, press 2 for Support, press 3 for Billing."
+      </Accordion>
+
+      <Accordion title="AI Agent — connect to an AI bot">
+        The call is answered by an AI bot that can have a conversation with the caller. Use this for automated handling — things like taking messages, answering FAQs, or booking appointments.
+
+        **Example:** You pick your "Front Desk Bot." The AI answers the call and talks to the caller.
+      </Accordion>
+
+      <Accordion title="External — forward to a mobile or landline">
+        The call is forwarded to a phone number outside your system, like a mobile phone or a landline. Use this when you want calls to reach someone who is not on the platform.
+
+        **Example:** You enter `+91 98765 43210`. Calls to your number get forwarded to that mobile.
+      </Accordion>
+    </AccordionGroup>
+  </Step>
+
+  <Step title="Select the destination">
+    After you pick a routing type, a second dropdown or field appears. This is where you pick the specific destination.
+
+    - For **Extension**: pick the extension number from the dropdown
+    - For **Queue**: pick the queue name from the dropdown
+    - For **IVR**: pick the IVR menu from the dropdown
+    - For **AI Agent**: pick the bot from the dropdown
+    - For **External**: type in the full phone number (with country code)
+  </Step>
+
+  <Step title="Save">
+    Click **Save**.
+
+    Your number is now live. The next call to this number will be routed exactly as you configured.
+  </Step>
+</Steps>
+
+<Warning>
+  If you do not configure routing on a number, incoming calls to that number will not reach anyone. Always set up routing after buying a number.
+</Warning>
+
+## Change routing later
+
+You can change routing at any time. Just follow the same steps above — open the ⋯ menu, click **Configure Routing**, pick a new type and destination, and save.
+
+There is no downtime. The new routing takes effect immediately.
+
+<Tip>
+  You can switch routing as often as you need. For example, route to an AI Agent outside business hours and to a Queue during the day.
+</Tip>

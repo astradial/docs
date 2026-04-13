@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.astradial.com)",
+      "Bash(grep -r \"WHITELIST\" \"/Users/hari/StudioProjects/Taknetics Codebase/LogsUpdate\" --include=\"*.py\" 2>/dev/null | head -20)",
+      "Bash(grep -r \"auth\\\\|Auth\\\\|token\\\\|Token\\\\|verify\\\\|Verify\" \"/Users/hari/StudioProjects/Taknetics Codebase/LogsUpdate\" --include=\"*.py\" 2>/dev/null | grep -v \".venv\" | head -40)",
+      "Bash(cp \"/Users/hari/Desktop/AstraDial/Logo/1.png\" \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs/logo/light.png\" && cp \"/Users/hari/Desktop/AstraDial/Logo/2.png\" \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs/logo/dark.png\")",
+      "Bash(python3 -c \"import secrets; print\\(secrets.token_urlsafe\\(32\\)\\)\")",
+      "Bash(cd \"/Users/hari/StudioProjects/Taknetics Codebase/LogsUpdate\" && python3 -c \"import ast; ast.parse\\(open\\('server.py'\\).read\\(\\)\\); print\\('OK'\\)\" && python3 -c \"import ast; ast.parse\\(open\\('security.py'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(cd \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs\" && mint dev)",
+      "Bash(cd \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs\" && npx mint validate 2>&1 | tail -20)",
+      "Bash(cd \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs\" && npx mint validate 2>&1 | grep -E \"\\(success|error|warning\\)\" | head -5)",
+      "WebFetch(domain:docs.smartflo.tatatelebusiness.com)",
+      "Bash(cd \"/Users/hari/StudioProjects/Taknetics Codebase/astradocs\" && npx mint validate 2>&1 | grep -E \"\\(success|error\\)\" | head -5)"
+    ]
+  }
+}

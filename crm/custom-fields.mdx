@@ -1,0 +1,226 @@
+---
+title: "Custom fields and pipelines"
+description: "Customise pipeline stages and add extra fields to contacts, companies, and deals so the CRM fits your business."
+icon: "sliders"
+---
+
+## Why customise?
+
+Every business is different. A hotel's sales process does not look like a software company's. The default pipeline stages and fields might not cover everything you need.
+
+The Customize section lets you change two things:
+
+1. **Pipelines** — add, rename, reorder, or delete the stages that leads and deals move through
+2. **Custom Fields** — add extra fields to your contacts, companies, or deals so you can track whatever matters to your business
+
+## Opening the Customize page
+
+<Steps>
+  <Step title="Go to Mini CRM in the sidebar">
+    In the left sidebar, find the **Mini CRM** section.
+  </Step>
+  <Step title="Click Customize">
+    Click **Customize**. You will land on the Customize page.
+  </Step>
+</Steps>
+
+You will see **two tabs** at the top of the page: **Pipelines** and **Custom Fields**. Click either tab to switch between them.
+
+---
+
+## Pipelines
+
+Pipelines define the stages that your leads and deals move through. By default, leads have stages like New, Contacted, Qualified, etc. Deals have stages like Lead, Qualified, Proposal, etc.
+
+You can change all of this to match your actual sales process.
+
+### Adding a new stage
+
+<Steps>
+  <Step title="Go to the Pipelines tab">
+    On the Customize page, click the **Pipelines** tab.
+  </Step>
+
+  <Step title="Pick which pipeline to edit">
+    You will see two pipelines listed: **Leads Pipeline** and **Deals Pipeline**. Click the one you want to change.
+  </Step>
+
+  <Step title="Click Add Stage">
+    At the bottom of the stage list, click the **Add Stage** button.
+  </Step>
+
+  <Step title="Name the stage">
+    Type a name for the new stage. For example, if you are editing the Leads pipeline and your process includes a demo step, you might add a stage called "Demo Scheduled" between Contacted and Qualified.
+  </Step>
+
+  <Step title="Save">
+    Click **Save**. The new stage appears in the pipeline and shows up as a new column on the Kanban board.
+  </Step>
+</Steps>
+
+### Renaming a stage
+
+<Steps>
+  <Step title="Find the stage in the list">
+    On the Pipelines tab, click the pipeline you want to edit. You will see all existing stages listed.
+  </Step>
+
+  <Step title="Click the stage name">
+    Click directly on the stage name text. It becomes editable.
+  </Step>
+
+  <Step title="Type the new name and save">
+    Type the new name and click **Save**. The stage is renamed everywhere — on the Kanban board, in list views, and in detail panels.
+  </Step>
+</Steps>
+
+### Reordering stages
+
+<Steps>
+  <Step title="Open the pipeline">
+    On the Pipelines tab, click the pipeline you want to edit.
+  </Step>
+
+  <Step title="Drag stages to reorder">
+    Click and hold a stage, then drag it up or down in the list to change its position. The order here matches the order of columns on the Kanban board, from left to right.
+  </Step>
+
+  <Step title="Save">
+    Click **Save** to apply the new order.
+  </Step>
+</Steps>
+
+### Deleting a stage
+
+<Steps>
+  <Step title="Open the pipeline">
+    On the Pipelines tab, click the pipeline you want to edit.
+  </Step>
+
+  <Step title="Click the delete icon">
+    Next to the stage you want to remove, click the **delete icon** (trash can).
+  </Step>
+
+  <Step title="Confirm deletion">
+    A confirmation dialog appears. Click **Delete** to confirm.
+  </Step>
+</Steps>
+
+<Warning>
+  If there are leads or deals currently in the stage you are deleting, you will be asked to move them to another stage first. You cannot delete a stage that still has items in it.
+</Warning>
+
+---
+
+## Custom Fields
+
+Custom fields let you add extra data fields to your records. The default fields (name, phone, email, etc.) cover the basics. Custom fields let you track anything else.
+
+### Where custom fields can be added
+
+You can add custom fields to three types of records:
+
+| Record type | Examples of custom fields you might add |
+|---|---|
+| **Contacts** | Preferred language, birthday, loyalty tier |
+| **Companies** | Contract number, account manager, renewal date |
+| **Deals** | Product category, license type, discount percentage |
+
+### Available field types
+
+When you create a custom field, you pick a **type** that determines what kind of data the field holds.
+
+| Type | What it is | Example use |
+|---|---|---|
+| **Text** | A single line of text | Contract number, department name |
+| **Number** | A numeric value | Employee count, discount percentage |
+| **Date** | A calendar date | Renewal date, onboarding date |
+| **Select** | A dropdown with predefined options | Region (North, South, East, West) |
+| **Checkbox** | A true/false toggle | "NDA signed?" or "VIP customer?" |
+| **Email** | An email address (with validation) | Secondary email, billing email |
+| **Phone** | A phone number (with validation) | WhatsApp number, alternate phone |
+| **URL** | A web link | LinkedIn profile, company portal |
+| **Long Text** | A multi-line text area | Special instructions, detailed notes |
+
+### Adding a custom field
+
+<Steps>
+  <Step title="Go to the Custom Fields tab">
+    On the Customize page, click the **Custom Fields** tab.
+  </Step>
+
+  <Step title="Pick the record type">
+    You will see three sections: **Contacts**, **Companies**, and **Deals**. Click the section where you want to add a field.
+  </Step>
+
+  <Step title="Click Add Field">
+    Click the **Add Field** button. A form appears.
+  </Step>
+
+  <Step title="Configure the field">
+    Fill in the following:
+
+    - **Field Name** — what this field is called (e.g. "Contract Number")
+    - **Field Type** — pick from the types listed above (e.g. "Text")
+    - **Required** — toggle this on if this field must be filled in when creating a record (leave off for optional fields)
+
+    If you pick **Select** as the type, you will also need to add the dropdown options. Type each option and press Enter to add it.
+  </Step>
+
+  <Step title="Click Save">
+    Click **Save**. The custom field now appears on every record of that type. For example, if you added a "Contract Number" field to Companies, every company form and detail panel will now show that field.
+  </Step>
+</Steps>
+
+### Example: adding a "Contract Number" field to Companies
+
+Here is a real-world example to walk you through it.
+
+<Steps>
+  <Step title="Open Customize">
+    Sidebar > Mini CRM > Customize.
+  </Step>
+
+  <Step title="Click the Custom Fields tab">
+    Click **Custom Fields** at the top of the page.
+  </Step>
+
+  <Step title="Click Companies">
+    Under the Custom Fields tab, click the **Companies** section.
+  </Step>
+
+  <Step title="Click Add Field">
+    Click the **Add Field** button.
+  </Step>
+
+  <Step title="Fill in the details">
+    - **Field Name**: Contract Number
+    - **Field Type**: Text
+    - **Required**: Off (not every company will have a contract number right away)
+  </Step>
+
+  <Step title="Click Save">
+    Click **Save**. Done. Now when you open any company record or add a new company, you will see a "Contract Number" field in the form.
+  </Step>
+</Steps>
+
+<Info>
+  Custom fields apply to **all** records of that type. When you add a field to Companies, it shows up on every company — not just one. If you only need to store a note for one specific company, use the Notes field instead.
+</Info>
+
+<Note>
+  You can edit or delete custom fields later from the same Customize page. Deleting a custom field removes it from all records, and any data stored in that field is lost. Be careful.
+</Note>
+
+## Quick reference
+
+| Action | How to do it |
+|---|---|
+| Open Customize | Sidebar > Mini CRM > Customize |
+| Edit pipelines | Pipelines tab > click a pipeline |
+| Add a stage | Pipelines tab > Add Stage button |
+| Rename a stage | Click the stage name to edit |
+| Reorder stages | Drag stages up or down |
+| Delete a stage | Trash icon next to the stage |
+| Add a custom field | Custom Fields tab > pick record type > Add Field |
+| Choose field type | Select from Text, Number, Date, Select, Checkbox, Email, Phone, URL, Long Text |

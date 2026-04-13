@@ -1,0 +1,124 @@
+---
+title: "Super Human (AI bots)"
+description: "Deploy AI-powered voice bots that answer calls, have conversations, create tickets, and transfer to humans when needed."
+icon: "robot"
+---
+
+## What is Super Human?
+
+Super Human is the name for Astradial's AI-powered voice bots. These are virtual agents that can answer phone calls and have real conversations with your callers -- just like a person would.
+
+Think of it like hiring a receptionist who never sleeps, never takes a day off, and can handle a hundred calls at the same time. The bot picks up the phone, listens to the caller, talks back, and does things like:
+
+- Answer common questions ("What are your check-in times?")
+- Collect information from the caller (name, booking number, etc.)
+- Create support tickets automatically
+- Transfer the call to a real person when the bot cannot help
+
+Super Human bots work 24 hours a day, 7 days a week. Callers talk to them just like they would talk to a human, using their normal voice.
+
+<Info>
+  The "Super Human" name is what you see in the dashboard. You might also hear these called "AI bots" or "AI agents" -- they all mean the same thing.
+</Info>
+
+## How to create a bot
+
+<Steps>
+  <Step title="Open the Super Human page">
+    In the left sidebar, click **Configure**, then click **Super Human**.
+
+    You will see a list of all AI bots in your organisation. If you have not created any yet, the list will be empty.
+  </Step>
+
+  <Step title="Create a new bot">
+    Click the **+ Create Bot** button. A setup form will open.
+  </Step>
+
+  <Step title="Give it a name">
+    Enter a name for your bot. Pick something that describes what it does.
+
+    **Examples:**
+    - "Front Desk Bot" -- for a hotel reception bot
+    - "Support Bot" -- for a customer support bot
+    - "After Hours Bot" -- for a bot that handles calls outside business hours
+
+    <Tip>
+      The name is just for you and your team. Callers never see or hear the bot's name.
+    </Tip>
+  </Step>
+
+  <Step title="Select an AI model">
+    Choose which AI model powers your bot's brain. Different models have different strengths -- some are faster, some are smarter, some are better at conversations.
+
+    Your Astradial admin will have configured which models are available for your organisation.
+  </Step>
+
+  <Step title="Configure the conversation flow">
+    This is where you tell the bot what to say and how to behave. You can set up:
+
+    - **System prompt** -- instructions that tell the bot who it is and how to act (e.g. "You are a friendly front desk agent at Grand Estancia Hotel")
+    - **Tools** -- actions the bot can take during a call (create a ticket, transfer the call, look up information)
+    - **Conversation flow** -- the step-by-step path the bot follows during a call
+
+    <Note>
+      The conversation flow is built using a visual editor. You do not need to write any code. Just drag, drop, and connect the steps.
+    </Note>
+  </Step>
+
+  <Step title="Save the bot">
+    Click **Save**. Your bot is now created but not yet connected to a phone number.
+  </Step>
+</Steps>
+
+## Connect a bot to a phone number
+
+A bot sitting by itself does nothing. You need to tell the system: "When someone calls this number, let the bot answer."
+
+<Steps>
+  <Step title="Go to Phone Numbers">
+    In the left sidebar, click **Deploy**, then click **Phone Numbers**.
+  </Step>
+
+  <Step title="Open routing for your number">
+    Find the phone number you want the bot to answer. Click the **three-dot menu** (three dots icon) on that number's row and select **Configure Routing**.
+  </Step>
+
+  <Step title="Select AI Agent">
+    In the routing type dropdown, pick **AI Agent**.
+
+    A second dropdown appears showing all your bots. Select the bot you just created.
+  </Step>
+
+  <Step title="Save">
+    Click **Save**. That is it.
+
+    The next time someone calls this phone number, your AI bot will pick up and start talking.
+  </Step>
+</Steps>
+
+<Warning>
+  Make sure your bot's conversation flow is fully set up before connecting it to a live phone number. An incomplete bot might confuse callers.
+</Warning>
+
+## What can bots do?
+
+Here is a quick summary of everything a Super Human bot can handle during a call:
+
+<CardGroup cols={2}>
+  <Card title="Answer questions" icon="comments">
+    The bot can answer frequently asked questions based on the information you give it. No need for callers to wait on hold for simple questions.
+  </Card>
+  <Card title="Create tickets" icon="ticket">
+    When a caller has an issue, the bot can automatically create a support ticket with all the details from the conversation.
+  </Card>
+  <Card title="Transfer to humans" icon="phone-arrow-right">
+    If the bot cannot help, it can transfer the call to a real person -- either a specific extension or a queue of agents.
+  </Card>
+  <Card title="Collect information" icon="clipboard-list">
+    The bot can ask for and record details like names, phone numbers, booking references, and more.
+  </Card>
+</CardGroup>
+
+<Tip>
+  You can have multiple bots for different purposes. For example, one bot for daytime calls that transfers to agents, and another for after-hours calls that takes messages and creates tickets.
+</Tip>

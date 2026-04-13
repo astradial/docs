@@ -1,0 +1,192 @@
+---
+title: "Manage tickets"
+description: "Filter, view, update, and resolve tickets. Call customers back directly from a ticket and keep your team on track."
+icon: "list-check"
+---
+
+## The tickets table
+
+When you open the Tickets page (**Monitor** > **Tickets** in the sidebar), you see a table with all your tickets.
+
+Each row in the table shows you:
+
+| Column | What it shows |
+|---|---|
+| **Caller** | The phone number of the person who called. |
+| **Category** | The type of ticket — Missed Call, Bot Interaction, or Queue Timeout. |
+| **Summary** | A short one-line description of what happened. |
+| **Priority** | How urgent this is — Low, Medium, High, or Urgent. Each level has a different colour badge. |
+| **Status** | Where this ticket is in the workflow — Open, In Progress, or Closed. |
+| **Source** | What created this ticket — was it a missed call, a bot conversation, or a queue timeout? |
+| **Time** | When the ticket was created. Shows the date and time of the event. |
+
+<Tip>
+  The table is sorted by newest first, so the most recent tickets always appear at the top. This way you see what needs attention right now.
+</Tip>
+
+## Filtering tickets
+
+You do not need to scroll through every ticket to find what you are looking for. Use the filters at the top of the table.
+
+<Steps>
+  <Step title="Filter by status">
+    Click the **Status** filter dropdown. You will see three options:
+
+    - **Open** — tickets that nobody has started working on yet
+    - **In Progress** — tickets that someone is currently handling
+    - **Closed** — tickets that have been resolved
+
+    Select one to show only tickets with that status. For example, pick **Open** to see everything that still needs attention.
+  </Step>
+
+  <Step title="Filter by source">
+    Click the **Source** filter dropdown. You will see:
+
+    - **Missed Call** — tickets created because a call was not answered
+    - **Bot** — tickets created from an AI bot conversation
+    - **Queue Timeout** — tickets created because a caller waited too long in a queue
+
+    Pick one to narrow down the list. For example, select **Bot** to see only tickets from bot interactions.
+  </Step>
+
+  <Step title="Filter by date">
+    Click the **Date** filter to pick a date range. This is useful when you want to see tickets from a specific day or week.
+  </Step>
+</Steps>
+
+<Info>
+  You can combine filters. For example, show only **Open** tickets from **Missed Calls** in the **last 7 days**. This helps you zero in on exactly what you need.
+</Info>
+
+## Viewing ticket details
+
+<Steps>
+  <Step title="Click a ticket row">
+    Click on any ticket in the table. A **detail panel** slides open on the right side of the screen.
+  </Step>
+
+  <Step title="Read the details">
+    The detail panel shows you everything about this ticket:
+
+    - **Caller number** — who called
+    - **Category and source** — what type of event it was
+    - **Summary** — the short description
+    - **Details** — the full story (for bot tickets, this includes the conversation transcript)
+    - **Priority** — the urgency level
+    - **Status** — the current status
+    - **Remarks** — any notes your team has added
+    - **Timestamps** — when it was created and last updated
+  </Step>
+</Steps>
+
+## Changing ticket status
+
+A ticket moves through three stages: **Open** > **In Progress** > **Closed**. Here is how to move it forward.
+
+<Steps>
+  <Step title="Open the ticket">
+    Click the ticket row to open the detail panel on the right.
+  </Step>
+
+  <Step title="Click the status badge">
+    In the detail panel, find the **Status** badge. It will say something like "Open" with a coloured background.
+
+    Click the badge. A dropdown appears with the available statuses.
+  </Step>
+
+  <Step title="Pick the new status">
+    - Select **In Progress** when you or a team member start working on the ticket.
+    - Select **Closed** when the issue is fully resolved.
+
+    The badge updates immediately.
+  </Step>
+</Steps>
+
+<Warning>
+  Only mark a ticket as **Closed** when the issue is actually resolved. If you close a ticket without calling the customer back or handling the issue, that customer's request is lost.
+</Warning>
+
+## Adding remarks and notes
+
+Remarks let your team leave notes on a ticket. This is useful when multiple people are working on the same issue.
+
+<Steps>
+  <Step title="Open the ticket detail panel">
+    Click a ticket row to open the panel on the right.
+  </Step>
+
+  <Step title="Find the remarks section">
+    Scroll down in the detail panel until you see the **Remarks** or **Notes** section.
+  </Step>
+
+  <Step title="Type your note and save">
+    Write what you did, what happened, or what still needs to happen. For example:
+
+    > "Called the customer back. They wanted to reschedule their appointment. Done."
+
+    Click **Save** to attach the note to the ticket.
+  </Step>
+</Steps>
+
+<Tip>
+  Good remarks make handoffs easy. If you start working on a ticket but cannot finish, leave a note explaining where you left off. The next person who picks it up will know exactly what to do.
+</Tip>
+
+## Calling the customer back
+
+You can call the customer directly from the ticket without typing their number into a phone.
+
+<Steps>
+  <Step title="Open the ticket detail panel">
+    Click the ticket row.
+  </Step>
+
+  <Step title="Click the call button">
+    In the detail panel, you will see a **click-to-call** button (a phone icon) next to the caller's number.
+
+    Click it.
+  </Step>
+
+  <Step title="The call connects">
+    Your phone (or softphone extension) will ring first. When you pick up, the system dials the customer. You are now connected.
+  </Step>
+</Steps>
+
+<Note>
+  Click-to-call uses your extension. Make sure you are logged in and your extension is registered before trying to call. If your extension is not registered, the call will not go through.
+</Note>
+
+## Archiving old tickets
+
+Over time, your ticket list will grow. You can archive closed tickets to keep the table clean.
+
+<Steps>
+  <Step title="Filter to closed tickets">
+    Use the Status filter and select **Closed** to see only resolved tickets.
+  </Step>
+
+  <Step title="Select tickets to archive">
+    Use the checkboxes on the left side of each row to select the tickets you want to archive. You can select multiple tickets at once.
+  </Step>
+
+  <Step title="Click Archive">
+    Click the **Archive** button that appears above the table. The selected tickets move out of the main view.
+  </Step>
+</Steps>
+
+<Info>
+  Archived tickets are not deleted. They are simply hidden from the main table. You can always access them later if you need to look something up.
+</Info>
+
+## Quick reference
+
+| Action | How to do it |
+|---|---|
+| View all tickets | Sidebar > Monitor > Tickets |
+| Filter by status | Status dropdown at top of table |
+| Filter by source | Source dropdown at top of table |
+| Open ticket details | Click any ticket row |
+| Change status | Click the status badge in the detail panel |
+| Add a note | Remarks section in the detail panel |
+| Call the customer | Phone icon next to the caller number |
+| Archive tickets | Select closed tickets > click Archive |

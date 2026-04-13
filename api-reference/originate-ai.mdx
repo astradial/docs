@@ -1,0 +1,143 @@
+---
+title: "Originate to AI API"
+description: "Call a phone number and connect them directly to your AI bot. Perfect for outbound AI calls like appointment reminders, surveys, and follow-ups."
+icon: "robot"
+---
+
+## What is originate-to-AI?
+
+This endpoint lets you make an outbound phone call and connect the person who picks up directly to one of your AI bots. The phone rings, the person answers, and they are immediately talking to your bot.
+
+Think of it like having your AI assistant make a phone call for you. Instead of a human calling the customer, the bot does it. The customer picks up their phone and starts talking to the bot right away.
+
+**Common use cases:**
+- Appointment reminders ("Hi, this is a reminder about your appointment tomorrow at 3 PM")
+- Surveys ("We'd love your feedback on your recent stay")
+- Follow-ups ("We noticed you had an issue last week -- is everything resolved?")
+- Payment reminders ("Your invoice is due in 3 days")
+
+<Info>
+  This is the outbound version of connecting a bot to a phone number. Instead of waiting for someone to call in, you are calling them and connecting them to the bot.
+</Info>
+
+## How it works
+
+Here is what happens when you make an originate-to-AI request:
+
+1. You send the API request with the customer's number and the bot to use
+2. The system dials the customer's phone number
+3. The customer's phone rings, showing your caller ID
+4. When the customer picks up, they are immediately connected to your AI bot
+5. The bot starts the conversation based on its configured flow
+
+## Endpoint
+
+```
+POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai
+```
+
+## Request body
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `to` | string | Yes | The phone number to call (e.g. `"+919944421125"`) |
+| `caller_id` | string | Yes | The DID number to show as caller ID (e.g. `"+918065978005"`) |
+| `ai_app` | string | Yes | The AI bot to connect the call to (e.g. `"superhuman"`) |
+
+### Field details
+
+- **to** -- the customer's phone number you want to call. Include the country code (e.g. `+91` for India).
+- **caller_id** -- the phone number the customer will see on their screen. Must be a DID number assigned to your organisation.
+- **ai_app** -- the identifier for which AI bot should handle the conversation. Use `"superhuman"` for your Super Human bot.
+
+## Full example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: ak_your_key_here" \
+  -d '{
+    "to": "+919944421125",
+    "caller_id": "+918065978005",
+    "ai_app": "superhuman"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://devpbx.astradial.com/api/v1/calls/originate-to-ai', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-API-Key': 'ak_your_key_here'
+  },
+  body: JSON.stringify({
+    to: '+919944421125',
+    caller_id: '+918065978005',
+    ai_app: 'superhuman'
+  })
+});
+
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    'https://devpbx.astradial.com/api/v1/calls/originate-to-ai',
+    headers={
+        'Content-Type': 'application/json',
+        'X-API-Key': 'ak_your_key_here'
+    },
+    json={
+        'to': '+919944421125',
+        'caller_id': '+918065978005',
+        'ai_app': 'superhuman'
+    }
+)
+
+data = response.json()
+```
+
+</CodeGroup>
+
+## Response
+
+A successful request returns:
+
+```json
+{
+  "status": "success",
+  "call_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `status` | `"success"` if the outbound call was initiated |
+| `call_id` | A unique ID for this call. Use it to track the call in logs or with other API endpoints. |
+
+## Common errors
+
+| Status code | Meaning | What to do |
+| --- | --- | --- |
+| `401` | Invalid or missing API key | Check your `X-API-Key` header |
+| `400` | Invalid request body | Make sure `to`, `caller_id`, and `ai_app` are all provided |
+| `403` | Caller ID not assigned to your org | Use a DID number that belongs to your organisation |
+| `404` | AI bot not found | Check the `ai_app` value matches an existing bot |
+
+<Warning>
+  Make sure the AI bot referenced in `ai_app` is fully configured with a conversation flow before using this endpoint. If the bot has no flow, the customer will pick up and hear silence.
+</Warning>
+
+## Tips
+
+<Tip>
+  You can use this endpoint in combination with workflows. For example, set up a webhook trigger that fires this API call when a customer's appointment is 24 hours away -- the bot calls them automatically with a reminder.
+</Tip>
+
+<Note>
+  Outbound AI calls appear in your call history just like any other call. You can see them in the dashboard under **Calls** or by using the call logs API endpoint.
+</Note>

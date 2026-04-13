@@ -1,13 +1,17 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Astra Dial",
+  "name": "Astradial",
   "colors": {
     "primary": "#322C2B",
     "light": "#F5F0EB",
     "dark": "#1A1615"
   },
   "favicon": "/logo/dark.png",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
   "navigation": {
     "tabs": [
       {
@@ -16,62 +20,95 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart"
+              "getting-started/welcome",
+              "getting-started/create-account",
+              "getting-started/dashboard"
             ]
           },
           {
-            "group": "Platform",
+            "group": "Phone numbers",
             "pages": [
-              "guides/dashboard",
-              "guides/call-logs",
-              "guides/leads",
-              "guides/campaigns"
+              "phone-numbers/buy-a-number",
+              "phone-numbers/configure-routing",
+              "phone-numbers/manage-numbers"
             ]
           },
           {
-            "group": "Voice bots",
+            "group": "Users & teams",
             "pages": [
-              "guides/voice-bot",
-              "guides/astra-lite"
+              "users/add-users",
+              "users/roles-permissions",
+              "users/extensions"
+            ]
+          },
+          {
+            "group": "Calls",
+            "pages": [
+              "calls/call-history",
+              "calls/recordings",
+              "calls/click-to-call",
+              "calls/live-monitoring"
+            ]
+          },
+          {
+            "group": "Queues",
+            "pages": [
+              "queues/create-queue",
+              "queues/manage-agents"
+            ]
+          },
+          {
+            "group": "Tickets",
+            "pages": [
+              "tickets/overview",
+              "tickets/manage-tickets"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Mini CRM",
+        "groups": [
+          {
+            "group": "CRM",
+            "pages": [
+              "crm/overview",
+              "crm/clients",
+              "crm/leads",
+              "crm/deals",
+              "crm/custom-fields"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "AI & Automation",
+        "groups": [
+          {
+            "group": "AI bots",
+            "pages": [
+              "bots/super-human"
             ]
           },
           {
             "group": "Automation",
             "pages": [
-              "guides/astra-engage",
-              "guides/whatsapp",
-              "guides/dnd-list"
+              "automation/workflows",
+              "automation/whatsapp"
             ]
           }
         ]
       },
       {
-        "tab": "Capacity planning",
+        "tab": "API",
         "groups": [
           {
-            "group": "Overview",
+            "group": "API reference",
             "pages": [
-              "guides/capacity-planning/call-capacity"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Integrations",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": [
-              "integrations/overview"
-            ]
-          },
-          {
-            "group": "Setup guides",
-            "pages": [
-              "integrations/webhook",
-              "integrations/sip-setup",
-              "integrations/audio-streaming"
+              "api-reference/authentication",
+              "api-reference/click-to-call",
+              "api-reference/call-management",
+              "api-reference/originate-ai"
             ]
           }
         ]
@@ -87,10 +124,6 @@
       ]
     }
   },
-  "logo": {
-    "light": "/logo/light.png",
-    "dark": "/logo/dark.png"
-  },
   "navbar": {
     "links": [
       {
@@ -101,7 +134,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://www.astradial.com"
+      "href": "https://editor.astradial.com"
     }
   },
   "footer": {

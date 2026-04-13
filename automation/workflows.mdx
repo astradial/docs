@@ -1,0 +1,117 @@
+---
+title: "Workflows"
+description: "Build automated actions that trigger when things happen -- like sending a WhatsApp message when a call is missed or creating a ticket when a new lead comes in."
+icon: "diagram-project"
+---
+
+## What are workflows?
+
+A workflow is an automatic "if this happens, then do that" rule.
+
+Think of it like setting up dominoes. You line them up so that when the first one falls, it knocks over the next one, which knocks over the next one, and so on. With workflows, the "first domino" is something that happens (like a missed call), and the rest of the dominoes are actions the system takes automatically (like sending a WhatsApp message).
+
+Here are some real examples:
+
+- **Missed call** then **send WhatsApp message**: "Sorry we missed your call! We will ring you back shortly."
+- **Ticket created** then **notify the team**: send a message to the assigned agent
+- **Incoming call from a VIP customer** then **skip the queue**: route them straight to a senior agent
+
+Without workflows, your team would have to do all of this manually. Workflows save time and make sure nothing falls through the cracks.
+
+<Info>
+  Workflows run completely in the background. You set them up once, and they handle everything automatically from that point on.
+</Info>
+
+## How to create a workflow
+
+<Steps>
+  <Step title="Open the Workflows page">
+    In the left sidebar, click **Automate**, then click **Workflows**.
+
+    You will see a list of all workflows in your organisation.
+  </Step>
+
+  <Step title="Create a new workflow">
+    Click the **+ Create Workflow** button. The visual workflow editor will open.
+
+    This is a drag-and-drop canvas where you build your workflow by connecting blocks together.
+  </Step>
+
+  <Step title="Pick a trigger">
+    Every workflow starts with a **trigger** -- the event that kicks things off. Click the trigger block and select one:
+
+    | Trigger | When it fires |
+    | --- | --- |
+    | **Incoming Call** | A call comes in to any of your numbers |
+    | **Missed Call** | A call was not answered by anyone |
+    | **Ticket Created** | A new support ticket is created |
+    | **Webhook** | An external system sends data to your webhook URL |
+
+    <Tip>
+      The "Webhook" trigger is powerful. It lets any external tool (your website, CRM, booking system, etc.) trigger actions inside Astradial by sending an HTTP request.
+    </Tip>
+  </Step>
+
+  <Step title="Add actions">
+    After the trigger, add one or more **actions** -- the things that happen automatically. Connect them by dragging lines between the blocks.
+
+    | Action | What it does |
+    | --- | --- |
+    | **Send WhatsApp** | Sends a WhatsApp message to a phone number |
+    | **Create Ticket** | Creates a support ticket with details you specify |
+    | **Transfer Call** | Routes the current call to an extension or queue |
+    | **API Call** | Sends an HTTP request to an external system |
+
+    You can chain multiple actions together. For example: missed call then send WhatsApp then create ticket.
+  </Step>
+
+  <Step title="Configure each action">
+    Click on each action block to configure it. For example:
+
+    - **Send WhatsApp**: pick a template, set the recipient (caller's number)
+    - **Create Ticket**: set the title, priority, and assignee
+    - **API Call**: enter the URL, method, and payload
+  </Step>
+
+  <Step title="Save and activate">
+    Click **Save** to save your workflow. Make sure the toggle at the top is switched **On** to activate it.
+
+    Your workflow is now live. The next time the trigger event happens, the actions will run automatically.
+  </Step>
+</Steps>
+
+<Warning>
+  Always test your workflow after creating it. Make a test call or trigger the event manually to make sure everything works as expected before relying on it for real customer calls.
+</Warning>
+
+## Example: missed call WhatsApp notification
+
+Here is a step-by-step example of the most common workflow -- sending a WhatsApp message when a call is missed.
+
+<Steps>
+  <Step title="Create a new workflow">
+    Go to **Automate** then **Workflows** and click **+ Create Workflow**.
+  </Step>
+
+  <Step title="Set trigger to Missed Call">
+    Click the trigger block and select **Missed Call**.
+  </Step>
+
+  <Step title="Add a Send WhatsApp action">
+    Drag a **Send WhatsApp** action onto the canvas and connect it to the trigger.
+
+    Configure it:
+    - **To**: the caller's phone number (use the variable from the trigger)
+    - **Template**: pick your "missed call" WhatsApp template
+  </Step>
+
+  <Step title="Save and activate">
+    Click **Save** and turn on the toggle. Done.
+
+    Now every time a call is missed, the caller automatically gets a WhatsApp message.
+  </Step>
+</Steps>
+
+<Note>
+  For WhatsApp actions to work, you need to have the WhatsApp integration set up first. See [WhatsApp integration](/automation/whatsapp) for how to connect your WhatsApp Business number.
+</Note>

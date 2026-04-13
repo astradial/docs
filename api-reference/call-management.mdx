@@ -1,0 +1,367 @@
+---
+title: "Call management API"
+description: "List call logs, monitor live calls, hang up, hold, unhold, and transfer calls using the API."
+icon: "phone-flip"
+---
+
+## Overview
+
+The call management API gives you full control over calls in your Astradial system. You can pull call history, see what calls are happening right now, and control live calls -- all from your own software.
+
+Think of it like a remote control for your phone system. Instead of clicking buttons in the dashboard, you send API requests to do the same things.
+
+<Info>
+  All endpoints require an API key. See [API authentication](/api-reference/authentication) for how to create one and include it in your requests.
+</Info>
+
+## Base URL
+
+```
+https://devpbx.astradial.com
+```
+
+All endpoints below are relative to this base URL.
+
+---
+
+## List call logs
+
+Get a list of all past calls -- who called, when, how long it lasted, and whether it was answered.
+
+```
+GET /api/v1/calls
+```
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://devpbx.astradial.com/api/v1/calls \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://devpbx.astradial.com/api/v1/calls', {
+  headers: { 'X-API-Key': 'ak_your_key_here' }
+});
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://devpbx.astradial.com/api/v1/calls',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+**Response** returns an array of call records, each containing caller, destination, duration, status, timestamp, and recording URL (if applicable).
+
+---
+
+## Get live active calls
+
+See all calls happening right now, in real time.
+
+```
+GET /api/v1/calls/live
+```
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://devpbx.astradial.com/api/v1/calls/live \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://devpbx.astradial.com/api/v1/calls/live', {
+  headers: { 'X-API-Key': 'ak_your_key_here' }
+});
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://devpbx.astradial.com/api/v1/calls/live',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+**Response** returns an array of currently active calls with channel IDs, caller, destination, duration so far, and call state.
+
+<Tip>
+  Use the `channelId` from the live calls response to perform actions on a specific call (hang up, hold, transfer).
+</Tip>
+
+---
+
+## Get call statistics
+
+Get counts and summary numbers for your calls -- total calls, answered, missed, average duration, etc.
+
+```
+GET /api/v1/calls/count
+```
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET https://devpbx.astradial.com/api/v1/calls/count \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://devpbx.astradial.com/api/v1/calls/count', {
+  headers: { 'X-API-Key': 'ak_your_key_here' }
+});
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://devpbx.astradial.com/api/v1/calls/count',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+**Response** returns call counts and statistics for your organisation.
+
+---
+
+## Hang up a call
+
+End a live call immediately.
+
+```
+POST /api/v1/calls/{channelId}/hangup
+```
+
+| Parameter | Location | Description |
+| --- | --- | --- |
+| `channelId` | URL path | The channel ID of the live call (get this from the live calls endpoint) |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://devpbx.astradial.com/api/v1/calls/CHANNEL_ID_HERE/hangup \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const channelId = 'CHANNEL_ID_HERE';
+const response = await fetch(
+  `https://devpbx.astradial.com/api/v1/calls/${channelId}/hangup`,
+  {
+    method: 'POST',
+    headers: { 'X-API-Key': 'ak_your_key_here' }
+  }
+);
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+channel_id = 'CHANNEL_ID_HERE'
+response = requests.post(
+    f'https://devpbx.astradial.com/api/v1/calls/{channel_id}/hangup',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+<Warning>
+  Hanging up a call is instant and cannot be undone. Both parties are disconnected immediately.
+</Warning>
+
+---
+
+## Put a call on hold
+
+Pause a live call. The other party hears hold music while they wait.
+
+```
+POST /api/v1/calls/{channelId}/hold
+```
+
+| Parameter | Location | Description |
+| --- | --- | --- |
+| `channelId` | URL path | The channel ID of the live call |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://devpbx.astradial.com/api/v1/calls/CHANNEL_ID_HERE/hold \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const channelId = 'CHANNEL_ID_HERE';
+const response = await fetch(
+  `https://devpbx.astradial.com/api/v1/calls/${channelId}/hold`,
+  {
+    method: 'POST',
+    headers: { 'X-API-Key': 'ak_your_key_here' }
+  }
+);
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+channel_id = 'CHANNEL_ID_HERE'
+response = requests.post(
+    f'https://devpbx.astradial.com/api/v1/calls/{channel_id}/hold',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+---
+
+## Resume from hold
+
+Take a call off hold and reconnect both parties.
+
+```
+POST /api/v1/calls/{channelId}/unhold
+```
+
+| Parameter | Location | Description |
+| --- | --- | --- |
+| `channelId` | URL path | The channel ID of the held call |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://devpbx.astradial.com/api/v1/calls/CHANNEL_ID_HERE/unhold \
+  -H "X-API-Key: ak_your_key_here"
+```
+
+```javascript JavaScript
+const channelId = 'CHANNEL_ID_HERE';
+const response = await fetch(
+  `https://devpbx.astradial.com/api/v1/calls/${channelId}/unhold`,
+  {
+    method: 'POST',
+    headers: { 'X-API-Key': 'ak_your_key_here' }
+  }
+);
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+channel_id = 'CHANNEL_ID_HERE'
+response = requests.post(
+    f'https://devpbx.astradial.com/api/v1/calls/{channel_id}/unhold',
+    headers={'X-API-Key': 'ak_your_key_here'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+---
+
+## Transfer a call
+
+Move a live call to a different extension or phone number.
+
+```
+POST /api/v1/calls/{channelId}/transfer
+```
+
+| Parameter | Location | Description |
+| --- | --- | --- |
+| `channelId` | URL path | The channel ID of the live call |
+
+**Request body:**
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `target` | string | Yes | The extension or phone number to transfer to |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://devpbx.astradial.com/api/v1/calls/CHANNEL_ID_HERE/transfer \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: ak_your_key_here" \
+  -d '{
+    "target": "1002"
+  }'
+```
+
+```javascript JavaScript
+const channelId = 'CHANNEL_ID_HERE';
+const response = await fetch(
+  `https://devpbx.astradial.com/api/v1/calls/${channelId}/transfer`,
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': 'ak_your_key_here'
+    },
+    body: JSON.stringify({ target: '1002' })
+  }
+);
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+channel_id = 'CHANNEL_ID_HERE'
+response = requests.post(
+    f'https://devpbx.astradial.com/api/v1/calls/{channel_id}/transfer',
+    headers={
+        'Content-Type': 'application/json',
+        'X-API-Key': 'ak_your_key_here'
+    },
+    json={'target': '1002'}
+)
+data = response.json()
+```
+
+</CodeGroup>
+
+<Note>
+  You can transfer to an internal extension (e.g. `"1002"`) or to an external phone number (e.g. `"+919944421125"`). The call is redirected immediately.
+</Note>
+
+---
+
+## Quick reference
+
+Here is a summary of all call management endpoints at a glance:
+
+| Method | Endpoint | What it does |
+| --- | --- | --- |
+| `GET` | `/api/v1/calls` | List call logs |
+| `GET` | `/api/v1/calls/live` | Get live active calls |
+| `GET` | `/api/v1/calls/count` | Get call statistics |
+| `POST` | `/api/v1/calls/{channelId}/hangup` | Hang up a call |
+| `POST` | `/api/v1/calls/{channelId}/hold` | Put a call on hold |
+| `POST` | `/api/v1/calls/{channelId}/unhold` | Resume from hold |
+| `POST` | `/api/v1/calls/{channelId}/transfer` | Transfer a call |
