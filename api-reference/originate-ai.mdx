@@ -1,143 +1,257 @@
 ---
 title: "Originate to AI API"
-description: "Call a phone number and connect them directly to your AI bot. Perfect for outbound AI calls like appointment reminders, surveys, and follow-ups."
+description: "Call a phone number or extension and connect to an AI agent via Asterisk Stasis"
 icon: "robot"
 ---
 
-## What is originate-to-AI?
+## What is originate to AI?
 
-This endpoint lets you make an outbound phone call and connect the person who picks up directly to one of your AI bots. The phone rings, the person answers, and they are immediately talking to your bot.
+This endpoint calls someone (an extension or external phone number) and when they answer, connects them directly to an AI agent running on Asterisk Stasis.
 
-Think of it like having your AI assistant make a phone call for you. Instead of a human calling the customer, the bot does it. The customer picks up their phone and starts talking to the bot right away.
-
-**Common use cases:**
-- Appointment reminders ("Hi, this is a reminder about your appointment tomorrow at 3 PM")
-- Surveys ("We'd love your feedback on your recent stay")
-- Follow-ups ("We noticed you had an issue last week -- is everything resolved?")
-- Payment reminders ("Your invoice is due in 3 days")
+Think of it like this: your AI bot picks up the phone, dials a number, and starts talking when the person answers.
 
 <Info>
-  This is the outbound version of connecting a bot to a phone number. Instead of waiting for someone to call in, you are calling them and connecting them to the bot.
+The call enters a Stasis application where the AI agent controls the conversation via WebSocket. No dialplan routing is involved.
 </Info>
 
 ## How it works
 
-Here is what happens when you make an originate-to-AI request:
+<Steps>
+  <Step title="Your system sends the API request">
+    You call the originate-to-ai endpoint with the destination number and AI agent details.
+  </Step>
+  <Step title="Asterisk dials the number">
+    The phone system calls the person. They see your caller ID on their phone.
+  </Step>
+  <Step title="Person answers">
+    When they pick up, the call is immediately connected to your AI agent via WebSocket.
+  </Step>
+  <Step title="AI agent takes over">
+    Your AI agent (OpenAI, Deepgram, custom, etc.) handles the conversation in real-time.
+  </Step>
+</Steps>
 
-1. You send the API request with the customer's number and the bot to use
-2. The system dials the customer's phone number
-3. The customer's phone rings, showing your caller ID
-4. When the customer picks up, they are immediately connected to your AI bot
-5. The bot starts the conversation based on its configured flow
+## Key features
+
+- Direct call origination to Stasis app (no dialplan routing)
+- WebSocket URL support for external AI services
+- Supports both internal extensions and external numbers
+- Channel variables passed to AI agent handler
+- Async call origination (non-blocking)
+
+## Use cases
+
+- AI-powered outbound calling campaigns
+- Automated appointment reminders with conversational AI
+- Customer surveys with natural language processing
+- Voice assistant integrations (OpenAI Realtime API, Deepgram, etc.)
+- Real-time speech-to-speech translation services
 
 ## Endpoint
 
 ```
-POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai
+POST /api/v1/calls/originate-to-ai
 ```
 
-## Request body
+### Authentication
+
+Include your API key or token in the header:
+
+```
+Authorization: Bearer YOUR_ORG_TOKEN
+```
+
+or
+
+```
+X-API-Key: ak_your_api_key
+```
+
+### Request body
 
 | Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `to` | string | Yes | The phone number to call (e.g. `"+919944421125"`) |
-| `caller_id` | string | Yes | The DID number to show as caller ID (e.g. `"+918065978005"`) |
-| `ai_app` | string | Yes | The AI bot to connect the call to (e.g. `"superhuman"`) |
+|-------|------|----------|-------------|
+| `to` | string | Yes | Extension number (e.g. `2001`) or external phone number (e.g. `+919944421125`) |
+| `caller_id` | string | No | Name or number shown on the recipient's phone |
+| `wss_url` | string | No | WebSocket URL for external AI service |
+| `ai_agent_app` | string | No | Stasis application name (default: `ai_agent`) |
+| `timeout` | number | No | Ring timeout in seconds (default: 30) |
+| `variables` | object | No | Custom channel variables passed to the AI agent |
 
-### Field details
+## Examples
 
-- **to** -- the customer's phone number you want to call. Include the country code (e.g. `+91` for India).
-- **caller_id** -- the phone number the customer will see on their screen. Must be a DID number assigned to your organisation.
-- **ai_app** -- the identifier for which AI bot should handle the conversation. Use `"superhuman"` for your Super Human bot.
-
-## Full example
+### Call an extension with an AI agent
 
 <CodeGroup>
-
-```bash cURL
+```bash curl
 curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
+  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: ak_your_key_here" \
   -d '{
-    "to": "+919944421125",
-    "caller_id": "+918065978005",
-    "ai_app": "superhuman"
+    "to": "2001",
+    "caller_id": "AI Assistant",
+    "wss_url": "wss://ai.example.com/voice/stream"
   }'
 ```
 
-```javascript JavaScript
-const response = await fetch('https://devpbx.astradial.com/api/v1/calls/originate-to-ai', {
-  method: 'POST',
+```javascript node.js
+const response = await fetch("https://devpbx.astradial.com/api/v1/calls/originate-to-ai", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'X-API-Key': 'ak_your_key_here'
+    "Authorization": "Bearer YOUR_ORG_TOKEN",
+    "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    to: '+919944421125',
-    caller_id: '+918065978005',
-    ai_app: 'superhuman'
+    to: "2001",
+    caller_id: "AI Assistant",
+    wss_url: "wss://ai.example.com/voice/stream"
   })
 });
-
-const data = await response.json();
 ```
 
-```python Python
+```python python
 import requests
 
 response = requests.post(
-    'https://devpbx.astradial.com/api/v1/calls/originate-to-ai',
+    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
     headers={
-        'Content-Type': 'application/json',
-        'X-API-Key': 'ak_your_key_here'
+        "Authorization": "Bearer YOUR_ORG_TOKEN",
+        "Content-Type": "application/json"
     },
     json={
-        'to': '+919944421125',
-        'caller_id': '+918065978005',
-        'ai_app': 'superhuman'
+        "to": "2001",
+        "caller_id": "AI Assistant",
+        "wss_url": "wss://ai.example.com/voice/stream"
     }
 )
+```
+</CodeGroup>
 
-data = response.json()
+### Call an external number with OpenAI Realtime
+
+<CodeGroup>
+```bash curl
+curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
+  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+919944421125",
+    "caller_id": "Support Bot",
+    "ai_agent_app": "ai_agent",
+    "wss_url": "wss://api.openai.com/v1/realtime",
+    "timeout": 45,
+    "variables": {
+      "CAMPAIGN_ID": "summer2024",
+      "LANGUAGE": "en-US"
+    }
+  }'
 ```
 
+```javascript node.js
+const response = await fetch("https://devpbx.astradial.com/api/v1/calls/originate-to-ai", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_ORG_TOKEN",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    to: "+919944421125",
+    caller_id: "Support Bot",
+    ai_agent_app: "ai_agent",
+    wss_url: "wss://api.openai.com/v1/realtime",
+    timeout: 45,
+    variables: {
+      CAMPAIGN_ID: "summer2024",
+      LANGUAGE: "en-US"
+    }
+  })
+});
+```
+
+```python python
+import requests
+
+response = requests.post(
+    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
+    headers={
+        "Authorization": "Bearer YOUR_ORG_TOKEN",
+        "Content-Type": "application/json"
+    },
+    json={
+        "to": "+919944421125",
+        "caller_id": "Support Bot",
+        "ai_agent_app": "ai_agent",
+        "wss_url": "wss://api.openai.com/v1/realtime",
+        "timeout": 45,
+        "variables": {
+            "CAMPAIGN_ID": "summer2024",
+            "LANGUAGE": "en-US"
+        }
+    }
+)
+```
+</CodeGroup>
+
+### Call with a custom AI service
+
+<CodeGroup>
+```bash curl
+curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
+  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "2002",
+    "wss_url": "wss://voice-ai.myservice.com/stream",
+    "variables": {
+      "AGENT_TYPE": "sales",
+      "PRIORITY": "high"
+    }
+  }'
+```
+
+```python python
+import requests
+
+response = requests.post(
+    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
+    headers={
+        "Authorization": "Bearer YOUR_ORG_TOKEN",
+        "Content-Type": "application/json"
+    },
+    json={
+        "to": "2002",
+        "wss_url": "wss://voice-ai.myservice.com/stream",
+        "variables": {
+            "AGENT_TYPE": "sales",
+            "PRIORITY": "high"
+        }
+    }
+)
+```
 </CodeGroup>
 
 ## Response
 
-A successful request returns:
-
 ```json
 {
   "status": "success",
-  "call_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  "message": "Call originated to AI agent",
+  "channel_id": "1713045600.123"
 }
 ```
 
-| Field | Description |
-| --- | --- |
-| `status` | `"success"` if the outbound call was initiated |
-| `call_id` | A unique ID for this call. Use it to track the call in logs or with other API endpoints. |
-
 ## Common errors
 
-| Status code | Meaning | What to do |
-| --- | --- | --- |
-| `401` | Invalid or missing API key | Check your `X-API-Key` header |
-| `400` | Invalid request body | Make sure `to`, `caller_id`, and `ai_app` are all provided |
-| `403` | Caller ID not assigned to your org | Use a DID number that belongs to your organisation |
-| `404` | AI bot not found | Check the `ai_app` value matches an existing bot |
+| Status | Error | Cause |
+|--------|-------|-------|
+| 400 | `to is required` | Missing the `to` field |
+| 401 | `Authentication required` | Missing or invalid API key |
+| 500 | `Origination failed` | Asterisk could not place the call |
 
 <Warning>
-  Make sure the AI bot referenced in `ai_app` is fully configured with a conversation flow before using this endpoint. If the bot has no flow, the customer will pick up and hear silence.
+The `to` field must be either an internal extension number or a full phone number with country code (e.g. `+919944421125`). The caller must have permission to call external numbers if dialing out.
 </Warning>
 
-## Tips
-
 <Tip>
-  You can use this endpoint in combination with workflows. For example, set up a webhook trigger that fires this API call when a customer's appointment is 24 hours away -- the bot calls them automatically with a reminder.
+Use the `variables` field to pass context to your AI agent. For example, pass the customer's name, booking ID, or language preference so the bot can personalize the conversation.
 </Tip>
-
-<Note>
-  Outbound AI calls appear in your call history just like any other call. You can see them in the dashboard under **Calls** or by using the call logs API endpoint.
-</Note>
