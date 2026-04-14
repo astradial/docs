@@ -1,199 +1,100 @@
 ---
-title: "Your dashboard"
-description: "A complete tour of the Astradial dashboard -- what every section does, what the numbers mean, and how to navigate around."
+title: "The dashboard"
+description: "A complete tour of the Astradial dashboard — what every section does and where to find things."
 ---
 
-After you sign in, you land on your dashboard. This is your home base -- the first thing you see every time you open Astradial. This guide explains every part of the screen so you know exactly what you are looking at.
-
-## The onboarding wizard
-
-The very first time you log in after your organisation is approved, you will see an **onboarding wizard** at the top of your dashboard. This wizard walks you through the four essential steps to get your phone system up and running.
-
-<Steps>
-  <Step title="Create Users" icon="users">
-    Add the people on your team who will be using Astradial. Each user gets their own login and extension number. You need at least one user (besides yourself) to start receiving calls.
-
-    Click the button in this step and it will take you straight to the Users page where you can add team members.
-  </Step>
-
-  <Step title="Get a Number" icon="phone">
-    Buy a phone number (called a DID) for your organisation. This is the number your customers will call. You can buy local numbers for different regions.
-
-    Click this step and it takes you to the Phone Numbers page to browse and purchase available numbers.
-  </Step>
-
-  <Step title="Configure Routing" icon="route">
-    Tell Astradial what to do when someone calls your number. You can route calls to a specific user, to a queue, or to an AI bot. This is where you set up the flow of incoming calls.
-
-    Click this step to go to your phone number's routing settings.
-  </Step>
-
-  <Step title="Go Live" icon="rocket">
-    Once your users are created, your number is purchased, and your routing is configured, you are ready to go live. Make a test call to your new number and make sure everything works.
-  </Step>
-</Steps>
-
-<Tip>
-  You do not have to complete the wizard in one sitting. The steps stay at the top of your dashboard until you finish them all. You can come back to it any time.
-</Tip>
-
-## Stats cards
-
-Below the onboarding wizard (or at the top if you have already completed it), you will see a row of **stats cards**. These give you a quick snapshot of what is happening in your organisation right now.
-
-| Card | What it shows |
-| --- | --- |
-| **Total Calls** | The total number of calls your organisation has received and made. This counts all calls -- answered, missed, and busy. |
-| **Active Users** | How many users in your organisation are currently online and available to take calls. |
-| **Open Tickets** | The number of support tickets that are still open and need attention. |
-| **Avg Duration** | The average length of your calls. This helps you understand how long typical conversations last. |
-
-<Info>
-  These numbers update automatically. You do not need to refresh the page to see the latest stats.
-</Info>
-
-## Call Volume chart
-
-Below the stats cards, you will see a **Call Volume** chart. This is a visual graph that shows you how many calls you received over time.
-
-- The **horizontal axis** (bottom) shows the time period -- days or hours depending on the range you select.
-- The **vertical axis** (left side) shows the number of calls.
-- You can hover over any point on the chart to see the exact number of calls for that time period.
-
-This chart helps you spot patterns. For example, you might notice that most of your calls come in on Monday mornings, which means you should make sure extra agents are available at that time.
-
-## Recent Calls table
-
-Below the chart, you will see a **Recent Calls** table. This shows your most recent calls in a list format.
-
-Each row in the table shows:
-
-| Column | What it means |
-| --- | --- |
-| **From** | The phone number or extension that made the call. |
-| **To** | The phone number or extension that received the call. |
-| **Status** | Whether the call was answered, missed, busy, or failed. |
-| **Duration** | How long the call lasted (in minutes and seconds). |
-| **Time** | When the call happened. |
-
-<Tip>
-  Click on any call in the table to see more details about it, including the full call path and recording (if recording is enabled).
-</Tip>
-
-To see your complete call history going further back, click **Calls** in the sidebar navigation. The dashboard only shows the most recent calls.
+When you log into your organization, you land on the **Dashboard Overview** page. The left sidebar is your main navigation.
 
 ## Sidebar navigation
 
-On the left side of your screen, you will see the **sidebar**. This is how you navigate to every part of Astradial. The sidebar is organised into sections, each containing related pages.
+The sidebar is organized into five sections:
 
 ### Configure
 
-This section is where you set up the core pieces of your phone system.
-
-<CardGroup cols={2}>
-  <Card title="Users" icon="users" href="/users/add-users">
-    Add and manage the people on your team. Each user gets a login, an extension number, and a role that controls what they can access.
-  </Card>
-  <Card title="Phone Numbers (DIDs)" icon="phone" href="/phone-numbers/buy-a-number">
-    Buy new phone numbers, see your existing numbers, and configure what happens when someone calls each number.
-  </Card>
-  <Card title="Trunks" icon="tower-broadcast">
-    Advanced SIP trunk configuration. Most users do not need to touch this -- it is set up for you automatically.
-  </Card>
-  <Card title="Queues" icon="people-group" href="/queues/create-queue">
-    Create and manage call queues. A queue holds callers in a waiting line until an agent is free to answer.
-  </Card>
-</CardGroup>
+| Menu item | What it does |
+|-----------|-------------|
+| **Home** | Dashboard overview with call stats, charts, and recent calls |
+| **Users** | Create and manage SIP users, extensions, and call routing |
+| **Super Human** | Create and manage AI voice bots powered by Gemini |
+| **Queues** | Set up call queues so callers wait in line for agents |
 
 ### Monitor
 
-This section is where you keep an eye on what is happening with your calls.
-
-<CardGroup cols={2}>
-  <Card title="Calls" icon="phone-arrow-down-left" href="/calls/call-history">
-    View your complete call history. Every call is logged here with details like time, duration, status, and recording.
-  </Card>
-  <Card title="Live" icon="signal-stream" href="/calls/live-monitoring">
-    See calls that are happening right now in real time. You can monitor active calls as they are in progress.
-  </Card>
-</CardGroup>
+| Menu item | What it does |
+|-----------|-------------|
+| **Calls** | View call history, listen to recordings, and monitor live calls |
+| **Tickets** | Track support tickets created from calls or workflows |
 
 ### Mini CRM
 
-This section is your built-in customer relationship management tool.
-
-<CardGroup cols={2}>
-  <Card title="Clients" icon="address-book" href="/crm/clients">
-    Your existing customers. Add client records, store their contact details, and see their full call history with your organisation.
-  </Card>
-  <Card title="Leads" icon="user-plus" href="/crm/leads">
-    Potential customers you are tracking. Move leads through stages as they get closer to becoming clients.
-  </Card>
-  <Card title="Deals" icon="handshake" href="/crm/deals">
-    Track sales opportunities with values and stages. See your pipeline and know where every deal stands.
-  </Card>
-  <Card title="Tickets" icon="ticket" href="/tickets/overview">
-    Support tickets created from calls or manually. Assign tickets to team members, set priorities, and track resolution.
-  </Card>
-</CardGroup>
+| Menu item | What it does |
+|-----------|-------------|
+| **Clients** | Manage companies and their contact details |
+| **Leads** | Track sales prospects with a Kanban pipeline |
+| **Deals** | Track sales opportunities with monetary values |
+| **Customize** | Configure pipeline stages and custom fields |
 
 ### Automate
 
-This section is where you set up automations and AI features.
-
-<CardGroup cols={2}>
-  <Card title="Workflows" icon="diagram-project" href="/automation/workflows">
-    Build automated workflows that trigger on events. For example: send a WhatsApp message when a call is missed, or create a ticket when a new lead calls.
-  </Card>
-  <Card title="WhatsApp" icon="comment-dots" href="/automation/whatsapp">
-    Configure WhatsApp messaging integrations. Send automated messages to customers based on call events or workflow triggers.
-  </Card>
-</CardGroup>
+| Menu item | What it does |
+|-----------|-------------|
+| **Workflows** | Build automated flows for calls, WhatsApp messages, and more |
+| **WhatsApp** | Connect MSG91 for WhatsApp messaging |
+| **API & Webhooks** | Generate API keys and view the API reference |
 
 ### Deploy
 
-This section is where you manage AI bots.
+| Menu item | What it does |
+|-----------|-------------|
+| **Phone Numbers** | Add and manage your phone numbers (DIDs) |
+| **Trunks** | Configure SIP trunk connections to carriers |
 
-<CardGroup cols={1}>
-  <Card title="Bots" icon="robot" href="/bots/super-human">
-    Create and deploy AI voice bots that can answer calls, have conversations, collect information, and route callers. Each bot follows a workflow you design.
-  </Card>
-</CardGroup>
+## Dashboard overview page
 
-## Navigating the dashboard
+The home page shows you four key metrics at a glance:
 
-Here are a few tips that apply everywhere in Astradial, not just the dashboard home page.
+1. **Total Calls** — How many calls your organization has handled
+2. **Active Users** — How many SIP extensions are registered
+3. **Open Tickets** — Tickets that need attention
+4. **Avg Duration** — Average length of your calls
 
-<AccordionGroup>
-  <Accordion title="How do I get back to the dashboard?">
-    Click the **Astradial logo** at the top of the sidebar, or click **Dashboard** in the sidebar. Either one takes you back to the home page with your stats and recent calls.
-  </Accordion>
+Below the stats, you will see:
 
-  <Accordion title="Can I collapse the sidebar?">
-    Yes. On smaller screens the sidebar may automatically collapse. You can click the menu icon at the top to expand or collapse it.
-  </Accordion>
+- **Call Volume Chart** — A weekly chart showing inbound vs. outbound calls
+- **Recent Calls** — The last 10 calls with status, duration, and timestamps
 
-  <Accordion title="How do I sign out?">
-    Look for your profile icon or name at the bottom of the sidebar. Click on it and you will see a **Sign Out** option.
-  </Accordion>
+## Bottom links
 
-  <Accordion title="How do I switch between organisations?">
-    If you belong to more than one organisation, you can switch between them from the organisation selector at the top of the sidebar. Click on your organisation name to see the list.
-  </Accordion>
-</AccordionGroup>
+At the bottom of the sidebar, you will find:
 
-## Next steps
+- **Role Permissions** — See what each role (Owner, Admin, Manager, Agent) can do
+- **Request Feature** — Send a feature request to the Astradial team
+- **Raise Issue** — Report a problem
+- **Guide** — Link to this documentation
 
-Now that you know your way around the dashboard, it is time to start setting up your phone system. Follow the onboarding wizard, or jump straight into any of these guides.
+## User profile menu
 
-<CardGroup cols={3}>
-  <Card title="Add users" icon="user-plus" href="/users/add-users">
-    Invite your team members to Astradial.
-  </Card>
-  <Card title="Get a number" icon="phone" href="/phone-numbers/buy-a-number">
-    Buy your first business phone number.
-  </Card>
-  <Card title="Set up a queue" icon="people-group" href="/queues/create-queue">
-    Create a call queue for your team.
-  </Card>
-</CardGroup>
+Click your organization name at the very bottom of the sidebar to open a dropdown with:
+
+- **Settings** — Organization settings and Asterisk config deployment
+- **Light/Dark Mode** — Toggle between light and dark themes
+- **Log out** — Sign out of your account
+
+## Quick start checklist
+
+Here is what to do first after setting up:
+
+<Steps>
+  <Step title="Add users">
+    Go to **Users** and create SIP extensions for your team members.
+  </Step>
+  <Step title="Add a phone number">
+    Go to **Phone Numbers** to add a DID (your public phone number).
+  </Step>
+  <Step title="Configure routing">
+    Set your phone number to route calls to a user extension or a queue.
+  </Step>
+  <Step title="Set up a SIP phone">
+    Download Zoiper or any SIP app, scan the QR code from the Users page, and you're ready to make calls.
+  </Step>
+</Steps>

@@ -1,79 +1,51 @@
 ---
-title: "Click to call"
-description: "Make phone calls directly from the Astradial dashboard. No need to pick up a desk phone -- just click a button and you are connected."
-icon: "phone-arrow-up-right"
+title: "Click-to-call"
+description: "Initiate calls between any two parties directly from the dashboard — connect an extension to a phone number, another extension, or a queue."
 ---
 
-## What is click-to-call?
-
-Click-to-call lets you start a phone call directly from the Astradial web interface. Instead of opening a softphone app, looking up a number, and dialing it manually, you just click a button and Astradial connects the call for you.
-
-Think of it like a magic button. You click it, your phone rings, you pick up, and then the other person's phone rings. Once they pick up, you are in a conversation. That is it.
+Click-to-call lets you start a phone call from the dashboard without picking up a phone. Astradial calls the first party, and when they answer, connects them to the second party.
 
 ## How it works
 
-Here is what happens behind the scenes when you use click-to-call:
+1. You specify a **From** (who gets called first) and a **To** (who gets connected after)
+2. Astradial rings the "From" party first
+3. When they answer, Astradial rings the "To" party
+4. When both answer, they are connected in a call
 
-1. You click the call button and choose who to call
-2. Astradial calls **your** extension first (your softphone rings)
-3. You pick up your softphone
-4. Astradial then calls the **other person**
-5. When they pick up, you are both connected
-
-<Info>
-  Your softphone needs to be registered and working for click-to-call to work. Astradial calls your extension first, so if your softphone is not connected, the call will not go through.
-</Info>
-
-## Making a call
+## Initiate a call
 
 <Steps>
-  <Step title="Go to the Calls or Tickets page">
-    You can start a click-to-call from the **Calls** page or the **Tickets** page. Look for the **phone icon** button.
+  <Step title="Click Initiate Call">
+    On the Calls page, click the **Initiate Call** button (phone icon) in the top-right area.
   </Step>
-  <Step title="Click the phone icon">
-    Click the phone icon to open the call dialog.
+  <Step title="Set the From (rings first)">
+    Choose who gets called first:
+    - **Extension** — Select a user from your organization
+    - **Phone Number** — Enter a 10-digit phone number
   </Step>
-  <Step title="Choose your extension">
-    In the **From** field, select your extension. This is the phone that will ring first.
+  <Step title="Set the To (connected after)">
+    Choose who gets connected after the first party answers:
+    - **Extension** — Select a user
+    - **Queue** — Select a call queue
+    - **Phone Number** — Enter a phone number
   </Step>
-  <Step title="Enter the destination">
-    In the **To** field, enter the number you want to call. This can be:
-    - A full phone number (e.g. +91 98765 43210)
-    - Another extension in your organisation (e.g. 1002)
+  <Step title="Select a Caller ID">
+    Choose which of your phone numbers (DIDs) to show as the caller ID to the "To" party. If you only have one DID, it is auto-selected.
   </Step>
   <Step title="Click Call">
-    Hit the **Call** button. Your softphone will ring. Pick it up, and Astradial will connect you to the other party.
+    Astradial initiates the call. You will see a confirmation message: "Call initiated — ringing 'From' first, then connecting to 'To'."
   </Step>
 </Steps>
 
-<Tip>
-  If you are on the Tickets page and a ticket has a phone number attached, you can click-to-call that number directly without typing it in. Astradial fills in the number for you.
-</Tip>
+## Common use cases
 
-## Things to know
+| Scenario | From | To |
+|----------|------|-----|
+| Agent calls a customer | Agent's extension (1001) | Customer's phone number |
+| Connect two extensions | Extension 1001 | Extension 1002 |
+| Send caller to queue | Extension 1001 | Support queue (5001) |
+| Test your phone setup | Your extension | Your mobile number |
 
-<Note>
-  Click-to-call uses your extension and softphone. Make sure your softphone app (Zoiper, Opal, etc.) is open and registered before you try to make a call. If it is not connected, Astradial cannot ring your phone.
-</Note>
+## Using the API
 
-<Warning>
-  If you click **Call** and nothing happens, check the following:
-  - Is your softphone app open and registered?
-  - Is the "To" number correct and complete?
-  - Does your role allow making outbound calls?
-</Warning>
-
-## Who can use click-to-call?
-
-All roles can use click-to-call -- Owners, Admins, Managers, and Agents. If you have a registered softphone and a valid extension, you can make calls from the dashboard.
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Set up your softphone" icon="phone" href="/users/extensions">
-    Need to connect your softphone first? Follow the setup guide.
-  </Card>
-  <Card title="View call history" icon="clock-rotate-left" href="/calls/call-history">
-    See all your past calls in one place.
-  </Card>
-</CardGroup>
+You can also initiate calls programmatically using the API. See the [Click-to-call API](/api-reference/click-to-call) documentation.

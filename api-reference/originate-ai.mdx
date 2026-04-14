@@ -1,51 +1,9 @@
 ---
-title: "Originate to AI API"
-description: "Call a phone number or extension and connect to an AI agent via Asterisk Stasis"
-icon: "robot"
+title: "Originate to AI"
+description: "Make outbound phone calls that connect to AI voice bots — for automated outreach, reminders, and surveys."
 ---
 
-## What is originate to AI?
-
-This endpoint calls someone (an extension or external phone number) and when they answer, connects them directly to an AI agent running on Asterisk Stasis.
-
-Think of it like this: your AI bot picks up the phone, dials a number, and starts talking when the person answers.
-
-<Info>
-The call enters a Stasis application where the AI agent controls the conversation via WebSocket. No dialplan routing is involved.
-</Info>
-
-## How it works
-
-<Steps>
-  <Step title="Your system sends the API request">
-    You call the originate-to-ai endpoint with the destination number and AI agent details.
-  </Step>
-  <Step title="Asterisk dials the number">
-    The phone system calls the person. They see your caller ID on their phone.
-  </Step>
-  <Step title="Person answers">
-    When they pick up, the call is immediately connected to your AI agent via WebSocket.
-  </Step>
-  <Step title="AI agent takes over">
-    Your AI agent (OpenAI, Deepgram, custom, etc.) handles the conversation in real-time.
-  </Step>
-</Steps>
-
-## Key features
-
-- Direct call origination to Stasis app (no dialplan routing)
-- WebSocket URL support for external AI services
-- Supports both internal extensions and external numbers
-- Channel variables passed to AI agent handler
-- Async call origination (non-blocking)
-
-## Use cases
-
-- AI-powered outbound calling campaigns
-- Automated appointment reminders with conversational AI
-- Customer surveys with natural language processing
-- Voice assistant integrations (OpenAI Realtime API, Deepgram, etc.)
-- Real-time speech-to-speech translation services
+The originate-to-AI endpoint lets you make a phone call to someone and connect them to an AI voice bot. This is useful for automated outreach, appointment reminders, surveys, and follow-up calls.
 
 ## Endpoint
 
@@ -53,205 +11,86 @@ The call enters a Stasis application where the AI agent controls the conversatio
 POST /api/v1/calls/originate-to-ai
 ```
 
-### Authentication
+## Authentication
 
-Include your API key or token in the header:
+Requires an API key with `calls.originate_ai` permission.
 
+## Request body
+
+```json
+{
+  "to": "9944421125",
+  "caller_id": "+918065978015",
+  "ai_agent_app": "ai_agent",
+  "wss_url": "wss://gateway.astradial.com/ws/{orgId}/{botId}?key={apiKey}",
+  "timeout": 30,
+  "variables": {
+    "guest_name": "John Doe",
+    "room_number": "305",
+    "purpose": "wake_up_call"
+  }
+}
 ```
-Authorization: Bearer YOUR_ORG_TOKEN
-```
-
-or
-
-```
-X-API-Key: ak_your_api_key
-```
-
-### Request body
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `to` | string | Yes | Extension number (e.g. `2001`) or external phone number (e.g. `+919944421125`) |
-| `caller_id` | string | No | Name or number shown on the recipient's phone |
-| `wss_url` | string | No | WebSocket URL for external AI service |
-| `ai_agent_app` | string | No | Stasis application name (default: `ai_agent`) |
-| `timeout` | number | No | Ring timeout in seconds (default: 30) |
-| `variables` | object | No | Custom channel variables passed to the AI agent |
+| `to` | string | Yes | Phone number to call |
+| `caller_id` | string | No | Caller ID shown to the person being called |
+| `ai_agent_app` | string | No | The ARI application name (default: "ai_agent") |
+| `wss_url` | string | Yes | WebSocket URL for the AI bot |
+| `timeout` | number | No | Seconds to wait for answer (default: 30) |
+| `variables` | object | No | Custom variables passed to the bot |
 
-## Examples
+## Example: wake-up call
 
-### Call an extension with an AI agent
-
-<CodeGroup>
-```bash curl
-curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
-  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
+```bash
+curl -X POST https://your-server:8000/api/v1/calls/originate-to-ai \
+  -H "X-API-Key: ak_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
-    "to": "2001",
-    "caller_id": "AI Assistant",
-    "wss_url": "wss://ai.example.com/voice/stream"
-  }'
-```
-
-```javascript node.js
-const response = await fetch("https://devpbx.astradial.com/api/v1/calls/originate-to-ai", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer YOUR_ORG_TOKEN",
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    to: "2001",
-    caller_id: "AI Assistant",
-    wss_url: "wss://ai.example.com/voice/stream"
-  })
-});
-```
-
-```python python
-import requests
-
-response = requests.post(
-    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
-    headers={
-        "Authorization": "Bearer YOUR_ORG_TOKEN",
-        "Content-Type": "application/json"
-    },
-    json={
-        "to": "2001",
-        "caller_id": "AI Assistant",
-        "wss_url": "wss://ai.example.com/voice/stream"
-    }
-)
-```
-</CodeGroup>
-
-### Call an external number with OpenAI Realtime
-
-<CodeGroup>
-```bash curl
-curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
-  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "to": "+919944421125",
-    "caller_id": "Support Bot",
-    "ai_agent_app": "ai_agent",
-    "wss_url": "wss://api.openai.com/v1/realtime",
-    "timeout": 45,
+    "to": "9944421125",
+    "caller_id": "+918065978015",
+    "wss_url": "wss://gateway.astradial.com/ws/org123/bot456?key=ak_abc123",
     "variables": {
-      "CAMPAIGN_ID": "summer2024",
-      "LANGUAGE": "en-US"
+      "guest_name": "John Doe",
+      "purpose": "wake_up_call"
     }
   }'
 ```
 
-```javascript node.js
-const response = await fetch("https://devpbx.astradial.com/api/v1/calls/originate-to-ai", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer YOUR_ORG_TOKEN",
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    to: "+919944421125",
-    caller_id: "Support Bot",
-    ai_agent_app: "ai_agent",
-    wss_url: "wss://api.openai.com/v1/realtime",
-    timeout: 45,
-    variables: {
-      CAMPAIGN_ID: "summer2024",
-      LANGUAGE: "en-US"
-    }
-  })
-});
-```
+## Example: using an extension with a bot
 
-```python python
-import requests
+If you have a user configured with AI routing, you can call through that extension:
 
-response = requests.post(
-    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
-    headers={
-        "Authorization": "Bearer YOUR_ORG_TOKEN",
-        "Content-Type": "application/json"
-    },
-    json={
-        "to": "+919944421125",
-        "caller_id": "Support Bot",
-        "ai_agent_app": "ai_agent",
-        "wss_url": "wss://api.openai.com/v1/realtime",
-        "timeout": 45,
-        "variables": {
-            "CAMPAIGN_ID": "summer2024",
-            "LANGUAGE": "en-US"
-        }
-    }
-)
-```
-</CodeGroup>
-
-### Call with a custom AI service
-
-<CodeGroup>
-```bash curl
-curl -X POST https://devpbx.astradial.com/api/v1/calls/originate-to-ai \
-  -H "Authorization: Bearer YOUR_ORG_TOKEN" \
+```bash
+curl -X POST https://your-server:8000/api/v1/calls/originate-to-ai \
+  -H "X-API-Key: ak_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
-    "to": "2002",
-    "wss_url": "wss://voice-ai.myservice.com/stream",
-    "variables": {
-      "AGENT_TYPE": "sales",
-      "PRIORITY": "high"
-    }
+    "to": "9944421125",
+    "caller_id": "+918065978015",
+    "wss_url": "wss://your-server:7860/ws/org123/bot456?key=ak_abc123"
   }'
 ```
 
-```python python
-import requests
+## How it works
 
-response = requests.post(
-    "https://devpbx.astradial.com/api/v1/calls/originate-to-ai",
-    headers={
-        "Authorization": "Bearer YOUR_ORG_TOKEN",
-        "Content-Type": "application/json"
-    },
-    json={
-        "to": "2002",
-        "wss_url": "wss://voice-ai.myservice.com/stream",
-        "variables": {
-            "AGENT_TYPE": "sales",
-            "PRIORITY": "high"
-        }
-    }
-)
-```
-</CodeGroup>
+1. Astradial dials the phone number
+2. When the person answers, the call connects to the AI bot via WebSocket
+3. The bot follows its conversation flow
+4. Variables you pass are available to the bot for personalized responses
+5. The bot can transfer to a human, create tickets, or end the conversation
 
 ## Response
 
 ```json
 {
   "status": "success",
-  "message": "Call originated to AI agent",
-  "channel_id": "1713045600.123"
+  "message": "Call originated",
+  "channel_id": "PJSIP/trunk-00000005"
 }
 ```
 
-## Common errors
+## Use with workflows
 
-| Status | Error | Cause |
-|--------|-------|-------|
-| 400 | `to is required` | Missing the `to` field |
-| 401 | `Authentication required` | Missing or invalid API key |
-| 500 | `Origination failed` | Asterisk could not place the call |
-
-<Warning>
-The `to` field must be either an internal extension number or a full phone number with country code (e.g. `+919944421125`). The caller must have permission to call external numbers if dialing out.
-</Warning>
-
-<Tip>
-Use the `variables` field to pass context to your AI agent. For example, pass the customer's name, booking ID, or language preference so the bot can personalize the conversation.
-</Tip>
+You can also originate AI calls from workflows. In the workflow editor, add a **Place Call** action node and select a bot. The workflow passes trigger data as variables to the bot.

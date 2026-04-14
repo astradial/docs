@@ -1,95 +1,95 @@
 ---
-title: "Live call monitoring"
-description: "Watch active calls in real time. See who is talking to whom, take actions like transfer or hangup, and supervise calls with spy, whisper, and barge."
-icon: "tower-broadcast"
+title: "Live monitoring"
+description: "Monitor active calls in real-time — listen in, whisper to agents, or join calls as a supervisor."
 ---
 
-## What is live monitoring?
+The **Live Calls** tab shows all calls happening right now in your organization. It updates automatically every 3 seconds.
 
-Live monitoring lets you see phone calls as they happen, right now, in real time. Think of it like a control room where you can watch every active conversation in your organisation. You can see who is on a call, how long they have been talking, and even jump in if needed.
+## View live calls
 
-## Viewing active calls
+Go to **Calls** in the sidebar, then click the **Live Calls** tab. You will see a badge showing how many calls are currently active.
+
+Each live call shows:
+
+| Column | What it shows |
+|--------|-------------|
+| **From** | The caller's number |
+| **Direction** | Inbound or Outbound |
+| **CallerID** | The caller's name (if available) |
+| **Status** | Answered or Ringing |
+| **Duration** | How long the call has been going (updates in real-time) |
+| **To** | The destination extension or number |
+
+## Supervisor monitoring
+
+Supervisors can listen to calls in three different modes:
+
+### Spy (Listen)
+
+You hear both the caller and the agent, but **neither of them knows you are listening**.
+
+1. Click the three-dot menu on a live call
+2. Click **Monitor (Listen)**
+3. Enter your extension number in the dialog
+4. Click **Start**
+
+A "Monitored" badge appears on the call row.
+
+### Whisper (Coach)
+
+You can speak to the **agent only**. The caller cannot hear you. Use this to coach an agent during a difficult call.
+
+1. Click the three-dot menu on a live call
+2. Click **Whisper (Coach Agent)**
+3. Enter your extension number
+4. Click **Start**
+
+### Barge (Join call)
+
+You join the call as a **third participant**. Both the caller and the agent can hear you.
+
+1. Click the three-dot menu on a live call
+2. Click **Barge (Join Call)**
+3. Enter your extension number
+4. Click **Start**
+
+### Stop monitoring
+
+Click the three-dot menu on a monitored call and select **Stop Monitoring** to disconnect from the call without affecting it.
+
+## Transfer a call
+
+While a call is active, you can transfer it to another destination:
 
 <Steps>
-  <Step title="Open the live calls view">
-    In the sidebar, go to **Monitor** and click **Calls**. At the top of the page, you will see active calls that are happening right now.
+  <Step title="Click the transfer button">
+    Click the transfer icon (two arrows) on the live call row.
   </Step>
-  <Step title="See the details">
-    For each active call, you can see:
-    - **Who is calling** -- the caller's number or extension
-    - **Who they are talking to** -- the agent or extension that answered
-    - **Duration** -- how long the call has been going on
-    - **Status** -- whether the call is ringing, connected, or on hold
+  <Step title="Choose the destination type">
+    Select **Extension**, **Queue**, or **External Number**.
+  </Step>
+  <Step title="Select or enter the destination">
+    - For extensions: Search by name or extension number
+    - For queues: Select from the list
+    - For external: Enter the phone number
+  </Step>
+  <Step title="Click Transfer">
+    The call is transferred immediately.
   </Step>
 </Steps>
 
-<Info>
-  The live calls view updates automatically. You do not need to refresh the page -- new calls appear and finished calls disappear on their own.
-</Info>
+## Hang up a call
 
-## Actions you can take
+To end an active call:
 
-While a call is active, you can take actions on it directly from the dashboard.
-
-### Transfer
-
-Move the call to a different person or extension. This is useful when a caller needs to speak with someone else.
-
-### Hold
-
-Put the call on hold. The caller will hear hold music while they wait. You can take the call off hold at any time.
-
-### Hangup
-
-End the call immediately. Use this if a call needs to be disconnected.
+1. Click the three-dot menu on the call
+2. Click **Hangup**
+3. The call is disconnected
 
 <Warning>
-  The **Hangup** button ends the call for everyone. Make sure you really want to end the call before clicking it. There is no undo.
+  Hanging up a call disconnects both parties immediately. Use this carefully.
 </Warning>
 
-## Supervisor features
+## Phonebook
 
-If you are a supervisor (Owner, Admin, or Manager), you have special monitoring abilities. These let you listen to and participate in calls without the caller seeing your extension in the call list.
-
-### Spy (silent listen)
-
-Listen to a call without anyone knowing. Neither the agent nor the caller can hear you. This is useful for quality monitoring -- you can hear exactly how your team handles calls.
-
-### Whisper
-
-Listen to the call and **talk to your agent** without the caller hearing you. The agent can hear your coaching, but the caller only hears the agent. This is perfect for training -- you can guide a new team member through a difficult call in real time.
-
-### Barge
-
-Jump into the call so that **everyone can hear you** -- the agent and the caller. This turns the call into a three-way conversation. Use this when you need to step in and help directly.
-
-<Tip>
-  Start with **Spy** to understand what is happening, then switch to **Whisper** if the agent needs help, and only **Barge** if you need to speak to the caller directly.
-</Tip>
-
-## Who can use live monitoring?
-
-| Feature       | Owner | Admin | Manager | Agent |
-| ------------- | ----- | ----- | ------- | ----- |
-| View live calls | Yes | Yes   | Yes     | No    |
-| Transfer      | Yes   | Yes   | Yes     | No    |
-| Hold          | Yes   | Yes   | Yes     | No    |
-| Hangup        | Yes   | Yes   | Yes     | No    |
-| Spy           | Yes   | Yes   | Yes     | No    |
-| Whisper       | Yes   | Yes   | Yes     | No    |
-| Barge         | Yes   | Yes   | Yes     | No    |
-
-<Note>
-  Agents cannot access the live monitoring view. They can only see their own active call through their softphone app. Supervisory features like spy, whisper, and barge are available to Owners, Admins, and Managers only.
-</Note>
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="View call history" icon="clock-rotate-left" href="/calls/call-history">
-    Review past calls and their details.
-  </Card>
-  <Card title="Listen to recordings" icon="circle-play" href="/calls/recordings">
-    Play back recorded calls for review or training.
-  </Card>
-</CardGroup>
+Click the **Phonebook** button (book icon) in the Live Calls toolbar to manage a quick-reference contact list. You can add names and phone numbers for easy transfer lookups.

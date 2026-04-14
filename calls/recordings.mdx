@@ -1,78 +1,55 @@
 ---
-title: "Call recordings"
-description: "Listen to and download recorded calls. Astradial automatically records calls when recording is enabled for your organisation."
-icon: "circle-play"
+title: "Recordings"
+description: "Listen to and download call recordings from the call history."
 ---
 
-## How recordings work
+Astradial can record phone calls automatically. Recordings are stored on your server and accessible from the call history.
 
-When call recording is turned on for your organisation, Astradial automatically records every call. You do not have to press a "record" button -- it just happens in the background. After the call ends, the recording is saved and you can listen to it any time.
-
-Think of it like a security camera, but for phone calls. Everything is captured so you can go back and review it later.
-
-## Playing a recording
+## Listen to a recording
 
 <Steps>
-  <Step title="Go to call history">
-    In the sidebar, go to **Monitor** and click **Calls**.
+  <Step title="Go to Calls">
+    Click **Calls** in the sidebar.
   </Step>
   <Step title="Find the call">
-    Browse or filter the call list to find the call you want to listen to.
+    Look for calls that have a **Play** button in the Recording column. Only calls with actual conversation time have recordings — missed calls or unanswered calls do not.
   </Step>
-  <Step title="Click the play button">
-    Next to any recorded call, you will see a **play button**. Click it and the recording will start playing right there in your browser. No downloads needed.
+  <Step title="Click Play">
+    Click the play button. An audio player appears at the bottom of the screen showing:
+    - The caller and receiver numbers
+    - Call time and duration
+    - Play/pause controls
+    - A progress bar you can drag to seek
+    - A download button
   </Step>
 </Steps>
 
-<Tip>
-  Not every call will have a recording. If a call was very short (like someone hanging up immediately) or if recording was not enabled at the time, there will not be a play button for that call.
-</Tip>
+## Download a recording
 
-## Downloading a recording
-
-Sometimes you need to save a recording to your computer -- maybe for training, compliance, or sharing with someone who does not have access to Astradial.
-
-<Steps>
-  <Step title="Find the call">
-    Go to the Calls page and locate the call.
-  </Step>
-  <Step title="Click the download icon">
-    Next to the play button, you will see a **download icon**. Click it and the recording file will download to your computer.
-  </Step>
-</Steps>
-
-<Warning>
-  Only **Owners** and **Admins** can download recordings. If you are a Manager or Agent, you can listen to recordings in the browser but cannot download them. This is a security measure to protect sensitive call data.
-</Warning>
-
-## Recording consent
-
-Depending on your country's laws and your organisation's compliance settings, callers may need to know they are being recorded. Astradial can handle this for you.
-
-<Info>
-  When recording consent is enabled, callers hear a short announcement at the beginning of the call -- something like "This call may be recorded for quality and training purposes." This plays automatically before the call connects.
-</Info>
+Click the **Download** button in the recording column or in the audio player. The recording file will download to your computer.
 
 <Note>
-  Recording consent rules vary by country and region. Some places require both parties to agree to being recorded, while others only require one party to know. Check with your legal team to understand what applies to your business.
+  Download is only available to **Owner** and **Admin** roles. Managers can listen but cannot download.
 </Note>
 
-## Why recordings matter
+## Who can access recordings
 
-Recordings are useful for many things:
+| Action | Owner | Admin | Manager | Agent |
+|--------|-------|-------|---------|-------|
+| Listen (play) | Yes | Yes | Yes | No |
+| Download | Yes | Yes | No | No |
+| Delete | Yes | Yes | No | No |
 
-- **Training** -- listen to great calls and share them with new team members so they can learn how to handle customers
-- **Dispute resolution** -- if there is a disagreement about what was said on a call, the recording is the source of truth
-- **Quality assurance** -- managers can review calls to make sure customers are getting great service
-- **Compliance** -- some industries require you to keep call recordings for a certain period of time
+If you see a disabled play button with a tooltip saying "You don't have permission to access recordings", your role does not have recording access.
 
-## Next steps
+## When are calls recorded?
 
-<CardGroup cols={2}>
-  <Card title="View call history" icon="clock-rotate-left" href="/calls/call-history">
-    Browse all your calls and their details.
-  </Card>
-  <Card title="Monitor live calls" icon="tower-broadcast" href="/calls/live-monitoring">
-    See what is happening on calls right now in real time.
-  </Card>
-</CardGroup>
+Calls are recorded when:
+- Recording is enabled for the user's extension (set in user settings)
+- The call is answered and has conversation time
+- The recording system is working and has disk space
+
+Calls are **not** recorded when:
+- The call was not answered (NO ANSWER status)
+- Recording is disabled for that extension
+- The call had zero talk time

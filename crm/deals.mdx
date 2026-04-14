@@ -1,153 +1,68 @@
 ---
-title: "Deals pipeline"
-description: "Track business opportunities through your sales pipeline. See deal values, stages, and forecasts at a glance."
-icon: "handshake"
+title: "Deals"
+description: "Track sales opportunities with monetary values, expected close dates, and pipeline stages."
 ---
 
-## What is a deal?
+The **Deals** page tracks sales opportunities. Each deal has a monetary value and moves through pipeline stages until it is won or lost. Like leads, you can use a Kanban board or list view.
 
-A deal is a business opportunity that has a money amount attached to it.
+## Deal pipeline stages
 
-Think of it this way: a **lead** is a person who might buy. A **deal** is the actual sale you are trying to close with them, and it has a specific value — for example, "Annual phone system subscription — Rs. 2,40,000."
+| Stage | Meaning |
+|-------|---------|
+| **Lead** | Initial opportunity identified |
+| **Qualified** | Confirmed as a real opportunity |
+| **Proposal** | Sent a proposal or quote |
+| **Negotiation** | Discussing terms and pricing |
+| **Won** | Deal closed successfully |
+| **Lost** | Deal did not close |
 
-Deals move through stages as you get closer to closing them. You can see your entire sales pipeline at a glance and know exactly how much revenue is in play.
+## Stats
 
-## Opening the Deals page
+At the top of the page, two key metrics:
 
-<Steps>
-  <Step title="Go to Mini CRM in the sidebar">
-    In the left sidebar, find the **Mini CRM** section.
-  </Step>
-  <Step title="Click Deals">
-    Click **Deals**. You will land on the Deals page.
-  </Step>
-</Steps>
+- **Pipeline Value** — Total value of all open deals (not Won or Lost) in INR
+- **Won Value** — Total value of all deals in the "Won" stage
 
-## The value cards
-
-At the very top of the Deals page, you will see summary cards:
-
-| Card | What it shows |
-|---|---|
-| **Pipeline** | The total value of all your open deals added together. This is how much money is currently "in play." |
-| **Won** | The total value of all deals that have been moved to the **Won** stage. This is money you have already closed. |
-
-<Tip>
-  Check these cards regularly. A healthy pipeline should always have more value than what you have already won. If your pipeline is empty, it is time to generate more leads.
-</Tip>
-
-## The deal pipeline (Kanban board)
-
-The Deals page shows a Kanban board — just like the Leads page, but with different stages. Each column represents a stage in your sales process.
-
-The default stages (from left to right) are:
-
-| Column | What it means |
-|---|---|
-| **Lead** | A new opportunity. You know there is potential, but you have not evaluated it yet. |
-| **Qualified** | You have confirmed the opportunity is real — the customer has a budget, a need, and a timeline. |
-| **Proposal** | You have sent a proposal or quote to the customer. |
-| **Negotiation** | The customer is reviewing your proposal. You are discussing terms, pricing, or scope. |
-| **Won** | The deal is closed. The customer has said yes and the contract is signed. |
-| **Lost** | The deal is dead. The customer went with someone else, or the opportunity disappeared. |
-
-Each deal appears as a **card** showing the deal title, value, and associated company.
-
-## Adding a new deal
+## Add a deal
 
 <Steps>
   <Step title="Click Add Deal">
-    On the Deals page, click the **Add Deal** button. A form appears.
+    Click the **Add Deal** button.
   </Step>
-
-  <Step title="Fill in the deal details">
-    The form has the following fields:
-
-    | Field | What to enter | Required? |
-    |---|---|---|
-    | **Title** | A short name for the deal (e.g. "GE Annual Subscription") | Yes |
-    | **Stage** | Which pipeline stage this deal starts in (defaults to "Lead") | Yes |
-    | **Amount** | The deal value in rupees (e.g. 2,40,000) | No |
-    | **Company** | The company this deal is with — pick from your existing clients | No |
-    | **Contact** | The specific person at the company you are dealing with | No |
-    | **Expected Close Date** | When you expect this deal to close | No |
+  <Step title="Fill in the details">
+    | Field | Required | Description |
+    |-------|----------|------------|
+    | **Title** | Yes | Name of the deal (e.g., "Enterprise Plan") |
+    | **Stage** | No | Pipeline stage (defaults to "Lead") |
+    | **Amount** | No | Deal value in INR |
+    | **Company** | No | Link to a company |
+    | **Contact** | No | Link to a contact |
+    | **Expected Close** | No | When you expect the deal to close |
+    | **Notes** | No | Any additional notes |
   </Step>
-
-  <Step title="Click Save">
-    Click **Save**. The deal appears as a card in the column matching the stage you selected.
+  <Step title="Click Create">
+    The deal appears on the Kanban board.
   </Step>
 </Steps>
 
-<Note>
-  Always fill in the **Amount** field, even if it is an estimate. This is what powers the Pipeline and Won value cards at the top. Without amounts, those totals will not be accurate.
-</Note>
+## Move deals through the pipeline
 
-## Moving deals through stages
+Drag deal cards between columns on the Kanban board, or edit the deal and change the stage.
 
-### On the Kanban board
+## Deal card details
 
-Click and hold a deal card, then drag it to a different column. Drop it to move the deal to that stage.
+Each card shows:
+- Deal title
+- Company name (if linked)
+- Amount (formatted as INR with commas, or "No amount")
+- Expected close date
+- Contact name badge
+- Assigned user badge
 
-As a deal progresses through your sales process:
+## Assign deals
 
-1. **Lead** — you just identified the opportunity
-2. **Qualified** — you confirmed the customer is serious
-3. **Proposal** — you sent them a quote
-4. **Negotiation** — you are working out the final details
-5. **Won** — congratulations, the deal is closed
-6. **Lost** — the deal did not work out
+Click the three-dot menu → **Assign** to assign a deal to a team member. This helps track who is responsible for closing each deal.
 
-<Info>
-  When you drag a deal to the **Won** column, its value is added to the **Won** total at the top of the page and removed from the **Pipeline** total. This gives you an accurate picture of closed revenue vs. pending revenue.
-</Info>
+## Customize the pipeline
 
-## Viewing deals as a list
-
-If you prefer working with a table instead of a Kanban board, switch to **List view** using the toggle at the top of the page.
-
-The list view shows each deal as a row with columns for:
-
-- **Title** — the deal name
-- **Stage** — which pipeline stage it is in
-- **Amount** — the deal value
-- **Company** — the associated company
-- **Contact** — the associated contact
-- **Expected Close Date** — when you expect to close it
-
-<Tip>
-  List view is great for sorting and filtering. Click any column header to sort the table. For example, click **Amount** to sort deals from largest to smallest, so you can focus on your biggest opportunities first.
-</Tip>
-
-## Linking deals to companies and contacts
-
-When you create a deal and link it to a company, that deal appears in the company's detail panel on the Clients page. This means:
-
-- Open a company's profile, and you see all their deals
-- Open a deal, and you see which company it belongs to
-- Everything stays connected
-
-<Steps>
-  <Step title="Open a deal">
-    Click any deal card on the Kanban board or any row in the list view.
-  </Step>
-
-  <Step title="Check the Company and Contact fields">
-    In the detail panel, you will see the **Company** and **Contact** fields. If they are empty, click to add a company or contact. If they are already filled, click to jump to that company or contact's profile.
-  </Step>
-</Steps>
-
-<Warning>
-  A deal without a linked company is harder to track. Always associate deals with a company so your team can see the full picture when they open a client's profile.
-</Warning>
-
-## Quick reference
-
-| Action | How to do it |
-|---|---|
-| View all deals | Sidebar > Mini CRM > Deals |
-| Switch views | Kanban / List toggle at top of page |
-| Add a deal | Click "Add Deal" button |
-| Move to next stage | Drag card to new column (Kanban) or change Stage in detail panel |
-| See pipeline value | Pipeline card at top of page |
-| See closed revenue | Won card at top of page |
-| Link to a company | Company field in the deal form or detail panel |
+Go to **Customize** → **Pipelines** → **Deal Pipeline** to change the stages. You can add stages like "Demo Scheduled" or "Contract Sent" to match your sales process.

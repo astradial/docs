@@ -1,117 +1,88 @@
 ---
 title: "WhatsApp integration"
-description: "Connect your WhatsApp Business number to Astradial so you can send messages from tickets, workflows, and automations."
-icon: "comment-dots"
+description: "Connect MSG91 to send WhatsApp messages from workflows, ticket notifications, and automations."
 ---
 
-## What is the WhatsApp integration?
+Astradial integrates with **MSG91** to send WhatsApp messages. You can use this for:
 
-The WhatsApp integration lets Astradial send WhatsApp messages on your behalf. Instead of manually texting customers, the system does it for you -- automatically.
+- Sending booking confirmations
+- Ticket status notifications
+- Automated reminders
+- Any template-based messaging
 
-Think of it like giving Astradial the ability to text your customers on WhatsApp whenever something happens. A customer missed a call? WhatsApp message. A ticket was resolved? WhatsApp notification. A booking was confirmed? WhatsApp receipt.
-
-The integration works through **MSG91**, which is the service that actually delivers the WhatsApp messages. You connect your MSG91 account to Astradial, and then Astradial can send messages through it.
-
-<Info>
-  You need a **MSG91 account** with WhatsApp Business API access to use this integration. If you do not have one, visit [msg91.com](https://msg91.com) to sign up.
-</Info>
-
-## How to connect WhatsApp
+## Set up MSG91
 
 <Steps>
+  <Step title="Get your MSG91 authkey">
+    Log into your MSG91 account and copy your authkey from the API settings.
+  </Step>
   <Step title="Open the WhatsApp page">
-    In the left sidebar, click **Automate**, then click **WhatsApp**.
+    Click **WhatsApp** in the sidebar under **Automate**.
   </Step>
-
-  <Step title="Enter your MSG91 credentials">
-    You will see a form asking for your MSG91 API credentials. You need two things from your MSG91 account:
-
-    - **API Key** -- found in your MSG91 dashboard under API settings
-    - **Sender ID / WhatsApp Number** -- the WhatsApp Business number registered with MSG91
-
-    Paste these into the form.
-
-    <Tip>
-      If you are not sure where to find your MSG91 API key, log in to MSG91, go to **API** in the top menu, and copy the key from there.
-    </Tip>
+  <Step title="Enter your authkey">
+    Paste the authkey in the input field and click **Save**.
   </Step>
-
-  <Step title="Save and verify">
-    Click **Save**. Astradial will verify the connection by checking your API key with MSG91.
-
-    If everything is correct, you will see a green **Connected** status.
+  <Step title="Verify connection">
+    The status changes to "MSG91 Connected" with a green checkmark.
   </Step>
 </Steps>
 
-<Warning>
-  Keep your MSG91 API key safe. Anyone with this key can send messages from your WhatsApp Business number. Do not share it publicly.
-</Warning>
+## Phone numbers
 
-## Sending WhatsApp messages
+After connecting MSG91, go to the **Phone Numbers** tab:
 
-Once connected, you can send WhatsApp messages from two places:
+1. Click **Fetch Numbers** to load your WhatsApp sender numbers from MSG91
+2. Your available numbers will appear as cards showing the phone number and quality rating
 
-### From tickets
+## Templates
 
-When you are viewing a ticket, you can send a WhatsApp message directly to the customer associated with that ticket. This is useful for follow-ups, status updates, or asking for more information.
+Go to the **Templates** tab to see your MSG91 WhatsApp templates:
 
-### From workflows
-
-The real power of WhatsApp is in automation. When you create a workflow, you can add a **Send WhatsApp** action that fires automatically when a trigger happens.
-
-**Common automations:**
-- Missed call -- send "Sorry we missed your call, we will call you back"
-- Ticket resolved -- send "Your issue has been resolved, reference number #1234"
-- Appointment confirmed -- send "Your booking is confirmed for tomorrow at 3 PM"
-
-See [Workflows](/automation/workflows) for how to set up automated WhatsApp messages.
-
-## WhatsApp templates
-
-WhatsApp Business requires you to use **pre-approved message templates** for outbound messages. You cannot send free-form text to customers who have not messaged you first -- this is a WhatsApp rule, not an Astradial limitation.
+1. Click **Fetch Templates** to load templates for your selected phone number
+2. Each template shows:
+   - **Name** — Template identifier
+   - **Status** — APPROVED or pending
+   - **Language** — Template language code
+   - **Components** — Template variables
 
 <Note>
-  Templates are created and approved in your MSG91 account, not inside Astradial. Once a template is approved by MSG91 (and by WhatsApp), it becomes available for use in Astradial workflows and tickets.
+  Only **APPROVED** templates can be used for sending messages. Templates must be approved by WhatsApp/MSG91 before they can be used.
 </Note>
 
-### What is a template?
+## Message logs
 
-A template is a pre-written message with placeholders for dynamic content. For example:
+Go to the **Message Logs** tab to track delivery:
 
-```
-Hi {{name}}, we missed your call at {{time}}.
-We will call you back shortly. — {{company_name}}
-```
+1. Select a date
+2. Click **Fetch Logs** to see messages sent on that date
+3. Each log entry shows:
+   - Customer's phone number
+   - Template name used
+   - Delivery status (Read, Delivered, Sent, or Failed)
+   - Time the message was requested
 
-When the message is sent, the placeholders get filled in with real values:
+<Note>
+  Delivery reports are available for up to 3 days.
+</Note>
 
-```
-Hi Priya, we missed your call at 2:45 PM.
-We will call you back shortly. — Astradial
-```
+## Sending WhatsApp from workflows
 
-## Configure ticket status notifications
+In the workflow editor, add a **Send WhatsApp** action node:
 
-You can set up automatic WhatsApp notifications for ticket status changes. When a ticket moves from "Open" to "In Progress" or "Resolved", the customer gets a WhatsApp message.
+### Template mode (recommended)
 
-<Steps>
-  <Step title="Create a workflow">
-    Go to **Automate** then **Workflows** and create a new workflow.
-  </Step>
+1. Select the **Template (MSG91)** mode
+2. Choose a sender number
+3. Select an approved template
+4. Map template variables to trigger data (e.g., map "guest_name" to `{trigger.name}`)
 
-  <Step title="Set the trigger">
-    Select **Ticket Created** or **Ticket Updated** as the trigger.
-  </Step>
+### Free text mode
 
-  <Step title="Add a Send WhatsApp action">
-    Add a **Send WhatsApp** action. Select the template you want to use for the notification and map the ticket fields (customer name, ticket number, status) to the template placeholders.
-  </Step>
+If templates are not available:
 
-  <Step title="Save and activate">
-    Save the workflow and turn on the toggle. Now customers will be automatically notified via WhatsApp whenever their ticket status changes.
-  </Step>
-</Steps>
+1. Select the **Free Text** mode
+2. Type your message using trigger variables: `Hello {trigger.name}!`
 
-<Tip>
-  Start with just one notification template (like "ticket resolved") and see how customers respond. You can always add more templates and automations later.
-</Tip>
+## WhatsApp ticket notifications
+
+You can set up automatic WhatsApp messages when ticket statuses change. This is configured separately — each status (Open, In Progress, Closed) can have its own WhatsApp template and variable mapping.

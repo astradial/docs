@@ -1,93 +1,53 @@
 ---
 title: "Call history"
-description: "View every call that has been made or received in your organisation. Filter by direction, see call status, and drill into the journey of any call."
-icon: "clock-rotate-left"
+description: "View and search through all past calls — see who called, when, how long they talked, and what happened."
 ---
 
-## What is call history?
+The call history gives you a complete record of every call that goes through your phone system. Go to **Calls** in the sidebar and you will see the **Call History** tab.
 
-Call history is a log of every single phone call in your organisation. Every time someone makes a call, receives a call, misses a call, or a call fails -- it gets recorded here. Think of it like a diary that writes down every phone conversation automatically.
+## What you see
 
-## How to view call history
+Each row in the call history table shows:
 
-<Steps>
-  <Step title="Open the Calls page">
-    In the sidebar, go to **Monitor** and click **Calls**. This is where all your call logs live.
-  </Step>
-  <Step title="Browse the table">
-    You will see a table with every call. Each row is one call, showing you the key details at a glance.
-  </Step>
-</Steps>
+| Column | What it shows |
+|--------|-------------|
+| **From** | The phone number or extension that made the call |
+| **To** | The phone number or extension that was called |
+| **Duration** | How long the actual conversation lasted (not including ring time) |
+| **Direction** | Inbound, Outbound, or Internal |
+| **Status** | ANSWERED, NO ANSWER, FAILED, or BUSY |
+| **Recording** | Play and download buttons (if a recording exists) |
+| **Time** | When the call started |
 
-## What you see in the table
+## Filter calls
 
-Every call in the table shows these details:
+Use the **direction filter** dropdown at the top to show only:
+- **All directions** — Every call
+- **Inbound** — Calls that came in from outside
+- **Outbound** — Calls that went out to phone numbers
+- **Internal** — Calls between extensions inside your organization
 
-| Column     | What it means                                                    |
-| ---------- | ---------------------------------------------------------------- |
-| **From**   | Who made the call (a phone number or extension)                  |
-| **To**     | Who the call was going to                                        |
-| **Duration** | How long the call lasted (e.g. 2m 34s)                         |
-| **Status** | What happened to the call (answered, missed, etc.)               |
-| **Time**   | When the call happened                                           |
+## View call journey
 
-## Call statuses
+Click on any call row to expand it and see the **Call Journey** — a step-by-step timeline of what happened during the call:
 
-Each call has a status that tells you what happened.
+- When the call started
+- Which queue it entered (if any)
+- When it was answered and by whom
+- Any transfers that happened
+- When the call ended
 
-- **Answered** -- the call was picked up and a conversation happened
-- **No Answer** -- the call rang but nobody picked up
-- **Busy** -- the person being called was already on another call
-- **Failed** -- something went wrong and the call could not connect
+Each step shows the time, action name, and duration. This is helpful for understanding exactly how a call was handled.
 
-<Tip>
-  If you see a lot of "No Answer" calls, it might mean your team needs more agents or a call queue so callers do not hang up waiting.
-</Tip>
+## Pagination
 
-## Filtering calls
+The history shows 20 calls per page. Use the **Previous** and **Next** buttons at the bottom to navigate between pages. The current page number is shown between the buttons.
 
-You do not have to scroll through every single call to find what you need. Use the filter buttons at the top of the page:
+## Call statuses explained
 
-- **All** -- shows every call (inbound and outbound)
-- **Inbound** -- shows only calls that came in from the outside
-- **Outbound** -- shows only calls your team made to the outside
-
-<Info>
-  Inbound means someone called you. Outbound means you called someone. Simple as that.
-</Info>
-
-## Viewing a call's journey
-
-Want to know exactly what happened during a call? Click on any call in the table to open the **call journey**. This shows you every step the call took from start to finish.
-
-For example, a call journey might look like:
-
-1. Call came in on phone number +91 22 1234 5678
-2. Routed to queue "Sales"
-3. Rang agent Sarah (ext 1001) -- no answer
-4. Rang agent John (ext 1002) -- answered
-5. Call ended after 3 minutes 12 seconds
-
-<Note>
-  The call journey is especially helpful for troubleshooting. If a caller says "I was transferred around and nobody helped me", you can see exactly what happened step by step.
-</Note>
-
-## Who can see what
-
-- **Owners, Admins, and Managers** can see all calls across the organisation
-- **Agents** can only see their own calls
-
-<Warning>
-  If you are an Agent and do not see a call you expected, it is because your role only lets you see calls where you were directly involved. Ask a Manager or Admin if you need to see other calls.
-</Warning>
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Listen to recordings" icon="play" href="/calls/recordings">
-    Play back or download recorded calls.
-  </Card>
-  <Card title="Make a call" icon="phone-arrow-up-right" href="/calls/click-to-call">
-    Start a call right from your browser.
-  </Card>
-</CardGroup>
+| Status | What it means |
+|--------|-------------|
+| **ANSWERED** | Someone picked up the call and had a conversation |
+| **NO ANSWER** | The call rang but nobody answered before the timeout |
+| **FAILED** | The call could not be connected (wrong number, trunk issue, etc.) |
+| **BUSY** | The destination was busy and could not take the call |

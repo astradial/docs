@@ -1,113 +1,77 @@
 ---
 title: "Welcome to Astradial"
-description: "Astradial is a cloud phone system for businesses. Receive calls, manage your team, track customers, and deploy AI bots — all from one dashboard."
+description: "Astradial is an open-source cloud PBX platform that lets you manage phone calls, AI voice bots, call queues, and more from a single dashboard."
 ---
 
 ## What is Astradial?
 
-Astradial is a cloud phone system. That means instead of buying expensive phone hardware and dealing with wires and cables, you get a full business phone system that runs entirely in your web browser.
+Astradial is a **cloud phone system** (also called a PBX) that you can self-host on your own server or use as a managed service. It gives your business:
 
-With Astradial, you can:
+- **Phone numbers** that ring your team's devices
+- **Call queues** so callers wait in line and get connected to the right person
+- **AI voice bots** that can answer calls, take messages, and transfer to humans
+- **Call recordings** and history for every conversation
+- **A mini CRM** to track your clients, leads, and deals
+- **Workflow automation** to send WhatsApp messages, make scheduled calls, and more
 
-- **Get professional phone numbers** for your business
-- **Receive and make calls** from anywhere with an internet connection
-- **Route calls** to the right person or team automatically
-- **Track every call** with full history, recordings, and analytics
-- **Manage customers** with a built-in mini CRM
-- **Deploy AI bots** that can answer calls and talk to your customers
-- **Create support tickets** from calls so nothing falls through the cracks
-- **Automate workflows** like sending WhatsApp messages after a missed call
+Think of it as your own private phone system — like what big companies use — but you control it.
 
-You manage everything from a single dashboard at [editor.astradial.com](https://editor.astradial.com).
+## Who is this for?
 
-## Who is Astradial for?
+- **Small businesses** that need a professional phone system
+- **Hotels and hospitality** that want AI-powered guest services
+- **Call centers** that need call routing and agent management
+- **Developers** who want to build voice AI applications
+- **Anyone** who wants to self-host their phone infrastructure
 
-Astradial is built for businesses that need a professional phone setup without the headache of traditional phone systems.
+## How it works
 
-<CardGroup cols={2}>
-  <Card title="Small businesses" icon="store">
-    Get a professional phone number and never miss a customer call again. Route calls to your team's mobile phones when they're away from the desk.
-  </Card>
-  <Card title="Hotels & hospitality" icon="hotel">
-    Handle reservation calls with AI bots, route guests to the right department, and log every interaction automatically.
-  </Card>
-  <Card title="Support teams" icon="headset">
-    Set up call queues so customers reach the next available agent. Create tickets from calls and track resolution.
-  </Card>
-  <Card title="Sales teams" icon="phone-volume">
-    Track leads and deals in the built-in CRM. Record calls for training. See every interaction with a customer in one place.
-  </Card>
-</CardGroup>
-
-## Key features
-
-Here is a quick look at what you get with Astradial.
-
-### Phone numbers
-
-Buy local phone numbers (called DIDs) and assign them to your organisation. When someone calls that number, Astradial handles the rest -- routing the call to the right person or queue.
-
-### Users & extensions
-
-Add your team members as users. Each user gets their own extension number (like 1001, 1002, etc.) so they can receive calls. You control who can do what with roles and permissions.
-
-### Call queues
-
-A queue is a waiting line for callers. When all your agents are busy, callers wait in the queue and hear hold music until someone is free. You decide how calls get distributed -- round robin, longest idle, or random.
-
-### Call history & recordings
-
-Every single call is logged. You can see who called, when, how long the call lasted, and whether it was answered. If you turn on recording, you can listen back to any call.
-
-### Mini CRM
-
-Track your customers without needing a separate CRM tool. Add clients, manage leads, track deals through stages, and see the full history of every interaction -- all inside Astradial.
-
-### AI bots
-
-Deploy AI-powered voice bots that can answer calls, have conversations with callers, collect information, and route them to the right person. Set up bots with custom workflows so they say exactly what you need.
-
-### Tickets
-
-When a call needs follow-up, create a ticket. Assign it to a team member, set a priority, and track it until it is resolved. Tickets can also be created automatically from missed calls.
-
-### Workflows & automation
-
-Build automations that trigger on events. For example: when a call is missed, automatically send a WhatsApp message to the caller. Or when a new lead comes in, assign it to a sales rep.
-
-## What you will need
-
-Before you get started, make sure you have:
+Astradial has four main parts:
 
 <Steps>
-  <Step title="A web browser">
-    Astradial works in any modern browser -- Chrome, Firefox, Safari, or Edge. We recommend Chrome for the best experience.
+  <Step title="The Dashboard (Editor)">
+    A web application where you manage everything — users, phone numbers, call queues, AI bots, and more. You access it from your browser.
   </Step>
-  <Step title="An email address">
-    You will use this to create your account and sign in. Make sure you can access the inbox because you will need to verify your email.
+  <Step title="The API Server">
+    The backend that handles all the logic — user authentication, call routing rules, database operations, and API endpoints.
   </Step>
-  <Step title="An internet connection">
-    Since Astradial is a cloud system, you need a stable internet connection to make and receive calls.
+  <Step title="Asterisk PBX">
+    The actual phone system engine. Asterisk is an open-source telephony server that handles SIP calls, audio, and call routing.
+  </Step>
+  <Step title="AI Gateway (Pipecat Flow)">
+    The AI voice bot engine. It connects Google Gemini to your phone calls so bots can have real conversations with callers.
   </Step>
 </Steps>
 
-## How to get help
+## Two ways to run Astradial
 
-If you ever get stuck or have a question, we are here to help.
+<Tabs>
+  <Tab title="Self-hosted (Linux VPS)">
+    Install everything on your own server. You get:
+    - Full admin control
+    - Asterisk PBX for real phone calls
+    - All 7 Docker services running locally
+    - Complete privacy — your data stays on your server
 
-<CardGroup cols={2}>
-  <Card title="Email support" icon="envelope" href="mailto:support@astradial.com">
-    Send us an email at **support@astradial.com** and we will get back to you as soon as possible.
-  </Card>
-  <Card title="Documentation" icon="book">
-    You are already here! Browse through these guides for step-by-step instructions on every feature.
-  </Card>
-</CardGroup>
+    **Best for:** Production use, businesses that need full control
+  </Tab>
+  <Tab title="Cloud mode (Mac/Windows)">
+    Run just the dashboard locally and connect to an Astradial Cloud server. You get:
+    - Quick setup (under 2 minutes)
+    - No need to manage Asterisk yourself
+    - Dashboard runs on your machine, calls go through the cloud
+
+    **Best for:** Development, testing, contributors
+  </Tab>
+</Tabs>
 
 ## Next steps
 
-Ready to get started? Head over to the next guide to create your account.
-
-<Card title="Create your account" icon="user-plus" href="/getting-started/create-account">
-  Set up your Astradial account in under 5 minutes.
-</Card>
+<CardGroup cols={2}>
+  <Card title="Create your account" icon="user-plus" href="/getting-started/create-account">
+    Set up Astradial and create your first admin account
+  </Card>
+  <Card title="Explore the dashboard" icon="layout-dashboard" href="/getting-started/dashboard">
+    Learn your way around the Astradial dashboard
+  </Card>
+</CardGroup>

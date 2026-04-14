@@ -1,79 +1,80 @@
 ---
 title: "Tickets overview"
-description: "Tickets are automatic records of missed calls, bot interactions, and queue timeouts. They make sure nothing falls through the cracks."
-icon: "ticket"
+description: "How the ticketing system works in Astradial — create, track, and resolve support tickets from calls and workflows."
 ---
 
-## What is a ticket?
+The ticketing system helps you track issues, requests, and tasks that come from phone calls, AI bots, or workflow automations. When a caller reports a problem, a ticket is created so your team can follow up.
 
-A ticket is a to-do item that the system creates when something needs follow-up.
+## How tickets are created
 
-Here is the simplest way to think about it: when a customer calls your business and nobody answers, that call should not just disappear. Instead, Astradial creates a **ticket** automatically so your team knows they need to call that person back.
+Tickets can be created in three ways:
 
-Tickets are not just for missed calls. They are created whenever something happens that needs attention:
+### 1. From AI bot calls
 
-- **Missed calls** — someone called and nobody picked up
-- **Bot interactions** — an AI bot spoke with a caller and flagged something for a human to review
-- **Queue timeouts** — a caller waited in a queue too long and hung up before reaching an agent
+When an AI voice bot handles a call, it can collect information from the caller and automatically create a ticket. For example, a hotel guest calls and reports a maintenance issue — the bot creates a ticket with the room number, category, and description.
 
-<Info>
-  You do not need to create tickets manually (although you can). The system creates them for you automatically based on the events above. Your job is to review them and take action.
-</Info>
+### 2. From workflow automations
 
-## Where to find tickets
+Workflows can include a **Create Ticket** action that generates tickets based on incoming data. For example, when a webhook receives a booking, a workflow can create a welcome ticket.
 
-<Steps>
-  <Step title="Open the sidebar">
-    Look at the left side of your screen. You will see the sidebar menu with several sections.
-  </Step>
-  <Step title="Click Monitor">
-    In the sidebar, find the **Monitor** section. Click on **Tickets**.
+### 3. Manually (coming soon)
 
-    You will land on the Tickets page, which shows all tickets for your organisation in a table.
-  </Step>
-  <Step title="Check the badge">
-    Notice the small number badge next to the word **Tickets** in the sidebar. That number tells you how many **open** tickets you currently have. If the badge says **3**, you have three tickets waiting for attention.
-  </Step>
-</Steps>
+Manual ticket creation from the dashboard is being implemented.
 
-## What is inside a ticket?
+## Ticket fields
 
-Every ticket contains these fields:
+Each ticket contains:
 
-| Field | What it means |
-|---|---|
-| **Caller number** | The phone number of the person who called. This is the number you would call back. |
-| **Category** | What type of event created this ticket — for example, "Missed Call" or "Bot Interaction." |
-| **Summary** | A short one-line description of what happened. For example: "Missed call from +91 98765 43210." |
-| **Details** | The full story. For bot interactions, this includes what the caller said and what the bot said. |
-| **Priority** | How urgent this ticket is — **Low**, **Medium**, **High**, or **Urgent**. |
-| **Status** | Where this ticket is in the workflow — **Open**, **In Progress**, or **Closed**. |
+| Field | Description |
+|-------|------------|
+| **Guest Name** | Who reported the issue |
+| **Room Number** | Location or reference (used in hospitality) |
+| **Summary** | A one-line description of the issue |
+| **Details** | Full description of the problem |
+| **Category** | Type of issue (housekeeping, maintenance, billing, etc.) |
+| **Priority** | How urgent the ticket is |
+| **Status** | Current state of the ticket |
 
-<Tip>
-  New tickets always start with a status of **Open**. When someone on your team starts working on it, they change it to **In Progress**. When the issue is resolved, they mark it as **Closed**.
-</Tip>
+## Ticket statuses
 
-## How tickets help your business
+| Status | Meaning |
+|--------|---------|
+| **Open** | Newly created, waiting to be picked up |
+| **In Progress** | Someone is working on it |
+| **Closed** | The issue has been resolved |
 
-<CardGroup cols={2}>
-  <Card title="Never miss a callback" icon="phone-missed">
-    Every missed call becomes a ticket. Your team sees it, calls the customer back, and closes the ticket. No call slips through.
-  </Card>
-  <Card title="Track bot conversations" icon="robot">
-    When your AI bot talks to a customer and cannot fully resolve the issue, a ticket is created with the full conversation. Your team picks up right where the bot left off.
-  </Card>
-  <Card title="Monitor queue performance" icon="clock">
-    If callers are hanging up before reaching an agent, queue timeout tickets tell you exactly when and how often that is happening.
-  </Card>
-  <Card title="Measure your team" icon="chart-line">
-    See how many tickets are open, how quickly they get resolved, and who is handling them. Spot problems before they get worse.
-  </Card>
-</CardGroup>
+## Priority levels
 
-## Next steps
+| Priority | When to use |
+|----------|------------|
+| **Low** | Non-urgent, can wait |
+| **Normal** | Standard priority, handle during business hours |
+| **High** | Urgent, needs attention soon |
+| **Urgent** | Critical, requires immediate action |
 
-Now that you know what tickets are and where to find them, head to the next guide to learn how to work with them.
+## WhatsApp notifications
 
-<Card title="Manage tickets" icon="list-check" href="/tickets/manage-tickets">
-  Learn how to filter, update, and resolve tickets.
-</Card>
+Astradial can send WhatsApp messages when ticket statuses change. For example, when a ticket is created, the caller receives a WhatsApp confirmation. When it is resolved, they get a notification.
+
+This is configured through the [WhatsApp integration](/automation/whatsapp).
+
+## Ticket categories
+
+Categories depend on your industry. Here are examples for hospitality:
+
+| Category | Default Priority |
+|----------|-----------------|
+| Housekeeping | Normal |
+| Maintenance | High |
+| Billing | Normal |
+| Room Service | Normal |
+| Noise Complaint | High |
+| Other | Low |
+
+## Permissions
+
+| Action | Owner | Admin | Manager | Agent |
+|--------|-------|-------|---------|-------|
+| View tickets | Yes | Yes | Yes | Yes |
+| Create/update tickets | Yes | Yes | Yes | Yes |
+| Delete/archive tickets | Yes | Yes | Yes | No |

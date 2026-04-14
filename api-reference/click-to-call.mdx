@@ -1,133 +1,96 @@
 ---
 title: "Click-to-call API"
-description: "Initiate a call between two parties using the API. Your phone rings first, then connects to the customer."
-icon: "phone-arrow-up-right"
+description: "Initiate phone calls programmatically — connect two parties via the API."
 ---
 
-## What is click-to-call?
-
-Click-to-call lets you start a phone call with one API request. You hit the endpoint, your phone rings, you pick up, and then the system automatically dials the customer and connects you both.
-
-Think of it like clicking a "Call" button on a customer's profile in your CRM. Instead of manually dialing the number, the system handles everything -- it calls you first, waits for you to pick up, then calls the customer and bridges the two calls together.
-
-<Info>
-  This is the same thing that happens when you click the call button inside the Astradial dashboard. The API just lets you trigger it from your own software.
-</Info>
-
-## How it works
-
-Here is what happens when you make a click-to-call request:
-
-1. You send the API request with your extension and the customer's number
-2. **Your phone rings first** (the extension you specified)
-3. You pick up your phone
-4. The system then dials the customer's number
-5. When the customer picks up, you are both connected
-
-The customer sees your caller ID (the DID number you specified), not your personal number or extension.
+The click-to-call API lets you initiate phone calls from your application. Astradial calls the "from" party first, and when they answer, connects them to the "to" party.
 
 ## Endpoint
 
 ```
-POST https://devpbx.astradial.com/api/v1/calls/click-to-call
+POST /api/v1/calls/click-to-call
+```
+
+## Authentication
+
+Requires an API key with `calls.click_to_call` permission.
+
+```
+X-API-Key: ak_your_api_key
 ```
 
 ## Request body
 
+```json
+{
+  "from": "1001",
+  "to": "9944421125",
+  "to_type": "external",
+  "caller_id": "+918065978015",
+  "timeout": 30,
+  "variables": {
+    "custom_key": "custom_value"
+  }
+}
+```
+
 | Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `from` | string | Yes | Your extension number (e.g. `"1001"`) |
-| `to` | string | Yes | The phone number to call (e.g. `"+919944421125"`) |
-| `caller_id` | string | Yes | The DID number to show as caller ID (e.g. `"+918065978005"`) |
+|-------|------|----------|-------------|
+| `from` | string | Yes | Extension number or phone number to call first |
+| `to` | string | Yes | Destination to connect after "from" answers |
+| `to_type` | string | No | Type of destination: `extension`, `queue`, `ivr`, `ai_agent`, or `external` |
+| `caller_id` | string | No | Phone number shown as caller ID to the "to" party |
+| `timeout` | number | No | Seconds to wait for "from" to answer (default: 30) |
+| `variables` | object | No | Custom variables passed to the call |
 
-<Note>
-  The `caller_id` must be a phone number that is assigned to your organisation in Astradial. You cannot use a random number -- the system will reject it.
-</Note>
+## Example: agent calls a customer
 
-### Field details
-
-- **from** -- this is your extension number inside Astradial (like `1001` or `1002`). When the API is called, this extension's phone will ring first.
-- **to** -- this is the customer's phone number you want to call. Include the country code (e.g. `+91` for India).
-- **caller_id** -- this is the phone number the customer will see on their screen when their phone rings. It must be one of the DID numbers assigned to your organisation.
-
-## Full example
-
-<CodeGroup>
-
-```bash cURL
-curl -X POST https://devpbx.astradial.com/api/v1/calls/click-to-call \
+```bash
+curl -X POST https://your-server:8000/api/v1/calls/click-to-call \
+  -H "X-API-Key: ak_your_api_key" \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: ak_your_key_here" \
   -d '{
     "from": "1001",
-    "to": "+919944421125",
-    "caller_id": "+918065978005"
+    "to": "9944421125",
+    "to_type": "external",
+    "caller_id": "+918065978015"
   }'
 ```
 
-```javascript JavaScript
-const response = await fetch('https://devpbx.astradial.com/api/v1/calls/click-to-call', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-API-Key': 'ak_your_key_here'
-  },
-  body: JSON.stringify({
-    from: '1001',
-    to: '+919944421125',
-    caller_id: '+918065978005'
-  })
-});
+## Example: connect two extensions
 
-const data = await response.json();
+```bash
+curl -X POST https://your-server:8000/api/v1/calls/click-to-call \
+  -H "X-API-Key: ak_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "1001",
+    "to": "1002",
+    "to_type": "extension"
+  }'
 ```
 
-```python Python
-import requests
+## How it works
 
-response = requests.post(
-    'https://devpbx.astradial.com/api/v1/calls/click-to-call',
-    headers={
-        'Content-Type': 'application/json',
-        'X-API-Key': 'ak_your_key_here'
-    },
-    json={
-        'from': '1001',
-        'to': '+919944421125',
-        'caller_id': '+918065978005'
-    }
-)
-
-data = response.json()
-```
-
-</CodeGroup>
+1. Astradial calls the `from` number/extension
+2. When they answer, Astradial calls the `to` number/extension
+3. When both answer, they are connected in a call
+4. Either party can hang up to end the call
 
 ## Response
-
-A successful request returns:
 
 ```json
 {
   "status": "success",
-  "call_id": "c8f3e2a1-4b5d-6e7f-8a9b-0c1d2e3f4a5b"
+  "message": "Call initiated"
 }
 ```
 
-| Field | Description |
-| --- | --- |
-| `status` | `"success"` if the call was initiated |
-| `call_id` | A unique ID for this call. Use it to track the call in call logs or with other API endpoints. |
+If the call fails:
 
-## Common errors
-
-| Status code | Meaning | What to do |
-| --- | --- | --- |
-| `401` | Invalid or missing API key | Check your `X-API-Key` header |
-| `400` | Invalid request body | Make sure `from`, `to`, and `caller_id` are all provided |
-| `403` | Caller ID not assigned to your org | Use a DID number that belongs to your organisation |
-| `404` | Extension not found | Check that the `from` extension exists |
-
-<Warning>
-  The call will not go through if the extension specified in `from` is not registered (i.e. the user is not logged in to their softphone or the Astradial dashboard). Make sure the user is online before triggering click-to-call.
-</Warning>
+```json
+{
+  "status": "error",
+  "message": "Failed to originate call: extension not registered"
+}
+```

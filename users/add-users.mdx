@@ -1,73 +1,119 @@
 ---
-title: "Add team members"
-description: "Add people to your Astradial organisation so they can make and receive calls. Each person gets their own login and extension number."
-icon: "user-plus"
+title: "Add users"
+description: "How to create SIP users with phone extensions so your team can make and receive calls."
 ---
 
-## What is a user?
+Every person who needs to make or receive calls needs a **user account** with a **SIP extension**. An extension is a short number (like 1001, 1002) that identifies each person in your phone system.
 
-A user is someone on your team who needs to use Astradial. Think of it like giving someone a desk and a phone in an office. Once you add them, they get their own login, their own extension number, and they can start making and receiving calls.
-
-## How to add a user
+## Create a new user
 
 <Steps>
   <Step title="Open the Users page">
-    In the sidebar, go to **Configure** and then click **Users**. This is where you see everyone on your team.
+    In the sidebar, click **Users** under the **Configure** section.
   </Step>
-  <Step title="Click the add button">
-    Click the **+ Add User** button at the top of the page. A form will open up.
+  <Step title="Click Add User">
+    Click the **Add User** button (the plus icon) in the top-right corner. A dialog box will open.
   </Step>
-  <Step title="Fill in their details">
-    Fill in the following fields:
+  <Step title="Fill in the basic details">
+    | Field | What to enter | Example |
+    |-------|--------------|---------|
+    | **Full Name** | The person's name | John Doe |
+    | **Extension** | A unique 3-4 digit number | 1001 |
+    | **Username** | A login username | johndoe |
+    | **Email** | Their email address | john@company.com |
+    | **Password** | At least 6 characters | (a secure password) |
+    | **Role** | Their permission level | Agent |
+  </Step>
+  <Step title="Choose call routing">
+    Under **Call Routing**, select how calls to this extension should be handled:
 
-    - **Username** -- a short name they will use to log in (e.g. `john` or `sarah.m`)
-    - **Email** -- their email address
-    - **Full Name** -- their real name (e.g. Sarah Miller)
-    - **Extension** -- a short number like `1001`, `1002`, or `1003`
-    - **Password** -- a password for their account
-
-    <Tip>
-      Think of the extension like an internal phone number. When someone inside your organisation wants to call Sarah, they just dial her extension (e.g. 1001) instead of a full phone number.
-    </Tip>
+    - **SIP / IP Phone** — The person uses a SIP app (like Zoiper) on their phone or computer. This is the most common option.
+    - **AI Bot (WSS URL)** — Calls go to an AI voice bot instead of a human. You need to enter the bot's WebSocket URL.
+    - **Phone Call (Mobile)** — Calls ring the person's mobile phone number directly.
   </Step>
   <Step title="Click Create">
-    Hit the **Create** button. That is it -- the user is now part of your organisation and can start receiving calls.
+    Click **Create**. Astradial will:
+    1. Create the user account
+    2. Generate SIP credentials
+    3. Deploy the configuration to Asterisk
+    4. The extension is ready to use immediately
   </Step>
 </Steps>
 
-## The users table
+## Set up a SIP phone
 
-After you add people, they all show up in a table on the Users page. You can see at a glance:
+After creating a user, they need to register a SIP phone app to start making calls.
 
-| Column    | What it shows                                      |
-| --------- | -------------------------------------------------- |
-| Extension | Their internal phone number (e.g. 1001)            |
-| Name      | Their full name                                    |
-| Email     | Their email address                                |
-| Role      | What they are allowed to do (Owner, Admin, etc.)   |
-| Status    | Whether their account is active or not             |
+<Steps>
+  <Step title="Open the QR code">
+    In the Users table, click the three-dot menu (actions) next to the user, then click **SIP QR Code**.
+  </Step>
+  <Step title="Download a SIP app">
+    Install one of these free SIP apps on your phone:
+    - **Zoiper** (iOS / Android) — Recommended
+    - **Opal** (iOS)
+    - **Opal SIP** (Android)
+    - Any standard SIP softphone
+  </Step>
+  <Step title="Scan the QR code">
+    Open your SIP app and scan the QR code shown in the dialog. The app will automatically configure itself with the correct server, username, and password.
+  </Step>
+  <Step title="Or enter credentials manually">
+    If your app doesn't support QR scanning, enter these details manually. You can copy each value by hovering over it and clicking the copy button:
 
-<Info>
-  You can edit or remove a user at any time by clicking on them in the table.
-</Info>
+    | Field | Value |
+    |-------|-------|
+    | **Server** | Your Astradial server hostname or IP |
+    | **Port** | 5060 (default) |
+    | **Username** | The user's Asterisk endpoint name |
+    | **Password** | The SIP password (auto-generated) |
+    | **Transport** | UDP |
+  </Step>
+</Steps>
 
-## Tips
+<Tip>
+  After registering, make a test call by dialing another extension number (like 1002). If both extensions are registered, the call will connect.
+</Tip>
+
+## Edit a user
+
+1. Click the three-dot menu next to any user in the table
+2. Click **Edit**
+3. Change any field — name, extension, email, role, routing, or password
+4. Click **Save**
+5. The configuration is automatically redeployed to Asterisk
 
 <Note>
-  Each extension number must be unique. You cannot give two people the same extension, just like you cannot give two desks the same phone number.
+  To change the password, enter a new one in the Password field. Leave it blank to keep the current password.
 </Note>
 
+## Delete a user
+
+1. Click the three-dot menu next to the user
+2. Click **Delete**
+3. Confirm the deletion
+
 <Warning>
-  Only **Owners** and **Admins** can add new users. If you do not see the **+ Add User** button, ask your organisation's admin to add you or upgrade your role.
+  Deleting a user removes their SIP extension permanently. Any active calls on that extension will be disconnected. This action cannot be undone.
 </Warning>
 
-## Next steps
+## Understanding roles
 
-<CardGroup cols={2}>
-  <Card title="Set up roles and permissions" icon="shield-halved" href="/users/roles-permissions">
-    Control what each team member can see and do.
-  </Card>
-  <Card title="Connect a softphone" icon="phone" href="/users/extensions">
-    Set up a softphone app so users can make and receive calls.
-  </Card>
-</CardGroup>
+When you create a user, you assign them a role. Each role has different permissions:
+
+| Role | What they can do |
+|------|-----------------|
+| **Admin** | Full access to everything except API key management |
+| **Supervisor** | Monitor calls, manage teams, view reports |
+| **Agent** | Handle calls, view own call history, use click-to-call |
+| **User** | Basic access, view own profile |
+
+For a complete breakdown of what each role can access, go to **Role Permissions** in the sidebar.
+
+## Call routing options explained
+
+| Routing type | When to use it | What happens |
+|-------------|----------------|-------------|
+| **SIP / IP Phone** | Person uses Zoiper or a desk phone | Calls ring their SIP app |
+| **AI Bot (WSS URL)** | Extension should be handled by an AI bot | Calls connect to the bot via WebSocket |
+| **Phone Call (Mobile)** | Person doesn't have a SIP app | Astradial calls their mobile number |

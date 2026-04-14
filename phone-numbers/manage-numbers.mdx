@@ -1,82 +1,84 @@
 ---
-title: "Manage your numbers"
-description: "View, update, and manage all the phone numbers in your organization."
-icon: "list-check"
+title: "Manage phone numbers"
+description: "How to add, configure, and manage your phone numbers (DIDs) in Astradial."
 ---
 
-## My Numbers tab
+A **DID** (Direct Inward Dialing) number is a phone number that people can call to reach your organization. When someone dials your DID, Astradial routes the call to the right place — an extension, a queue, or an AI bot.
 
-The **My Numbers** tab is your home base for all phone numbers in your organization. To get there, go to the left sidebar, click **Deploy**, then click **Phone Numbers**. You land on the My Numbers tab by default.
+## View your phone numbers
 
-Each number in the list shows five things:
+Go to **Phone Numbers** in the sidebar under **Deploy**. You will see two tabs:
 
-| Column | What it means |
-|---|---|
-| **Number** | The phone number itself (e.g. +91 80 4567 1234) |
-| **Description** | A label you or your admin set (e.g. "Main office line") |
-| **Routing** | The routing type — Extension, Queue, IVR, AI Agent, or External |
-| **Destination** | Where calls go (e.g. extension 1001, Support queue) |
-| **Status** | Whether the number is currently working or not |
+- **My Numbers** — Phone numbers assigned to your organization
+- **Buy a Number** — Available numbers you can request from the admin
 
-## Number statuses
+## Add a phone number (self-hosted)
 
-Your numbers will show one of these statuses:
-
-- **Active** — The number is live and working. Calls to this number are being routed.
-- **Inactive** — The number is paused. Calls to this number will not go through.
-
-<Info>
-  If a number shows as Inactive and you are not sure why, contact your organization's admin.
-</Info>
-
-## Change routing on a number
-
-You can update how a number routes calls at any time.
+If you are running Astradial on your own server:
 
 <Steps>
-  <Step title="Find the number">
-    On the **My Numbers** tab, find the number you want to change.
+  <Step title="Click Add Number">
+    Click the **Add Number** button (plus icon) in the top-right corner.
   </Step>
-
-  <Step title="Open the menu">
-    Click the **three-dot menu** (⋯) on the right side of that number's row.
+  <Step title="Enter the phone number">
+    Type the full phone number including country code. Example: `+918065978015`
   </Step>
+  <Step title="Add a description">
+    Give it a name so you can recognize it later. Example: "Main reception line"
+  </Step>
+  <Step title="Select a trunk">
+    Choose which SIP trunk this number belongs to. The trunk is the connection to your phone carrier.
+  </Step>
+  <Step title="Set up routing">
+    Choose where calls to this number should go:
 
-  <Step title="Configure routing">
-    Click **Configure Routing**.
-
-    Pick a new routing type and destination, then click **Save**. The change takes effect immediately.
-
-    For a full walkthrough of every routing option, see [Configure call routing](/phone-numbers/configure-routing).
+    | Routing type | What happens |
+    |-------------|-------------|
+    | **Extension** | Rings a specific user's SIP phone |
+    | **Queue** | Puts the caller in a call queue |
+    | **IVR** | Connects to an interactive voice menu |
+    | **AI Agent** | Connects to an AI voice bot |
+    | **External** | Forwards to an external phone number |
+  </Step>
+  <Step title="Click Add Number">
+    The number is added and routing is configured immediately.
   </Step>
 </Steps>
 
-## Cancel a pending request
+## Request a number (cloud/managed)
 
-If you requested a number but have not received approval yet, you can cancel the request.
+If your admin has set up a DID pool with available numbers:
 
-<Steps>
-  <Step title="Go to Pending Requests">
-    On the **My Numbers** tab, look for the **Pending Requests** section. This shows all numbers you have requested that are still waiting for admin approval.
-  </Step>
+1. Go to the **Buy a Number** tab
+2. Browse the available numbers — each shows the price per month, region, and provider
+3. Click **Request** next to the number you want
+4. Your request goes to the admin for approval
+5. Once approved, the number appears in your **My Numbers** tab
 
-  <Step title="Cancel the request">
-    Click the **Cancel** button next to the pending number.
+You can cancel a pending request from the **Pending Approval** section on the My Numbers tab.
 
-    The request is removed and the number goes back to the marketplace for others to request.
-  </Step>
-</Steps>
+## Configure routing
 
-<Note>
-  You can only cancel requests that are still pending. Once an admin has approved a number, it cannot be cancelled from this page.
-</Note>
+To change how calls to a number are handled:
 
-## Quick reference
+1. In the **My Numbers** tab, find the number you want to configure
+2. Click the three-dot menu and select **Configure Routing**
+3. Update the routing type and destination
+4. Optionally change the status to **Active** or **Inactive**
+5. Click **Save**
 
-| Task | How to do it |
-|---|---|
-| See all your numbers | Sidebar → Deploy → Phone Numbers → My Numbers tab |
-| Change routing on a number | ⋯ menu → Configure Routing → pick type and destination → Save |
-| Cancel a pending request | Find the pending number → click Cancel |
-| Buy a new number | [Buy a phone number](/phone-numbers/buy-a-number) |
-| Set up routing from scratch | [Configure call routing](/phone-numbers/configure-routing) |
+## Phone number statuses
+
+| Status | Meaning |
+|--------|---------|
+| **Active** | The number is live and receiving calls |
+| **Inactive** | The number exists but calls are not being routed |
+| **Pending** | You requested this number and it is waiting for admin approval |
+
+## Statistics
+
+At the top of the Phone Numbers page, three cards show:
+
+- **Active Numbers** — How many numbers are currently routing calls
+- **Pending Requests** — How many numbers are awaiting approval
+- **Available to Buy** — How many numbers are in the pool for purchase

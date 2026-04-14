@@ -1,89 +1,48 @@
 ---
 title: "Mini CRM overview"
-description: "Astradial includes a built-in Mini CRM to track your clients, leads, and deals -- all connected to your phone system."
-icon: "address-book"
+description: "Astradial's built-in CRM lets you track companies, contacts, leads, and deals — all connected to your phone system."
 ---
 
-## What is a CRM?
+The **Mini CRM** is a lightweight customer relationship management module built right into Astradial. It helps you keep track of who you are talking to and what deals are in progress.
 
-CRM stands for Customer Relationship Management. In plain terms, it is a place to keep track of all your customers, the people who might become customers, and the business deals you are working on.
+## Three core entities
 
-Think of it like a digital address book, but much smarter. Instead of just storing names and phone numbers, a CRM stores the full history of every interaction — who called, what was discussed, what deals are in progress, and what needs follow-up.
+| Entity | What it tracks | Example |
+|--------|---------------|---------|
+| **Clients (Companies)** | Organizations you work with | "Acme Corporation" |
+| **Leads (Contacts)** | Individual people and sales prospects | "John Doe, Sales Manager at Acme" |
+| **Deals** | Sales opportunities with monetary values | "Enterprise Plan — INR 50,000" |
 
-## Why is the CRM built into Astradial?
+## How they connect
 
-Most CRM tools are separate products. You log calls in one place, track customers in another, and waste time switching between screens.
+```
+Company (Client)
+├── Contacts (Leads) — people at this company
+├── Deals — sales opportunities with this company
+└── Activities — notes, calls, emails, meetings
+```
 
-With Astradial, your phone system and CRM live together in the same dashboard. That means:
+A **company** can have multiple **contacts** and multiple **deals**. Each **deal** can be linked to both a company and a specific contact. **Activities** (like notes and call records) can be attached to any entity.
 
-- When a customer calls, their CRM record pops up automatically
-- Call history is linked to contacts — you see every call a customer has ever made
-- Your team can track leads and deals without leaving the platform
-- No need to buy, set up, or learn a separate CRM tool
+## Key features
 
-<Info>
-  We call it "Mini CRM" because it covers the essentials — clients, leads, and deals. It is not trying to be a massive enterprise CRM with hundreds of features. It gives you what you actually need for day-to-day customer management.
-</Info>
+- **Kanban pipeline view** — Drag-and-drop cards through stages (New → Contacted → Qualified → Won)
+- **List view** — Traditional table with sorting and search
+- **Custom fields** — Add your own fields (text, number, date, dropdown, etc.)
+- **Custom pipelines** — Change the stages in your lead and deal pipelines
+- **Team assignment** — Assign companies, leads, and deals to specific team members
+- **Activity tracking** — Log notes, calls, emails, meetings, and tasks
+- **Dashboard stats** — See total companies, contacts, open deals, and pipeline value
 
-## What is inside the Mini CRM?
+## Navigation
 
-The Mini CRM has four sections, each accessible from the sidebar.
+In the sidebar under **Mini CRM**, you will find:
 
-<CardGroup cols={2}>
-  <Card title="Clients" icon="building" href="/crm/clients">
-    Companies and their contacts. Store company details, assign contacts, and see all related deals and call history in one place.
-  </Card>
-  <Card title="Leads" icon="user-plus" href="/crm/leads">
-    People who might become customers. Track them through stages — from New all the way to Converted or Lost — using a drag-and-drop Kanban board.
-  </Card>
-  <Card title="Deals" icon="handshake" href="/crm/deals">
-    Business opportunities with money attached. Track deals through your sales pipeline — from Lead to Won — and see your total pipeline value at a glance.
-  </Card>
-  <Card title="Customize" icon="sliders" href="/crm/custom-fields">
-    Tailor the CRM to your business. Add custom fields, create your own pipeline stages, and make the system work the way you work.
-  </Card>
-</CardGroup>
+- **Clients** — Manage companies
+- **Leads** — Manage contacts and sales prospects
+- **Deals** — Manage sales opportunities
+- **Customize** — Configure pipelines and custom fields
 
-## How to get to the Mini CRM
+## Currency
 
-<Steps>
-  <Step title="Open the sidebar">
-    Look at the left side of your screen. The sidebar shows all the sections of the platform.
-  </Step>
-  <Step title="Find the Mini CRM section">
-    Scroll down in the sidebar until you see the **Mini CRM** section. Under it, you will find links to **Clients**, **Leads**, **Deals**, and **Customize**.
-  </Step>
-  <Step title="Click any page to get started">
-    Click **Clients** to manage your companies and contacts, **Leads** to work your lead pipeline, **Deals** to track business opportunities, or **Customize** to set up custom fields and pipeline stages.
-  </Step>
-</Steps>
-
-## How the CRM connects to your phone system
-
-This is the biggest advantage of having your CRM inside your phone platform. Here is what happens automatically:
-
-<CardGroup cols={2}>
-  <Card title="Calls link to contacts" icon="link">
-    When you add a customer's phone number to their CRM record, every call from that number is automatically linked to their profile. Open a contact and see their full call history.
-  </Card>
-  <Card title="Click-to-call from CRM" icon="phone-arrow-up-right">
-    See a contact's phone number in the CRM? Click it to call them directly. No dialling, no copy-pasting numbers.
-  </Card>
-</CardGroup>
-
-<Tip>
-  Start by adding your most important customers to the Clients section. Once their phone numbers are in the system, you will immediately see the connection between your CRM records and your call logs.
-</Tip>
-
-## Next steps
-
-Jump into any section of the CRM to get started:
-
-<CardGroup cols={2}>
-  <Card title="Clients" icon="building" href="/crm/clients">
-    Add your companies and contacts.
-  </Card>
-  <Card title="Leads" icon="user-plus" href="/crm/leads">
-    Track potential customers through your pipeline.
-  </Card>
-</CardGroup>
+The CRM uses **Indian Rupees (INR)** for deal amounts. Pipeline values and won values are displayed in INR with comma formatting.

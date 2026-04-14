@@ -1,149 +1,103 @@
 ---
-title: "Leads pipeline"
-description: "Track potential customers through your sales pipeline using a drag-and-drop Kanban board or a list view."
-icon: "user-plus"
+title: "Leads (Contacts)"
+description: "Track sales prospects through your pipeline using Kanban boards or list views. Drag leads between stages as they progress."
 ---
 
-## What is a lead?
+The **Leads** page lets you manage contacts and sales prospects. You can view them as a **Kanban board** (drag-and-drop cards) or a **list** (table view).
 
-A lead is a person who might become a customer. Maybe they called your business and asked about your services. Maybe they filled out a form on your website. Maybe someone on your team met them at an event.
+## Two view modes
 
-The point is: they are interested, but they have not bought anything yet. Your job is to follow up, build the relationship, and try to turn them into a paying customer.
+Toggle between views using the tabs at the top of the page:
 
-The Leads section helps you track every lead and see exactly where they are in the process.
+- **Kanban** — Visual pipeline with columns for each stage. Drag cards to move leads between stages.
+- **List** — Traditional table with sortable columns.
 
-## Opening the Leads page
+## Default lead pipeline stages
 
-<Steps>
-  <Step title="Go to Mini CRM in the sidebar">
-    In the left sidebar, find the **Mini CRM** section.
-  </Step>
-  <Step title="Click Leads">
-    Click **Leads**. You will land on the Leads page.
-  </Step>
-</Steps>
-
-## Two ways to view your leads
-
-The Leads page has two views. You can switch between them at any time using the toggle at the top of the page.
-
-<CardGroup cols={2}>
-  <Card title="Kanban board" icon="columns-3">
-    A visual board with columns for each stage. Each lead is a card. Drag cards between columns to change their status. Great for seeing the big picture at a glance.
-  </Card>
-  <Card title="List view" icon="table">
-    A traditional table with one row per lead. Shows all details in columns. Great for filtering, sorting, and working through leads quickly.
-  </Card>
-</CardGroup>
-
-## The Kanban board
-
-The Kanban board is the default view. It looks like a series of vertical columns, and each column represents a stage in your lead pipeline.
-
-The default stages (from left to right) are:
-
-| Column | What it means |
-|---|---|
-| **New** | A brand-new lead. You have not reached out yet. |
-| **Contacted** | You have made initial contact — called them, emailed them, or messaged them. |
-| **Qualified** | You have spoken with them and confirmed they are a genuine potential customer. |
-| **Converted** | They have become a customer. The lead is won. |
-| **Lost** | They decided not to buy, or you could not reach them. The lead is lost. |
-
-Each lead appears as a **card** in one of these columns. The card shows the lead's name, company, and other key details.
+| Stage | Meaning |
+|-------|---------|
+| **New** | Just added, not yet contacted |
+| **Contacted** | You have reached out to them |
+| **Qualified** | Confirmed interest and budget |
+| **Converted** | They became a customer |
+| **Lost** | They chose not to proceed |
 
 <Tip>
-  To move a lead to the next stage, simply **drag the card** from one column and **drop it** into the next column. For example, when you make first contact with a new lead, drag their card from "New" to "Contacted."
+  You can customize these stages. Go to **Customize** → **Pipelines** → **Lead Pipeline** to add, rename, reorder, or remove stages.
 </Tip>
 
-## Adding a new lead
+## Add a lead
 
 <Steps>
   <Step title="Click Add Lead">
-    On the Leads page, click the **Add Lead** button. A form appears.
+    Click the **Add Lead** button (plus icon).
   </Step>
-
-  <Step title="Fill in the lead details">
-    The form has the following fields:
-
-    | Field | What to enter | Required? |
-    |---|---|---|
-    | **First Name** | The lead's first name (e.g. "Priya") | Yes |
-    | **Last Name** | The lead's last name (e.g. "Sharma") | Yes |
-    | **Email** | Their email address | No |
-    | **Phone** | Their phone number | No |
-    | **Job Title** | Their role at their company (e.g. "Operations Manager") | No |
-    | **Lead Source** | Where this lead came from (see list below) | No |
-    | **Company** | The company they work for — pick from your existing clients or type a new one | No |
+  <Step title="Fill in the details">
+    | Field | Required | Description |
+    |-------|----------|------------|
+    | **First Name** | Yes | Contact's first name |
+    | **Last Name** | No | Contact's last name |
+    | **Email** | No | Email address |
+    | **Phone** | No | Phone number |
+    | **Job Title** | No | Their role at the company |
+    | **Lead Source** | No | Where this lead came from (see below) |
+    | **Status** | No | Which pipeline stage (defaults to "New") |
+    | **Company** | No | Link to an existing company |
+    | **Notes** | No | Any additional notes |
   </Step>
-
-  <Step title="Click Save">
-    Click **Save**. The new lead appears as a card in the **New** column of the Kanban board.
+  <Step title="Click Create">
+    The lead appears on the Kanban board in the selected stage column.
   </Step>
 </Steps>
 
-### Lead sources
+## Lead sources
 
-When adding a lead, you can pick where they came from. This helps you track which channels are bringing in the most leads.
+When adding a lead, you can track where they came from:
 
-| Source | What it means |
-|---|---|
-| **Website** | They found you through your website |
-| **Phone** | They called your business |
-| **Referral** | Someone recommended you to them |
-| **Social** | They came from social media (LinkedIn, Instagram, etc.) |
-| **Advertisement** | They responded to an ad |
-| **Cold Call** | Your team called them proactively |
-| **Event** | You met them at a conference, trade show, or meetup |
+| Source | Description |
+|--------|------------|
+| Website | Came through your website |
+| Phone | Called your phone number |
+| Referral | Referred by someone |
+| Social | Found you on social media |
+| Advertisement | Responded to an ad |
+| Cold Call | You reached out first |
+| Event | Met at an event or conference |
+| Other | Any other source |
 
-<Info>
-  Tracking lead sources helps you understand what is working. If most of your converted leads come from referrals, you know to invest more in referral programs.
-</Info>
+## Move leads through the pipeline
 
-## Moving leads between stages
+### Using Kanban (drag-and-drop)
 
-### On the Kanban board
+1. Find the lead card in its current stage column
+2. Click and drag it to a new stage column
+3. Drop it — the status updates immediately
 
-Click and hold a lead card, then drag it to a different column. Release it to drop it into the new stage.
+If the update fails (for example, due to a network issue), the card automatically moves back to its previous position.
 
-For example:
-- You just spoke with a lead on the phone. Drag their card from **New** to **Contacted**.
-- After a meeting, you confirmed they have budget and need your product. Drag from **Contacted** to **Qualified**.
-- They signed a contract. Drag from **Qualified** to **Converted**.
+### Using the edit dialog
 
-### In the list view
+1. Click the three-dot menu on a lead card or table row
+2. Click **Edit**
+3. Change the **Status** dropdown to the new stage
+4. Click **Update**
 
-Click the lead's row to open the detail panel. Find the **Stage** field and click on it. Pick the new stage from the dropdown.
+## Assign leads to team members
 
-## Assigning leads to team members
+1. Click the three-dot menu on a lead
+2. Click **Assign**
+3. Select a team member
+4. The assigned person's name appears as a badge on the lead card
 
-If you have multiple people on your sales team, you can assign each lead to a specific person.
+## Search
 
-<Steps>
-  <Step title="Open the lead">
-    Click a lead card on the Kanban board, or click a row in the list view. The detail panel opens.
-  </Step>
+Use the search bar to filter leads by first name, last name, email, or phone number. Both Kanban and list views are filtered.
 
-  <Step title="Find the Assigned To field">
-    In the detail panel, look for the **Assigned To** field.
-  </Step>
+## Kanban card details
 
-  <Step title="Pick a team member">
-    Click the field and select a person from the dropdown. That person is now responsible for following up with this lead.
-  </Step>
-</Steps>
-
-<Note>
-  Assigning leads makes sure every potential customer has someone actively working on them. Unassigned leads tend to get forgotten.
-</Note>
-
-## Quick reference
-
-| Action | How to do it |
-|---|---|
-| View all leads | Sidebar > Mini CRM > Leads |
-| Switch views | Kanban / List toggle at top of page |
-| Add a lead | Click "Add Lead" button |
-| Move to next stage | Drag card to new column (Kanban) or change Stage in detail panel (List) |
-| Assign a lead | Open detail panel > Assigned To field |
-| Track lead source | Set Lead Source when adding or editing a lead |
+Each card on the Kanban board shows:
+- Lead's full name
+- Company name (if linked)
+- Lead source badge
+- Assigned user badge
+- Phone number

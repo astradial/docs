@@ -1,0 +1,84 @@
+---
+title: "SIP trunks"
+description: "How to configure SIP trunks in Astradial to connect to phone carriers for making and receiving calls."
+---
+
+A **SIP trunk** is the connection between Astradial and a phone carrier (like Tata, Airtel, Twilio, or any SIP provider). Without a trunk, you can make calls between extensions inside Astradial, but you cannot call real phone numbers or receive calls from the outside world.
+
+## What is a SIP trunk?
+
+Think of a SIP trunk like a phone line connecting your office phone system to the telephone network. It is the bridge between your internet-based phone system and the real phone network.
+
+| Term | Meaning |
+|------|---------|
+| **Inbound trunk** | Receives calls from the phone network into Astradial |
+| **Outbound trunk** | Sends calls from Astradial out to phone numbers |
+| **Peer-to-peer** | Both inbound and outbound on the same connection |
+
+## View your trunks
+
+Go to **Trunks** in the sidebar under **Deploy**. You will see a table showing all configured trunks with:
+
+- **Name** — A label you gave the trunk
+- **Host** — The SIP server address and port
+- **Type** — Inbound, Outbound, or Peer-to-peer
+- **Transport** — UDP, TCP, or TLS
+- **Channels** — Maximum simultaneous calls allowed
+- **Registration** — Whether the trunk is successfully connected to the carrier
+- **Status** — Active or Inactive
+
+## Create a trunk
+
+<Note>
+  Only admins and owners can create trunks.
+</Note>
+
+<Steps>
+  <Step title="Click Add Trunk">
+    Click the **Add Trunk** button (plus icon). Only visible to admins.
+  </Step>
+  <Step title="Fill in the connection details">
+    | Field | What to enter | Example |
+    |-------|--------------|---------|
+    | **Name** | A label for this trunk | Tata SIP |
+    | **Host** | The carrier's SIP server address | sip.provider.com |
+    | **Port** | SIP port (usually 5060) | 5060 |
+    | **Transport** | UDP, TCP, or TLS | UDP |
+    | **Type** | Inbound, Outbound, or Peer-to-Peer | Outbound |
+    | **Username** | SIP authentication username | your_sip_user |
+    | **Password** | SIP authentication password | your_sip_pass |
+    | **Max Channels** | How many simultaneous calls | 10 |
+  </Step>
+  <Step title="Click Create">
+    Astradial creates the trunk and registers it with the carrier. Check the **Registration** column — it should show "registered" within a few seconds.
+  </Step>
+</Steps>
+
+## Registration status
+
+| Status | Meaning |
+|--------|---------|
+| **Registered** | The trunk is connected and ready for calls |
+| **Unregistered** | The trunk is not connected — check credentials or network |
+| **Failed** | The registration attempt failed — verify host, username, and password |
+
+## Edit a trunk
+
+1. Click the three-dot menu next to the trunk
+2. Click **Edit**
+3. Update any field (leave password blank to keep the current one)
+4. Click **Save**
+
+## Delete a trunk
+
+1. Click the three-dot menu next to the trunk
+2. Click **Delete**
+3. Confirm the deletion
+
+<Warning>
+  Deleting a trunk disconnects all phone numbers that use it. Make sure to reassign your phone numbers to a different trunk first.
+</Warning>
+
+## Get a free developer trunk
+
+If you need a trunk for testing, click the **Request Free Trunk** button at the bottom of the page. This sends an email to the Astradial team to set up a free developer trunk with 1 channel and 1 Indian DID for 30 days.

@@ -1,124 +1,149 @@
 ---
 title: "Super Human (AI bots)"
-description: "Deploy AI-powered voice bots that answer calls, have conversations, create tickets, and transfer to humans when needed."
-icon: "robot"
+description: "Create AI voice bots powered by Google Gemini that can answer phone calls, have conversations, and transfer to humans."
 ---
 
-## What is Super Human?
+**Super Human** is Astradial's AI voice bot system. It lets you create bots that can answer phone calls, have natural conversations, collect information, and transfer callers to human agents when needed. The bots are powered by Google Gemini Live.
 
-Super Human is the name for Astradial's AI-powered voice bots. These are virtual agents that can answer phone calls and have real conversations with your callers -- just like a person would.
+## How it works
 
-Think of it like hiring a receptionist who never sleeps, never takes a day off, and can handle a hundred calls at the same time. The bot picks up the phone, listens to the caller, talks back, and does things like:
+1. You create a bot and design its conversation flow
+2. You connect a phone number or extension to the bot
+3. When someone calls that number, the bot answers
+4. The bot follows your flow — greeting the caller, asking questions, taking actions
+5. The bot can transfer to a human agent, create tickets, or call webhooks
 
-- Answer common questions ("What are your check-in times?")
-- Collect information from the caller (name, booking number, etc.)
-- Create support tickets automatically
-- Transfer the call to a real person when the bot cannot help
+## Set up your API key
 
-Super Human bots work 24 hours a day, 7 days a week. Callers talk to them just like they would talk to a human, using their normal voice.
-
-<Info>
-  The "Super Human" name is what you see in the dashboard. You might also hear these called "AI bots" or "AI agents" -- they all mean the same thing.
-</Info>
-
-## How to create a bot
+Before creating bots, you need a Google Gemini API key:
 
 <Steps>
+  <Step title="Get a Gemini API key">
+    Go to [Google AI Studio](https://aistudio.google.com/) and create an API key.
+  </Step>
   <Step title="Open the Super Human page">
-    In the left sidebar, click **Configure**, then click **Super Human**.
-
-    You will see a list of all AI bots in your organisation. If you have not created any yet, the list will be empty.
+    Click **Super Human** in the sidebar under **Configure**.
   </Step>
-
-  <Step title="Create a new bot">
-    Click the **+ Create Bot** button. A setup form will open.
+  <Step title="Click the status indicator">
+    At the top of the page, click the pill that says "Not Connected" (red).
   </Step>
-
-  <Step title="Give it a name">
-    Enter a name for your bot. Pick something that describes what it does.
-
-    **Examples:**
-    - "Front Desk Bot" -- for a hotel reception bot
-    - "Support Bot" -- for a customer support bot
-    - "After Hours Bot" -- for a bot that handles calls outside business hours
-
-    <Tip>
-      The name is just for you and your team. Callers never see or hear the bot's name.
-    </Tip>
+  <Step title="Enter your API key">
+    Paste your Google API key in the dialog and click **Save**.
   </Step>
-
-  <Step title="Select an AI model">
-    Choose which AI model powers your bot's brain. Different models have different strengths -- some are faster, some are smarter, some are better at conversations.
-
-    Your Astradial admin will have configured which models are available for your organisation.
-  </Step>
-
-  <Step title="Configure the conversation flow">
-    This is where you tell the bot what to say and how to behave. You can set up:
-
-    - **System prompt** -- instructions that tell the bot who it is and how to act (e.g. "You are a friendly front desk agent at Grand Estancia Hotel")
-    - **Tools** -- actions the bot can take during a call (create a ticket, transfer the call, look up information)
-    - **Conversation flow** -- the step-by-step path the bot follows during a call
-
-    <Note>
-      The conversation flow is built using a visual editor. You do not need to write any code. Just drag, drop, and connect the steps.
-    </Note>
-  </Step>
-
-  <Step title="Save the bot">
-    Click **Save**. Your bot is now created but not yet connected to a phone number.
+  <Step title="Verify connection">
+    The status indicator turns green and shows "Connected".
   </Step>
 </Steps>
+
+## Create a bot
+
+<Steps>
+  <Step title="Enter a name">
+    Type a name for your bot in the input field (e.g., "Reception Bot").
+  </Step>
+  <Step title="Click Create Agent">
+    The bot is created with an empty flow.
+  </Step>
+  <Step title="Click Edit Flow">
+    Click the **Edit Flow** button on the bot card to open the visual flow editor.
+  </Step>
+</Steps>
+
+## The flow editor
+
+The flow editor is a visual tool where you design the conversation. It looks like a flowchart — nodes connected by lines.
+
+### Node types
+
+| Node | Purpose |
+|------|---------|
+| **Initial** | The starting point. Defines the bot's personality and first instructions. |
+| **Node** | A conversation step with instructions and available actions. |
+| **End** | The end of the conversation. The bot hangs up. |
+
+### Configuring a node
+
+Click any node to open the inspector panel on the right. The inspector has four tabs:
+
+**General tab:**
+- **Label** — A name for this node (for your reference)
+- **Respond Immediately** — Whether the bot speaks right away or waits
+- **Context Strategy** — How conversation history is handled:
+  - **Append** — Keep all messages (default)
+  - **Reset** — Clear context between turns
+  - **Reset with Summary** — Clear but create a summary first
+
+**Messages tab:**
+- **Role Messages** — Define the bot's personality (e.g., "You are a friendly hotel receptionist named Sarah")
+- **Task Messages** — Instructions for what the bot should do at this step (e.g., "Ask the guest for their room number")
+
+**Functions tab:**
+- Define actions the bot can take:
+  - **Transfer to Department** — Send the caller to a queue or phone number
+  - **Check Availability** — Call an external API
+  - **Submit Ticket** — Create a support ticket
+  - Each function has parameters, routing rules, and state mappings
+
+**Actions tab:**
+- **Pre-actions** — Things that happen before the bot speaks (e.g., call a webhook)
+- **Post-actions** — Things that happen after (e.g., hang up, say something with TTS)
+
+### Saving your flow
+
+Press **Cmd+S** (Mac) or **Ctrl+S** (Windows) to save, or click the **Save to Gateway** button.
 
 ## Connect a bot to a phone number
 
-A bot sitting by itself does nothing. You need to tell the system: "When someone calls this number, let the bot answer."
+To make a bot answer calls:
 
 <Steps>
-  <Step title="Go to Phone Numbers">
-    In the left sidebar, click **Deploy**, then click **Phone Numbers**.
+  <Step title="Create a user with AI routing">
+    Go to **Users** → **Add User**. Set the routing to **AI Bot (WSS URL)**.
   </Step>
-
-  <Step title="Open routing for your number">
-    Find the phone number you want the bot to answer. Click the **three-dot menu** (three dots icon) on that number's row and select **Configure Routing**.
+  <Step title="Get the WebSocket URL">
+    On the Super Human page, the WebSocket URL is shown at the bottom:
+    ```
+    wss://gateway.astradial.com/ws/{orgId}/{botId}?key={apiKey}
+    ```
   </Step>
-
-  <Step title="Select AI Agent">
-    In the routing type dropdown, pick **AI Agent**.
-
-    A second dropdown appears showing all your bots. Select the bot you just created.
+  <Step title="Paste the URL as the routing destination">
+    Use this URL as the WebSocket URL in the user's routing configuration.
   </Step>
-
-  <Step title="Save">
-    Click **Save**. That is it.
-
-    The next time someone calls this phone number, your AI bot will pick up and start talking.
+  <Step title="Route a phone number to this extension">
+    Go to **Phone Numbers**, configure the routing of your DID to point to this user's extension.
   </Step>
 </Steps>
 
-<Warning>
-  Make sure your bot's conversation flow is fully set up before connecting it to a live phone number. An incomplete bot might confuse callers.
-</Warning>
+Now when someone calls that phone number, it rings the extension, which connects to your AI bot.
 
-## What can bots do?
+## Department transfers
 
-Here is a quick summary of everything a Super Human bot can handle during a call:
+Bots can transfer callers to human agents. Set up department routing:
 
-<CardGroup cols={2}>
-  <Card title="Answer questions" icon="comments">
-    The bot can answer frequently asked questions based on the information you give it. No need for callers to wait on hold for simple questions.
-  </Card>
-  <Card title="Create tickets" icon="ticket">
-    When a caller has an issue, the bot can automatically create a support ticket with all the details from the conversation.
-  </Card>
-  <Card title="Transfer to humans" icon="phone-arrow-right">
-    If the bot cannot help, it can transfer the call to a real person -- either a specific extension or a queue of agents.
-  </Card>
-  <Card title="Collect information" icon="clipboard-list">
-    The bot can ask for and record details like names, phone numbers, booking references, and more.
-  </Card>
-</CardGroup>
+1. On the bot card, click the **Transfer Config** button (expand icon)
+2. Click **Add** to add a department
+3. For each department, configure:
+   - **Label** — The department name (e.g., "Room Service")
+   - **Type** — Queue or Phone
+   - **Target** — The queue number or phone number
+4. Click **Save Mappings**
 
-<Tip>
-  You can have multiple bots for different purposes. For example, one bot for daytime calls that transfers to agents, and another for after-hours calls that takes messages and creates tickets.
-</Tip>
+The bot can then use a `transfer_to_department` function to route callers to the right team.
+
+## API keys
+
+Generate API keys for your bots:
+
+1. Enter an optional label in the API key input
+2. Click **Create Key**
+3. Copy the key immediately — it is only shown once
+4. Use this key in the WebSocket URL to authenticate connections
+
+## Bot settings
+
+Each bot shows:
+- **Name** — The bot's display name
+- **Extension** — If linked to a PBX extension
+- **Model** — The Gemini model being used (e.g., gemini-2.0-flash)
+- **Voice** — The voice ID (e.g., Puck, Kore)
+- **Status** — Active or Inactive

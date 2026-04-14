@@ -1,331 +1,92 @@
 ---
 title: "Roles and permissions"
-description: "Understand who can do what in your organisation"
-icon: "shield-check"
+description: "Understand what each role can do in Astradial — Owner, Admin, Manager, and Agent."
 ---
 
-## What are roles?
-
-Every person in your organisation has a **role**. A role is a label that decides what that person can see and what they can do inside Astradial. Think of it like hotel key cards. The hotel manager has a master key card that opens every single door in the building. A guest has a key card that only opens their own room. Both people are in the same hotel, but their key cards give them very different levels of access.
-
-Roles in Astradial work exactly the same way. When you add someone to your organisation, you give them a role. That role controls which pages show up in their sidebar, which buttons they can click, which data they can see, and which actions they can take. A person with a powerful role sees everything. A person with a restricted role only sees what they need to do their job.
-
-Every user gets exactly **one** role. You cannot give someone two roles at the same time. If you want to give someone more access, you change their role to a more powerful one.
-
-<Info>
-  Roles are set per organisation. If someone belongs to multiple organisations on Astradial, they can have a different role in each one.
-</Info>
-
----
+Astradial uses **role-based access control** (RBAC). Every user has a role that determines what they can see and do in the dashboard.
 
 ## The four roles
 
-Astradial has four roles. They go from the most powerful (Owner) to the most restricted (Agent). Here is what each one means, explained in plain language.
+| Role | Permissions | Best for |
+|------|------------|----------|
+| **Owner** | Everything — full control | Business owner, primary admin |
+| **Admin** | Almost everything (except API key secrets) | IT administrators |
+| **Manager** | View calls, recordings, users, CRM | Team leads, supervisors |
+| **Agent** | Own calls, tickets, click-to-call only | Call center agents |
 
-<Steps>
-  <Step title="Owner -- the boss">
-    The Owner has **full, unrestricted control** over the entire organisation. There is nothing an Owner cannot do. They can create and delete users, manage phone numbers, view every single call ever made, listen to and download recordings, delete recordings, manage API keys and secrets, change billing settings, set compliance policies, export data, and configure every setting in the system.
-
-    Think of the Owner as the person who holds the master key to the entire building. Every door, every drawer, every safe -- they can open it all.
-
-    There is usually **one Owner per organisation**. This should be the business owner or the person who is ultimately responsible for the account. Do not hand out the Owner role casually. If someone does not need full control, give them a lower role.
-  </Step>
-  <Step title="Admin -- the right hand">
-    An Admin is almost as powerful as an Owner. They can manage users, configure phone numbers, view all calls, manage the CRM, set up workflows, deploy configuration, and handle most day-to-day operations. The key difference is that an Admin **cannot manage API keys or secrets** and **cannot assign the Owner role** to someone else.
-
-    Think of an Admin as the hotel's general manager. They can open almost every door, manage the staff, and run the day-to-day operations. But they do not have access to the owner's private safe.
-
-    The Admin role is perfect for **IT managers, system administrators, or senior team leads** who need to set up and maintain the system but do not need access to sensitive API credentials.
-  </Step>
-  <Step title="Manager -- the team lead">
-    A Manager can **view and oversee** but has limited ability to change things. They can see all call logs across the team, listen to recordings, view the user list, manage CRM contacts, work with tickets, view workflows, and see the audit log. However, they **cannot** change organisation settings, manage phone numbers, download or delete recordings, create or edit workflows, manage users, or handle compliance settings.
-
-    Think of a Manager as a department head in the hotel. They can walk through the lobby, check the guest register, listen to feedback, and supervise their team. But they cannot change the hotel's policies, hire or fire staff, or access the back office systems.
-
-    The Manager role is ideal for **team leads, supervisors, and quality assurance staff** who need visibility into what is happening but should not be able to change system configuration.
-  </Step>
-  <Step title="Agent -- the frontline worker">
-    An Agent has the most restricted access. They can only see **their own calls** (not anyone else's), create and update tickets, use click-to-call to make outbound calls, and view CRM contacts. They **cannot** see other people's calls, listen to recordings, download anything, change settings, manage users, or access workflows and bots.
-
-    Think of an Agent as a hotel receptionist. They can answer the phone at their desk, help guests with requests, and write notes. But they cannot go into other people's offices, listen to other people's conversations, or change how the hotel operates.
-
-    The Agent role is designed for **call centre agents, support staff, and frontline employees** who need to do their job without seeing sensitive organisational data.
-  </Step>
-</Steps>
-
-<Note>
-  A quick way to remember the hierarchy: **Owner > Admin > Manager > Agent**. Each role down the list has fewer permissions than the one above it.
-</Note>
-
----
-
-## Full permission matrix
-
-Below is every single permission in Astradial, grouped by category, showing exactly which roles have access. This is the same table you see inside the platform on the **Role Permissions** page.
+## Detailed permission breakdown
 
 ### Organisation and settings
 
-These permissions control who can change how your organisation works at the system level.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Edit organisation settings | Yes | Yes | -- | -- |
-| Manage API keys and secrets | Yes | -- | -- | -- |
-| View billing and usage | Yes | Yes | -- | -- |
-| Deploy Asterisk config | Yes | Yes | -- | -- |
-
-- **Edit organisation settings** means changing things like the organisation name, timezone, recording preferences, and other global configuration. Only Owners and Admins can do this.
-- **Manage API keys and secrets** is the most restricted permission in the entire system. Only the Owner can create, view, rotate, or delete API keys. This exists because API keys give programmatic access to your data, and leaking one could be catastrophic.
-- **View billing and usage** lets you see your current plan, usage numbers, and invoices. Managers and Agents do not need to see this.
-- **Deploy Asterisk config** pushes configuration changes to the underlying phone system. This is a technical action that only Owners and Admins should perform.
+|-----------|-------|-------|---------|-------|
+| Edit org settings | Yes | Yes | No | No |
+| Manage API keys/secrets | Yes | No | No | No |
+| View billing and usage | Yes | Yes | No | No |
+| Deploy Asterisk config | Yes | Yes | No | No |
 
 ### User management
 
-These permissions control who can add, remove, and manage the people in your organisation.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Invite or delete users | Yes | Yes | -- | -- |
-| Assign any role (including Owner and Admin) | Yes | -- | -- | -- |
-| Assign Manager or Agent role | Yes | Yes | -- | -- |
-| View user list | Yes | Yes | Yes | -- |
+|-----------|-------|-------|---------|-------|
+| Invite/delete users | Yes | Yes | No | No |
+| Assign any role | Yes | Yes | No | No |
+| Assign manager/agent role | Yes | Yes | Yes | No |
+| View user list | Yes | Yes | Yes | No |
 | View own profile | Yes | Yes | Yes | Yes |
-
-- **Invite or delete users** means adding new people to the organisation or removing existing ones. Only Owners and Admins can do this.
-- **Assign any role** is Owner-only. This prevents an Admin from promoting themselves or someone else to Owner. Only the current Owner can hand out the Owner or Admin role.
-- **Assign Manager or Agent role** means Admins can set someone's role to Manager or Agent, but they cannot promote someone to Admin or Owner.
-- **View user list** lets you see the table of all users, their extensions, emails, and roles. Managers can see this list so they know who is on their team, but Agents cannot.
-- **View own profile** is available to everyone. Every user can see their own name, email, extension, and role.
-
-<Warning>
-  Be very careful with the "Assign any role" permission. If you give someone the Owner role by mistake, they will have full control over everything, including the ability to remove your own Owner access.
-</Warning>
 
 ### Phone numbers and queues
 
-These permissions control who can manage your organisation's phone numbers and call queues.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Buy or configure phone numbers | Yes | Yes | -- | -- |
-| View numbers and queues | Yes | Yes | Yes | Yes |
-
-- **Buy or configure phone numbers** means purchasing new DIDs (phone numbers), assigning them to queues or users, and changing routing rules. This is a billing and configuration action, so only Owners and Admins can do it.
-- **View numbers and queues** lets you see which phone numbers exist and which queues are set up. Everyone can see this because Agents need to know which queue they belong to and which numbers are active.
+|-----------|-------|-------|---------|-------|
+| Buy/configure numbers | Yes | Yes | No | No |
+| View numbers and queues | Yes | Yes | Yes | No |
 
 ### Calls
 
-These permissions control who can see call data, listen to recordings, and make outbound calls.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| View all call logs | Yes | Yes | Yes | -- |
+|-----------|-------|-------|---------|-------|
+| View all call logs | Yes | Yes | Yes | No |
 | View own calls only | Yes | Yes | Yes | Yes |
-| Listen to recordings | Yes | Yes | Yes | -- |
-| Download recordings | Yes | Yes | -- | -- |
-| Delete recordings | Yes | Yes | -- | -- |
+| Listen to recordings | Yes | Yes | Yes | No |
+| Download recordings | Yes | Yes | No | No |
+| Delete recordings | Yes | Yes | No | No |
 | Click-to-call | Yes | Yes | Yes | Yes |
-
-- **View all call logs** means seeing every call made by every person in the organisation. Owners, Admins, and Managers all have this because they need to supervise the team. Agents cannot see other people's calls -- they only see their own.
-- **View own calls only** is available to everyone. Every user can see the calls they personally made or received.
-- **Listen to recordings** means playing back a recorded call in the browser. Managers can listen (for quality assurance) but Agents cannot. This protects the privacy of other team members' conversations.
-- **Download recordings** means saving a recording file to your computer. Only Owners and Admins can do this. Managers can listen in the browser but cannot take the file outside of Astradial. This is a security measure.
-- **Delete recordings** means permanently removing a recording. Only Owners and Admins can do this. Once a recording is deleted, it is gone forever.
-- **Click-to-call** means initiating an outbound call directly from the platform. Everyone can do this because making calls is a core part of every user's job.
-
-<Tip>
-  If you want Managers to review call quality but do not want them to take recordings outside the platform, the current permissions are perfect. They can listen in the browser but cannot download.
-</Tip>
 
 ### Tickets
 
-These permissions control who can work with the ticketing system.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
+|-----------|-------|-------|---------|-------|
 | View tickets | Yes | Yes | Yes | Yes |
-| Create or update tickets | Yes | Yes | Yes | Yes |
-| Delete or archive tickets | Yes | Yes | Yes | -- |
-
-- **View tickets** is available to everyone. All users can see tickets so they can track customer issues.
-- **Create or update tickets** is also available to everyone. Any user can open a new ticket or update an existing one with new information. This is important because Agents are often the first people to hear about a customer problem.
-- **Delete or archive tickets** lets you remove or archive old tickets. Agents cannot do this -- only Owners, Admins, and Managers can. This prevents Agents from accidentally (or intentionally) deleting ticket history.
+| Create/update tickets | Yes | Yes | Yes | Yes |
+| Delete/archive tickets | Yes | Yes | Yes | No |
 
 ### Workflows and bots
 
-These permissions control who can set up and manage automated workflows and AI bot configuration.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Create or edit workflows | Yes | Yes | -- | -- |
-| View workflows | Yes | Yes | Yes | -- |
-| Manage bots (AI config) | Yes | Yes | -- | -- |
-
-- **Create or edit workflows** means building new automation flows or changing existing ones. Only Owners and Admins can do this because workflows directly affect how calls are routed and processed.
-- **View workflows** lets you see what workflows exist and how they are configured, without being able to change them. Managers can view workflows so they understand how calls flow through the system.
-- **Manage bots (AI config)** means creating, editing, or deleting AI bot configurations (Super Human bots). Only Owners and Admins can do this because bots interact directly with customers.
+|-----------|-------|-------|---------|-------|
+| Create/edit workflows | Yes | Yes | No | No |
+| View workflows | Yes | Yes | Yes | No |
+| Manage bots (AI config) | Yes | Yes | No | No |
 
 ### CRM
 
-These permissions control who can work with the built-in customer relationship management system (contacts, companies, leads, and deals).
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| View contacts, companies, and deals | Yes | Yes | Yes | Yes |
-| Create or edit CRM records | Yes | Yes | Yes | -- |
-| Delete CRM records | Yes | Yes | -- | -- |
-| Customize fields and pipelines | Yes | Yes | -- | -- |
-| Assign records to users | Yes | Yes | Yes | -- |
-
-- **View contacts, companies, and deals** is available to everyone. All users can browse the CRM to look up customer information. Agents need this to see who they are talking to on a call.
-- **Create or edit CRM records** means adding a new contact, company, lead, or deal, or updating the details of an existing one. Owners, Admins, and Managers can do this. Agents can view records but cannot create or change them.
-- **Delete CRM records** means permanently removing a contact, company, lead, or deal. Only Owners and Admins can do this. Deleting a CRM record is destructive and cannot be undone.
-- **Customize fields and pipelines** means adding custom fields to contacts or deals, creating new pipeline stages, or changing how the CRM is structured. Only Owners and Admins can do this because it affects how data is organized for the entire organisation.
-- **Assign records to users** means linking a contact, lead, or deal to a specific team member so they are responsible for it. Owners, Admins, and Managers can do this. Agents cannot assign records because that is a supervisory action.
+|-----------|-------|-------|---------|-------|
+| View contacts/companies/deals | Yes | Yes | Yes | Yes |
+| Create/edit CRM records | Yes | Yes | Yes | Yes |
+| Delete CRM records | Yes | Yes | Yes | No |
+| Customize fields and pipelines | Yes | Yes | No | No |
+| Assign to users | Yes | Yes | Yes | No |
 
 ### API and integrations
 
-These permissions control who can manage programmatic access to your Astradial account.
-
 | Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Create or revoke API keys | Yes | Yes | -- | -- |
-| View API keys | Yes | Yes | Yes | -- |
-| Manage webhooks | Yes | Yes | -- | -- |
+|-----------|-------|-------|---------|-------|
+| Create/revoke API keys | Yes | Yes | No | No |
+| View API keys | Yes | Yes | No | No |
+| Manage webhooks | Yes | Yes | No | No |
 
-- **Create or revoke API keys** means generating new keys for external integrations or revoking existing ones. Only Owners and Admins can do this.
-- **View API keys** means seeing which API keys exist (but not necessarily their full values). Managers can view this so they understand what integrations are connected.
-- **Manage webhooks** means setting up webhook endpoints that receive real-time notifications about events (like new calls or tickets). Only Owners and Admins can do this because webhooks send data to external systems.
+## View permissions in the dashboard
 
-<Warning>
-  API keys give external applications direct access to your data. Treat them like passwords. Only create them when you actually need an integration, and revoke any keys that are no longer in use.
-</Warning>
-
-### Compliance and audit
-
-These permissions control who can manage data retention, audit logs, and regulatory compliance features.
-
-| Permission | Owner | Admin | Manager | Agent |
-| --- | :---: | :---: | :---: | :---: |
-| Set retention policy | Yes | Yes | -- | -- |
-| View audit log | Yes | Yes | Yes | -- |
-| Export data (DPDP) | Yes | Yes | -- | -- |
-| Handle erasure requests | Yes | Yes | -- | -- |
-
-- **Set retention policy** means defining how long call recordings, logs, and other data are kept before they are automatically deleted. Only Owners and Admins can change this because it affects legal compliance.
-- **View audit log** means seeing a record of who did what and when (e.g. "Admin created user john@example.com on 15 March"). Managers can view the audit log so they can review team activity.
-- **Export data (DPDP)** means downloading your organisation's data in a structured format, as required under data protection regulations. Only Owners and Admins can do this.
-- **Handle erasure requests** means processing requests from individuals who want their personal data deleted (a right under data protection law). Only Owners and Admins can do this because it is a legal and compliance action.
-
----
-
-## How to view permissions in the platform
-
-You do not need to memorise the tables above. The full permission matrix is built right into the Astradial dashboard. Here is how to find it.
-
-<Steps>
-  <Step title="Open the sidebar">
-    Look at the left side of your screen. You will see the navigation sidebar with sections like Configure, Monitor, Mini CRM, Automate, and Deploy.
-  </Step>
-  <Step title="Scroll to the bottom">
-    Scroll all the way to the bottom of the sidebar. Below the main navigation sections, you will see a group of links including **Role Permissions**, Request Feature, Raise Issue, and Guide.
-  </Step>
-  <Step title="Click Role Permissions">
-    Click the **Role Permissions** link (it has a shield icon next to it). This opens the full permissions page.
-  </Step>
-  <Step title="Read the matrix">
-    You will see a table with every single permission grouped by category. Each row shows a permission name, and the four columns (Owner, Admin, Manager, Agent) show a green checkmark if that role has the permission, or a grey X if it does not. At the top of the page, you will also see four summary cards showing each role name and how many total permissions it has.
-  </Step>
-</Steps>
-
-<Info>
-  If you are logged in, the permissions page will highlight your current role so you can quickly see exactly what you can and cannot do.
-</Info>
-
----
-
-## How to change a user's role
-
-If you need to promote someone (give them more access) or demote them (give them less access), you can change their role. Only Owners and Admins can do this.
-
-<Steps>
-  <Step title="Go to the Users page">
-    In the sidebar, go to the **Configure** section and click **Users**. You will see a table of everyone in your organisation.
-  </Step>
-  <Step title="Find the user">
-    Browse the table or use the search to find the person whose role you want to change. Note their current role in the Role column.
-  </Step>
-  <Step title="Open their profile">
-    Click on the user's name or row to open their profile details.
-  </Step>
-  <Step title="Change the role">
-    Look for the **Role** dropdown. Click it and select the new role you want to assign. The options you see depend on your own role:
-    - If you are an **Owner**, you can assign any role: Owner, Admin, Manager, or Agent.
-    - If you are an **Admin**, you can only assign Manager or Agent. You cannot promote someone to Admin or Owner.
-  </Step>
-  <Step title="Save">
-    Click the **Save** button. The change takes effect immediately. The next time that user refreshes their page, they will see the new set of permissions.
-  </Step>
-</Steps>
-
-<Warning>
-  Role changes take effect immediately. If you demote someone from Admin to Agent, they will lose access to most pages as soon as they refresh. Make sure you intend to make the change before clicking Save.
-</Warning>
-
----
-
-## Tips and best practices
-
-<Tip>
-  **Start new hires as Agents.** When someone joins your team, give them the Agent role first. This gives them everything they need to do their job (make calls, create tickets, view CRM) without exposing sensitive data. After they complete training and you trust them with more responsibility, promote them to Manager.
-</Tip>
-
-<Tip>
-  **Reserve the Owner role for business owners.** The Owner role should belong to the person who is ultimately responsible for the account -- usually the business owner or CEO. Do not give the Owner role to IT staff or team leads. If they need broad access, Admin is the right choice.
-</Tip>
-
-<Tip>
-  **Admin is perfect for IT managers.** If you have someone who sets up the phone system, manages users, and handles configuration, give them the Admin role. They will be able to do almost everything without having access to API secrets or the ability to assign the Owner role.
-</Tip>
-
-<Tip>
-  **Manager is ideal for supervisors.** If someone needs to listen to recordings for quality assurance, review call logs, and keep an eye on the team's work, the Manager role gives them exactly the right level of visibility without the ability to change configuration.
-</Tip>
-
-<Note>
-  You cannot delete the last Owner of an organisation. There must always be at least one Owner. If you want to transfer ownership, first assign the Owner role to the new person, then demote yourself.
-</Note>
-
----
-
-## Summary by role
-
-Here is a plain-language summary of what each role can do, so you can quickly decide which role to assign.
-
-<CardGroup cols={2}>
-  <Card title="Owner" icon="crown">
-    Everything. Full control over all settings, users, calls, recordings, CRM, tickets, workflows, bots, API keys, billing, compliance, and data exports. The master key.
-  </Card>
-  <Card title="Admin" icon="user-shield">
-    Almost everything. Can manage users, phone numbers, calls, recordings, CRM, tickets, workflows, bots, webhooks, and compliance. Cannot manage API secrets or assign the Owner role.
-  </Card>
-  <Card title="Manager" icon="users">
-    View and supervise. Can see all calls and recordings (listen only), view users, manage CRM records, work with tickets, view workflows, and read audit logs. Cannot change settings, download recordings, or manage users.
-  </Card>
-  <Card title="Agent" icon="headset">
-    Do the job. Can see their own calls, create and update tickets, use click-to-call, and view CRM contacts. Cannot see other people's calls, listen to recordings, or change any settings.
-  </Card>
-</CardGroup>
-
----
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Add team members" icon="user-plus" href="/users/add-users">
-    Ready to add your team? Learn how to create user accounts and assign roles.
-  </Card>
-  <Card title="Set up extensions" icon="phone" href="/users/extensions">
-    Configure softphone extensions so your team can make and receive calls.
-  </Card>
-</CardGroup>
+Go to **Role Permissions** in the sidebar to see the full permission matrix for your organization. Your current role is shown as a badge at the top of the page.

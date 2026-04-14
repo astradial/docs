@@ -1,95 +1,100 @@
 ---
-title: "Extensions and softphones"
-description: "Learn what extensions are, how to connect a softphone app, and how to start making calls from your computer or mobile phone."
-icon: "phone"
+title: "SIP extensions"
+description: "How SIP extensions work in Astradial — what they are, how to configure them, and how to connect a phone."
 ---
 
-## What is an extension?
+## What is a SIP extension?
 
-An extension is a short number -- like `1001` or `1002` -- that identifies a person in your organisation. Think of it like a room number in a building. If you want to reach someone, you dial their extension.
+A SIP extension is a short number (like 1001, 1002, 1003) that identifies a person or device in your phone system. When someone calls extension 1001, it rings the phone app registered to that extension.
 
-Every user in Astradial gets a unique extension when they are added. No two people can have the same extension, just like no two rooms have the same number.
+**SIP** stands for Session Initiation Protocol. It is the standard technology that makes internet phone calls work. When you register a SIP app (like Zoiper) with your extension credentials, your device connects to the Astradial server and can make and receive calls.
+
+## How extensions are assigned
+
+When you [create a user](/users/add-users), you give them an extension number. Astradial then:
+
+1. Creates a SIP endpoint on the Asterisk PBX server
+2. Generates a unique SIP password
+3. Deploys the configuration so calls to that extension number are routed correctly
+
+## Extension number conventions
+
+You can use any number for extensions, but here are common patterns:
+
+| Range | Typical use |
+|-------|------------|
+| 1000 - 1099 | Individual user extensions |
+| 5000 - 5099 | Call queue extensions |
+| 9000 - 9099 | Conference rooms |
 
 <Tip>
-  Extensions are only used for internal calls within your organisation. When someone calls your business from the outside, the call comes into your phone number (DID) and Astradial routes it to the right extension.
+  Keep your extension numbers consistent. For example, use 1001-1099 for people and 5001-5099 for queues. This makes it easy to remember.
 </Tip>
 
-## What is a softphone?
+## Connecting a SIP phone
 
-To actually make and receive calls, your team members need a **softphone app**. A softphone is just a phone app that runs on a computer or mobile phone instead of a physical desk phone.
+You can use any SIP-compatible phone app or hardware phone. Here are the most popular options:
 
-Popular softphone apps include:
+### Software phones (free)
 
-- **Zoiper** (Windows, Mac, iOS, Android) -- free version available
-- **Opal** (iOS, Android) -- simple and clean
-- **Opal VoIP** -- lightweight mobile option
-- **Opal SIP Client** -- another mobile-friendly option
+| App | Platform | QR Support |
+|-----|----------|-----------|
+| **Zoiper** | iOS, Android, Windows, Mac | Yes |
+| **Opal** | iOS | Yes |
+| **Linphone** | iOS, Android, Windows, Mac, Linux | No |
+| **MicroSIP** | Windows | No |
 
-<Info>
-  You can use any SIP-compatible softphone app. The ones listed above are just recommendations. If you already have a softphone you like, it will probably work with Astradial.
-</Info>
+### Hardware phones
 
-## Connection details
+Any SIP-compatible desk phone works with Astradial. Popular brands include:
+- Yealink
+- Grandstream
+- Polycom
+- Cisco SPA series
 
-To connect a softphone to Astradial, you need three pieces of information:
+## Registration settings
 
-| Detail             | What it is                                                       | Example              |
-| ------------------ | ---------------------------------------------------------------- | -------------------- |
-| **SIP server**     | The address of your Astradial PBX server                         | `pbx.astradial.com`  |
-| **Extension**      | The user's extension number                                      | `1001`               |
-| **SIP password**   | The password set when the user was created                       | (set during setup)   |
+When configuring a SIP phone manually, use these settings:
+
+| Setting | Value |
+|---------|-------|
+| **Protocol** | SIP |
+| **Server / Domain** | Your Astradial server IP or hostname |
+| **Port** | 5060 |
+| **Transport** | UDP |
+| **Username** | The Asterisk endpoint name (shown in SIP QR dialog) |
+| **Password** | The SIP password (shown in SIP QR dialog) |
+| **Auth Username** | Same as Username |
 
 <Note>
-  The SIP password is the same password you set when you added the user. If you forgot it, an admin can reset it from the Users page.
+  The SIP username is the **Asterisk endpoint name**, not the user's login username. You can find it in the SIP QR Code dialog for each user.
 </Note>
 
-## Setting up Zoiper (step by step)
+## Making your first call
 
-Here is how to set up Zoiper, one of the most popular softphone apps.
+Once your SIP phone is registered:
 
-<Steps>
-  <Step title="Download Zoiper">
-    Go to [zoiper.com](https://www.zoiper.com) and download the app for your device (Windows, Mac, iOS, or Android). Install it and open it.
-  </Step>
-  <Step title="Add a SIP account">
-    When Zoiper opens, it will ask you to set up an account. Choose **SIP account** (not IAX or other options).
-  </Step>
-  <Step title="Enter the server address">
-    In the **Domain** or **Server** field, enter your Astradial SIP server address. Your admin will provide this -- it looks something like `pbx.astradial.com`.
-  </Step>
-  <Step title="Enter your extension and password">
-    - In the **Username** field, enter your extension number (e.g. `1001`)
-    - In the **Password** field, enter your SIP password
-  </Step>
-  <Step title="Register">
-    Click **Register** or **Save**. Zoiper will try to connect to the server. If everything is correct, you will see a green status or a "Registered" message. That means you are connected and ready to make calls.
-  </Step>
-  <Step title="Test it">
-    Try calling another extension in your organisation. Pick up the softphone, dial their extension number (e.g. `1002`), and hit call. If their softphone rings, everything is working.
-  </Step>
-</Steps>
+1. **Call another extension** — Dial the extension number (like 1002) to call a colleague
+2. **Call an external number** — Dial the full phone number (with country code if needed). This requires an outbound trunk to be configured.
+3. **Receive a call** — When someone calls your phone number (DID) and it is routed to your extension, your phone will ring
 
 ## Troubleshooting
 
-<Warning>
-  If your softphone says "Registration failed" or "Forbidden", double-check these things:
-  - Is the SIP server address correct? No typos?
-  - Is the extension number correct?
-  - Is the password correct? Passwords are case-sensitive.
-  - Is your internet connection working?
-</Warning>
-
-<Tip>
-  If you are on a company network with a firewall, SIP traffic might be blocked. Ask your IT team to make sure SIP ports (5060 UDP and 5060 TCP) are open.
-</Tip>
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Make a call from the browser" icon="arrow-up-right-from-square" href="/calls/click-to-call">
-    You can also make calls directly from the Astradial dashboard without a softphone.
-  </Card>
-  <Card title="View your call history" icon="clock-rotate-left" href="/calls/call-history">
-    See all your incoming and outgoing calls in one place.
-  </Card>
-</CardGroup>
+<AccordionGroup>
+  <Accordion title="My SIP phone won't register">
+    - Double-check the server IP and port (5060)
+    - Make sure you are using the correct SIP password (not the login password)
+    - Check that UDP port 5060 is open on your server firewall
+    - Try using the SIP QR code instead of manual entry
+  </Accordion>
+  <Accordion title="I can register but calls have no audio">
+    - Make sure UDP ports 10000-10100 are open on your server
+    - Check that your server's public IP is correctly configured in Asterisk
+    - If using Docker on Mac, SIP audio does not work locally — use a remote server
+  </Accordion>
+  <Accordion title="Calls connect but the other person can't hear me">
+    - Check your microphone permissions in the SIP app
+    - Make sure you are not on mute
+    - This is usually a NAT issue — your server may need `external_media_address` configured in Asterisk
+  </Accordion>
+</AccordionGroup>

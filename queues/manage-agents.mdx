@@ -1,107 +1,52 @@
 ---
-title: "Manage queue agents"
-description: "Add and remove team members from a call queue, and understand how different ring strategies distribute calls to your agents."
-icon: "people-group"
+title: "Manage agents"
+description: "Add and remove agents from call queues to control who receives incoming calls."
 ---
 
-## What are queue agents?
+Agents are the users who answer calls in a queue. You need to add at least one agent to a queue before it can handle calls.
 
-An agent is simply a team member who answers calls in a queue. When a caller is waiting in line, the system picks one (or more) agents and rings their phone.
-
-A queue without agents is like a store with no staff -- customers are waiting, but nobody is there to help them. So after creating a queue, the first thing you should do is add agents.
-
-## How to add agents
+## Add agents to a queue
 
 <Steps>
-  <Step title="Open the Queues page">
-    In the left sidebar, click **Configure**, then click **Queues**. You will see a list of all your queues.
+  <Step title="Open the queue settings">
+    On the Queues page, click the three-dot menu on the queue and select **Edit**.
   </Step>
-
-  <Step title="Click on the queue">
-    Click on the queue you want to manage. This opens the queue detail view.
-
-    You will see a **Members** section. This shows everyone currently assigned to this queue. If you just created the queue, this section will be empty.
+  <Step title="Scroll to the Members section">
+    At the bottom of the edit dialog, you will see the current members list and an **Add member** dropdown.
   </Step>
-
-  <Step title="Add a member">
-    Click the dropdown that says **Select a user**. You will see a list of all users in your organisation.
-
-    Pick the person you want to add and click **Add**.
-
-    The person now appears in the Members list. Their phone will start ringing when calls come into this queue.
-
-    <Tip>
-      You can add as many agents as you need. There is no limit. The more agents you have, the faster calls get answered.
-    </Tip>
+  <Step title="Select a user">
+    Click the dropdown and select a user. Only active users who are not already in the queue are shown. The dropdown shows each user's name and extension.
   </Step>
-
-  <Step title="Repeat for everyone">
-    Add all the team members who should be answering calls in this queue. Just keep selecting users from the dropdown and clicking Add.
+  <Step title="The agent is added immediately">
+    The user appears in the members list. They will start receiving calls from this queue right away.
   </Step>
 </Steps>
 
-## How to remove agents
+## Remove an agent from a queue
 
-If someone leaves the team, changes roles, or should no longer answer calls for this queue, you can remove them.
-
-<Steps>
-  <Step title="Open the queue">
-    Go to **Configure** then **Queues** and click on the queue.
-  </Step>
-
-  <Step title="Find the agent">
-    In the Members section, find the person you want to remove.
-  </Step>
-
-  <Step title="Click the X">
-    Click the **X** button next to their name. They are immediately removed from the queue.
-
-    They will no longer receive calls from this queue. Their personal extension still works normally -- this only affects the queue.
-  </Step>
-</Steps>
+1. Open the queue's edit dialog
+2. Find the agent in the Members list
+3. Click the **X** button next to their name
+4. The agent is removed and will no longer receive calls from this queue
 
 <Note>
-  Removing someone from a queue does not delete their user account. It just means they will not get calls from this particular queue anymore. You can always add them back later.
+  Removing an agent from a queue does not delete their user account. They just stop receiving calls from that specific queue. They can still be in other queues.
 </Note>
 
-## Ring strategies explained
+## How call distribution works
 
-The ring strategy controls how the system picks which agent to ring when a call is waiting. Here is how each one works.
+When a call enters a queue, Astradial checks which agents are available and uses the queue's strategy to decide who to ring:
 
-### Ring All
+1. The queue checks all members
+2. It filters out agents who are already on a call, paused, or unavailable
+3. It applies the strategy (Ring All, Round Robin, etc.) to pick which agent(s) to ring
+4. If the agent doesn't answer within the ring timeout, it tries the next agent
+5. If no agent answers within the max wait time, the call goes to the timeout destination (if configured)
 
-Every single agent in the queue gets rung at the same time. The first person to pick up their phone gets the call. Everyone else's phone stops ringing.
+## Best practices
 
-Think of it like shouting "who wants to take this call?" in an open office. Whoever grabs the phone first wins.
-
-**Best for:** Small teams (2-5 people) where you want the fastest possible answer time.
-
-### Round Robin
-
-The system takes turns. It keeps track of who answered the last call, and the next call goes to the next person in line.
-
-Think of it like dealing cards. Person A gets the first call, person B gets the second, person C gets the third, then it loops back to person A.
-
-**Best for:** Even workload distribution. Everyone gets roughly the same number of calls.
-
-### Least Recent
-
-The system looks at who has not answered a call in the longest time, and rings that person first.
-
-Think of it like a teacher calling on the student who has not raised their hand in a while. It makes sure everyone participates.
-
-**Best for:** Larger teams where you want to prevent one person from getting swamped while others sit idle.
-
-<Info>
-  You can change the ring strategy at any time by editing the queue. The change takes effect on the very next call — no restart or downtime needed.
-</Info>
-
-## Tips for managing agents
-
-<Warning>
-  If all agents in a queue are offline or unavailable, callers will wait in the queue until the max wait time runs out. Make sure you always have enough agents assigned and online during your business hours.
-</Warning>
-
-<Tip>
-  A person can be in multiple queues at the same time. For example, Sarah can be in both the "Sales" queue and the "Support" queue. She will receive calls from both.
-</Tip>
+- **Add at least 2-3 agents** to each queue so there is always someone available
+- **Use Ring All strategy** for small teams (under 5 agents) so the fastest person answers
+- **Use Round Robin** for larger teams to distribute calls evenly
+- **Set a timeout destination** so calls don't get lost if all agents are busy
+- **Monitor queue performance** from the Calls page to see wait times and abandoned calls

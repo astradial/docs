@@ -26,19 +26,24 @@
             ]
           },
           {
-            "group": "Phone numbers",
+            "group": "Users and teams",
             "pages": [
-              "phone-numbers/buy-a-number",
-              "phone-numbers/configure-routing",
-              "phone-numbers/manage-numbers"
+              "users/add-users",
+              "users/extensions",
+              "users/roles-permissions"
             ]
           },
           {
-            "group": "Users & teams",
+            "group": "Phone numbers",
             "pages": [
-              "users/add-users",
-              "users/roles-permissions",
-              "users/extensions"
+              "phone-numbers/manage-numbers",
+              "phone-numbers/configure-routing"
+            ]
+          },
+          {
+            "group": "SIP trunks",
+            "pages": [
+              "trunks/manage-trunks"
             ]
           },
           {
@@ -46,8 +51,8 @@
             "pages": [
               "calls/call-history",
               "calls/recordings",
-              "calls/click-to-call",
-              "calls/live-monitoring"
+              "calls/live-monitoring",
+              "calls/click-to-call"
             ]
           },
           {
@@ -82,7 +87,7 @@
         ]
       },
       {
-        "tab": "AI & Automation",
+        "tab": "AI and automation",
         "groups": [
           {
             "group": "AI bots",
@@ -117,6 +122,11 @@
     "global": {
       "anchors": [
         {
+          "anchor": "GitHub",
+          "href": "https://github.com/astradial/astradial",
+          "icon": "github"
+        },
+        {
           "anchor": "Website",
           "href": "https://www.astradial.com",
           "icon": "globe"
@@ -139,6 +149,7 @@
   },
   "footer": {
     "socials": {
+      "github": "https://github.com/astradial/astradial",
       "website": "https://www.astradial.com"
     }
   }
