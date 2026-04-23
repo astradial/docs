@@ -1,0 +1,114 @@
+---
+title: "Queues API"
+description: "Create call queues, add members, configure ring strategy and timeout."
+---
+
+A queue holds callers in MOH while distributing incoming calls to available agents.
+
+## Authentication
+
+JWT or API key with `queues.*` permission.
+
+## List queues
+
+```
+GET /api/v1/queues
+```
+
+```bash
+curl -X GET https://your-server:8000/api/v1/queues \
+  -H "Authorization: Bearer $JWT"
+```
+
+## Create a queue
+
+```
+POST /api/v1/queues
+```
+
+```bash
+curl -X POST https://your-server:8000/api/v1/queues \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "number": "5099",
+    "name": "Sales Queue",
+    "ring_strategy": "ringall",
+    "timeout": 30,
+    "timeout_destination_type": "voicemail",
+    "timeout_destination": "1001",
+    "moh_class": "default"
+  }'
+```
+
+| Field | Type | Notes |
+|---|---|---|
+| `number` | string | 4-digit, unique within org |
+| `name` | string | |
+| `ring_strategy` | string | `ringall`, `linear`, `rrmemory`, `leastrecent`, `fewestcalls` |
+| `timeout` | number | Seconds to ring before falling through |
+| `timeout_destination_type` | string | `extension`, `queue`, `ivr`, `voicemail`, `external`, `phone`, `hangup` |
+| `timeout_destination` | string | Destination value, format depends on type |
+| `moh_class` | string | Music-on-hold class name |
+
+## Update a queue
+
+```
+PUT /api/v1/queues/{id}
+```
+
+```bash
+curl -X PUT https://your-server:8000/api/v1/queues/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"timeout": 60}'
+```
+
+## Delete a queue
+
+```
+DELETE /api/v1/queues/{id}
+```
+
+```bash
+curl -X DELETE https://your-server:8000/api/v1/queues/<id> \
+  -H "Authorization: Bearer $JWT"
+```
+
+## Queue members
+
+### List members
+
+```
+GET /api/v1/queues/{id}/members
+```
+
+### Add a member
+
+```
+POST /api/v1/queues/{id}/members
+```
+
+```bash
+curl -X POST https://your-server:8000/api/v1/queues/<id>/members \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"extension":"1001","penalty":0}'
+```
+
+`penalty` controls ring priority — lower values ring first. Useful for tiered support.
+
+### Remove a member
+
+```
+DELETE /api/v1/queues/{id}/members/{extension}
+```
+
+```bash
+curl -X DELETE https://your-server:8000/api/v1/queues/<id>/members/1001 \
+  -H "Authorization: Bearer $JWT"
+```
+
+## Publish changes
+
+Queue save/update/delete automatically regenerate the dialplan — no separate publish call needed.

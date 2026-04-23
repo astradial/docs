@@ -11,7 +11,7 @@ When someone calls your phone number, Astradial needs to know where to send that
 |------|------------|-------------------|
 | **Extension** | Ring a specific person's SIP phone | 1001 |
 | **Queue** | Put the caller in a call queue | 5001 |
-| **IVR** | Connect to an interactive voice menu | Custom IVR path |
+| **IVR** | Connect to an interactive voice menu | Select IVR from dropdown |
 | **AI Agent** | Connect to an AI voice bot via WebSocket | `wss://gateway.example.com/ws/...` |
 | **External** | Forward the call to an outside phone number | +919944421125 |
 
@@ -34,7 +34,7 @@ When someone calls your phone number, Astradial needs to know where to send that
     Depending on the type you chose:
     - **Extension** — Select a user from the dropdown (shows their extension and name)
     - **Queue** — Select a queue from the dropdown (shows queue number and name)
-    - **IVR** — Enter the IVR destination path
+    - **IVR** — Select an IVR from the dropdown (shows IVR extension and name). Must be a **published** IVR.
     - **AI Agent** — Enter the WebSocket URL for your bot
     - **External** — Enter the full phone number
   </Step>
@@ -58,6 +58,15 @@ Put callers in line and distribute to available agents:
 
 - **Routing type:** Queue
 - **Destination:** 5001 (your support queue)
+
+### Route to an IVR
+
+Play a menu and let the caller pick:
+
+- **Routing type:** IVR
+- **Destination:** Pick your IVR from the dropdown
+
+See [Create an IVR](/ivr/create-ivr) if you haven't built one yet. An IVR must be **published** before it shows up in the dropdown.
 
 ### Route to an AI bot
 

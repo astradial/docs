@@ -1,0 +1,125 @@
+---
+title: "IVR menu routing"
+description: "Design digit options, nest IVRs, handle invalid input, and enable direct extension dial."
+---
+
+Menu routing is the heart of your IVR. Each digit maps to a destination. Design it well and callers reach the right person fast.
+
+## Action types
+
+| Action | What happens | Destination format |
+|---|---|---|
+| **Extension** | Rings a SIP extension | 4-digit extension number (e.g. `1001`) |
+| **Queue** | Places caller in a queue | Queue number (e.g. `5001`) |
+| **IVR** | Nests into another IVR menu | UUID of another IVR (picked from dropdown) |
+| **Voicemail** | Sends to voicemail | Extension's voicemail box |
+| **Hangup** | Ends the call immediately | (none) |
+| **Callback** | Records callback request, ends call | (none) |
+| **AI Agent** | Connects to an AI voice bot | WebSocket URL or AI agent user UUID |
+
+## Design guidelines
+
+### Use no more than 4-5 options
+
+Callers can't memorize long menus. If you have more departments, use nested IVRs.
+
+```
+Main Menu (max 4 options)
+├─ 1. Sales          → Queue 5001
+├─ 2. Support        → Nested IVR "Support Menu"
+│                       ├─ 1. Technical    → Queue 5011
+│                       ├─ 2. Billing      → Queue 5012
+│                       └─ 3. Returns      → Queue 5013
+├─ 3. Voicemail      → Voicemail 1000
+└─ 0. Operator       → Extension 1001
+```
+
+### Use 0 for the operator
+
+Standard convention: `0` always reaches a live person. Callers expect this.
+
+### Use `*` for "repeat menu" or "go back"
+
+Reserve `*` for navigation rather than a destination:
+
+- In a nested IVR — `*` = go back to parent menu.
+- In the main menu — `*` = repeat the greeting.
+
+Astradial plays the greeting again on `*` automatically if no option is assigned.
+
+### Don't assign all digits
+
+Leave unassigned digits invalid — callers who press them hear "invalid option" and get re-prompted. This is better than accidentally routing a fat-fingered `7` to a production destination.
+
+## Handling no-response
+
+If a caller doesn't press anything within the **Timeout** (default 10s), the greeting repeats. After **Max retries** (1 / 2 / 3 attempts), the call hangs up with a goodbye message.
+
+Tune timeout + retries to your audience:
+
+| Caller type | Timeout | Max retries |
+|---|---|---|
+| Business customers | 10s | 2 |
+| Elderly callers | 15s | 3 |
+| Rushed callers (delivery, etc.) | 5s | 1 |
+
+## Handling invalid input
+
+When a caller presses an unassigned digit, Astradial plays an "invalid option" prompt and re-asks. After the configured max retries, the call is ended with a goodbye.
+
+You can customize the invalid prompt via the IVR settings → **Invalid prompt** field.
+
+## Direct extension dial
+
+Enable **Direct extension dial** on the IVR settings to let callers punch in any 4-digit extension while the greeting is playing or during the wait period. The call jumps directly to that extension — bypassing the menu.
+
+Useful when you have a known caller base (staff, regular clients) who know the extension of the person they want.
+
+<Note>
+Direct extension dial works with numeric extensions only (e.g. `1001`, `2342`). It does not match patterns or prefix numbers.
+</Note>
+
+## Callback routing
+
+Selecting **Callback** as the action records the caller's number and ends the call. They don't wait on hold — you call them back.
+
+How to retrieve callbacks:
+
+- They appear in the **Tickets** section of the dashboard, tagged `callback-requested`.
+- The caller ID and timestamp are preserved.
+- Route your callback queue or bot to process them.
+
+## AI Agent routing
+
+Pick **AI Agent** to hand the call off to a Pipecat-based voice bot. Two destination formats are supported:
+
+- **WebSocket URL** — `wss://gateway.astradial.com/ws/your-bot-id`
+- **AI agent user UUID** — refers to an AI agent configured as a "user" in your org (recommended — the WebSocket URL is resolved automatically).
+
+## Nesting IVRs
+
+To build nested menus, create the child IVR first (e.g. "Support Menu" at extension 7011), then in the parent IVR assign a digit with action type **IVR** and pick the child from the dropdown.
+
+Call flow:
+
+1. Caller hears parent greeting.
+2. Presses 2.
+3. Hears child greeting.
+4. Navigates the child menu.
+5. Reaches the final destination.
+
+<Warning>
+Don't create circular references (IVR A → IVR B → IVR A). Astradial will route the call correctly but callers get stuck bouncing between menus.
+</Warning>
+
+## Testing a menu
+
+Before publishing to customers:
+
+1. Route a test DID (or use click-to-call) to your IVR.
+2. Dial the IVR from your phone.
+3. Press each digit to confirm it routes correctly.
+4. Test no-response and invalid-digit behaviour.
+5. If nested — test the nested path end-to-end.
+
+For CI-style testing, use the [originate-AI API](/api-reference/originate-ai) to programmatically call the IVR and assert the response.

@@ -1,0 +1,74 @@
+---
+title: "IVR overview"
+description: "Interactive Voice Response menus let callers self-serve with DTMF keypad input — press 1 for sales, 2 for support, etc."
+---
+
+An **IVR (Interactive Voice Response)** is an automated menu that callers hear when they dial a phone number. They press a digit on their keypad to reach the right person or queue — no human receptionist required.
+
+## When to use an IVR
+
+Use an IVR when:
+
+- You want to route calls by department (sales, support, billing) without a human operator.
+- Call volume is high enough that a receptionist becomes a bottleneck.
+- You need 24/7 call handling — IVRs don't sleep.
+- You want to surface self-service options before connecting a caller to an agent.
+
+## What an IVR can do
+
+Each IVR has:
+
+- A **greeting** — TTS-generated audio that plays when the call connects.
+- Up to 10 **menu options** (digits 0-9) plus `*` and `#` — each routes to a destination.
+- A **timeout** — how long to wait for input before repeating the greeting.
+- **Max retries** — how many times to repeat before hanging up.
+- Optional **direct extension dial** — callers can dial an extension directly from inside the IVR.
+
+## Menu option destinations
+
+Each digit can route to:
+
+| Destination type | Example |
+|---|---|
+| **Extension** | Ring a specific person's SIP phone |
+| **Queue** | Put the caller in a call queue |
+| **IVR** | Nest into another IVR menu |
+| **Voicemail** | Send to voicemail |
+| **Hangup** | End the call with a message |
+| **Callback** | Request a callback, end the call |
+| **AI Agent** | Connect to an AI voice bot |
+
+## Example flow
+
+```
+Caller dials +91 80 6597 8001
+  ↓
+IVR "Main menu" plays greeting:
+  "Welcome to Acme. Press 1 for sales, 2 for support, 3 for billing."
+  ↓
+Caller presses 2
+  ↓
+Call routes to queue 5002 (support)
+  ↓
+Next available support agent's SIP phone rings
+```
+
+## Lifecycle
+
+1. **Create** the IVR with a name, extension, and settings.
+2. **Record or generate** the greeting (TTS).
+3. **Build the menu** — assign digits to destinations.
+4. **Publish** the IVR to make it live on the dialplan.
+5. **Route a phone number** (DID) to the IVR.
+
+<Tip>
+Changes to an IVR take effect only after you click **Publish** — saving alone does not update the live dialplan.
+</Tip>
+
+## Related pages
+
+- [Create an IVR](/ivr/create-ivr) — step-by-step guide to the visual builder.
+- [IVR greetings and TTS](/ivr/greetings) — generate audio from text.
+- [Menu routing](/ivr/menu-routing) — design the digit options.
+- [Configure phone number routing](/phone-numbers/configure-routing) — point a DID at your IVR.
+- [IVR API reference](/api-reference/ivrs) — programmatic access.

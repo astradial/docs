@@ -63,6 +63,15 @@
             ]
           },
           {
+            "group": "IVR",
+            "pages": [
+              "ivr/overview",
+              "ivr/create-ivr",
+              "ivr/greetings",
+              "ivr/menu-routing"
+            ]
+          },
+          {
             "group": "Tickets",
             "pages": [
               "tickets/overview",
@@ -108,15 +117,33 @@
         "tab": "API",
         "groups": [
           {
-            "group": "API reference",
+            "group": "Getting started",
             "pages": [
-              "api-reference/authentication",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Calls",
+            "pages": [
               "api-reference/click-to-call",
               "api-reference/call-management",
               "api-reference/originate-ai"
             ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "api-reference/users",
+              "api-reference/phone-numbers",
+              "api-reference/queues",
+              "api-reference/ivrs"
+            ]
           }
         ]
+      },
+      {
+        "tab": "Playground",
+        "href": "https://devpbx.astradial.com/reference"
       }
     ],
     "global": {

@@ -1,0 +1,88 @@
+---
+title: "IVR greetings and TTS"
+description: "Generate IVR greetings from text using Google Cloud TTS — multiple languages, voice styles, and regeneration without re-recording."
+---
+
+Astradial uses Google Cloud Text-to-Speech to generate IVR greetings from the text you type. No studio recording needed.
+
+## How it works
+
+1. You enter text in the greeting node of the IVR builder.
+2. Pick a language and voice.
+3. Click **Generate greeting** — Astradial calls Google TTS and saves a `.wav` file to the server.
+4. When a call hits the IVR, Asterisk plays this `.wav` as the greeting.
+
+The filename and reference are stored on the IVR record in the database — no manual file management required.
+
+## Supported languages
+
+Any Google Cloud TTS language code works. Common ones:
+
+| Language | Code | Example voice |
+|---|---|---|
+| English (India) | `en-IN` | `en-IN-Wavenet-D` |
+| English (US) | `en-US` | `en-US-Wavenet-D` |
+| English (UK) | `en-GB` | `en-GB-Wavenet-A` |
+| Hindi (India) | `hi-IN` | `hi-IN-Wavenet-A` |
+| Tamil (India) | `ta-IN` | `ta-IN-Wavenet-A` |
+| Telugu (India) | `te-IN` | `te-IN-Standard-A` |
+
+<Note>
+The full list of Google TTS voices is at [cloud.google.com/text-to-speech/docs/voices](https://cloud.google.com/text-to-speech/docs/voices). Any voice name listed there is supported.
+</Note>
+
+## Voice types
+
+- **Wavenet** voices (`*-Wavenet-*`) — highest quality, neural TTS. Recommended for production.
+- **Standard** voices (`*-Standard-*`) — lower quality but faster and cheaper. Good for testing.
+- **Neural2** voices — Google's newer TTS. Supported if the voice name is correct.
+
+## Writing good IVR text
+
+### Keep it short
+
+Aim for under 15 seconds of audio. That's about 40 words at a normal speaking pace.
+
+✅ "Welcome to Acme. Press 1 for sales, 2 for support, 3 for billing."
+
+❌ "Hello and thank you for calling Acme Corporation, the leading provider of... [30 seconds of options]"
+
+### Speak the menu structure explicitly
+
+Callers can't see your UI. Read every option out loud.
+
+✅ "Press 1 for sales, 2 for support, or press star to repeat this menu."
+
+❌ "Please select from the following options." (What options?)
+
+### Pronunciation hints
+
+Google TTS handles most text well. For tricky words:
+
+- **Acronyms**: Space out letters: `A B N` instead of `ABN`.
+- **Phone numbers**: Spell out the country code: "plus nine one" for +91.
+- **Proper nouns**: If the TTS mispronounces a name, try phonetic spelling: "Rahool" instead of "Rahul".
+
+## Previewing before saving
+
+Click **Preview** next to the voice dropdown to hear the current text spoken. This plays in your browser and does NOT save the audio to the server.
+
+Useful for testing phrasing and voice choice before the production generate call.
+
+## Regenerating
+
+You can regenerate any time by editing the text/voice/language and clicking **Generate greeting** again. The new `.wav` overwrites the old one.
+
+<Warning>
+Regenerating does NOT automatically redeploy the dialplan. If your IVR is already live, click **Publish** after regenerating so the new greeting is picked up by Asterisk.
+</Warning>
+
+## Fallback if TTS fails
+
+If Google TTS returns an error (quota, invalid voice name, network issue), the IVR record is still updated but no `.wav` is written. Callers will hear Asterisk's default "welcome" sound.
+
+Fix: correct the language/voice/text and click **Generate greeting** again.
+
+## Generating greetings via API
+
+For scripted provisioning — see the [IVR API reference](/api-reference/ivrs#generate-greeting).

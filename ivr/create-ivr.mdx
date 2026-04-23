@@ -1,0 +1,121 @@
+---
+title: "Create an IVR"
+description: "Build an IVR using the visual node editor — set extension, greeting, menu options, and publish."
+---
+
+Creating an IVR takes about 5 minutes. You'll use the visual node editor to design the menu, then publish it to the live dialplan.
+
+## Prerequisites
+
+- Your organization is active in the Astradial dashboard.
+- You have at least one extension, queue, or external number you want the IVR to route to.
+
+## Step 1 — Open the IVR section
+
+<Steps>
+  <Step title="Navigate to IVR">
+    Click **IVR** (the route icon) in the sidebar, under the **Configure** section.
+  </Step>
+  <Step title="Click New IVR">
+    Top-right of the IVR list. Opens the visual builder.
+  </Step>
+</Steps>
+
+## Step 2 — Set the basics
+
+In the **Settings** panel on the right:
+
+| Field | What to enter |
+|---|---|
+| **Name** | Human-readable label, e.g. "Main Menu" |
+| **Extension** | 4-digit internal number, e.g. `7001`. Must be unique within your org. |
+| **Description** | Optional short note |
+| **Timeout (s)** | How many seconds to wait for a digit after the greeting plays (default 10). Set to 0 for wait-forever. |
+| **Max retries** | Dropdown: 1 / 2 / 3 attempts. Greeting repeats on no-response, hangs up after N. |
+| **Direct extension dial** | If enabled, callers can dial any 4-digit extension directly from inside the IVR without going through a menu option. |
+
+Click **Save settings**.
+
+## Step 3 — Generate the greeting
+
+Select the **Greeting** node in the visual builder.
+
+1. Pick a **Language** (English India, English US, Hindi, etc.).
+2. Pick a **Voice** (Wavenet D is a good default).
+3. Type the greeting text, e.g.:
+   > Welcome to Acme. Press 1 for sales, 2 for support, 3 for billing. To repeat this menu, press star.
+4. Click **Preview** to hear the TTS output in your browser.
+5. When you're happy, click **Generate greeting**. The audio is saved as a `.wav` file on the server and stored on the IVR record.
+
+<Note>
+You can regenerate the greeting any time — the new audio replaces the old one. Previewing the voice does not overwrite the saved greeting.
+</Note>
+
+## Step 4 — Add menu options
+
+For each digit (1-9, 0, `*`, `#`):
+
+<Steps>
+  <Step title="Click +Add option on the Menu node">
+    A new option row appears.
+  </Step>
+  <Step title="Pick the digit">
+    1 through 9, or `*` / `#` / `0`.
+  </Step>
+  <Step title="Choose action type">
+    Extension, Queue, IVR, Voicemail, Hangup, Callback, or AI Agent.
+  </Step>
+  <Step title="Pick the destination">
+    Dropdown shows only valid targets for the selected action type. E.g. picking "Queue" shows your org's queues by number and name.
+  </Step>
+  <Step title="Add a description">
+    Optional — shows up in call logs so you can tell which menu option a caller chose.
+  </Step>
+</Steps>
+
+Repeat for every digit you want to route.
+
+## Step 5 — Publish
+
+Click **Publish** (top-right).
+
+This regenerates your organization's dialplan and tells the PBX about the new IVR. Until you publish, the IVR is only a draft — calls to any phone number routed to it will hear "number not in service".
+
+<Tip>
+Watch for the "Configuration deployed" toast. If it doesn't appear, the publish failed — check the Settings page's server logs or contact support.
+</Tip>
+
+## Step 6 — Point a phone number at the IVR
+
+Go to **Phone Numbers** in the sidebar, open your DID's routing settings, set:
+
+- **Routing type**: IVR
+- **Destination**: pick your new IVR from the dropdown (shows as `<extension> — <name>`)
+
+Save. The next call to that DID will hit your IVR.
+
+## Troubleshooting
+
+### The call connects but no greeting plays
+
+Most common cause: the greeting wasn't actually generated. Open the IVR, confirm a `.wav` file URL is set on the greeting node. If not, click **Generate greeting**.
+
+Second most common cause: the IVR was saved but not published. Click **Publish** and retry the call.
+
+### Digit presses don't route
+
+Make sure you clicked **Save** on each menu option AND **Publish** after adding them. The visual builder shows unsaved changes with an unsaved indicator.
+
+### "Number not in service" when calling the DID
+
+The DID's routing is set but the IVR isn't published. Publish the IVR, then try again.
+
+### The IVR hangs up immediately
+
+Check your **Timeout** setting — if it's set to 0 the call waits forever (correct), but if it's set to something tiny (1-2s) callers don't have time to press.
+
+## What's next
+
+- [Add greetings with TTS](/ivr/greetings) — customize voice and language.
+- [Design menu routing](/ivr/menu-routing) — best practices for digit assignment.
+- [IVR API reference](/api-reference/ivrs) — build IVRs via API.

@@ -1,0 +1,104 @@
+---
+title: "Phone numbers (DIDs) API"
+description: "List phone numbers assigned to your org and configure their routing."
+---
+
+DID = Direct Inward Dial. Your public phone numbers that accept inbound calls from the PSTN.
+
+## List your phone numbers
+
+```
+GET /api/v1/dids
+```
+
+```bash
+curl -X GET https://your-server:8000/api/v1/dids \
+  -H "Authorization: Bearer $JWT"
+```
+
+**Response:**
+```json
+[
+  {
+    "id": "b71f116a-2b3c-11f1-9598-00505661ece1",
+    "number": "+918065978001",
+    "routing_type": "ivr",
+    "routing_destination": "2d7a59e9-4304-4032-a0c1-f8df2429751c",
+    "description": "Main line",
+    "status": "active"
+  }
+]
+```
+
+For `routing_type=ivr`, `routing_destination` is an IVR UUID. For `extension`/`queue` it's the 4-digit number. For `external` it's a phone number.
+
+## Update routing for a DID
+
+```
+PUT /api/v1/dids/{id}
+```
+
+```bash
+# Route to an extension
+curl -X PUT https://your-server:8000/api/v1/dids/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"routing_type":"extension","routing_destination":"1001"}'
+
+# Route to a queue
+curl -X PUT https://your-server:8000/api/v1/dids/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"routing_type":"queue","routing_destination":"5001"}'
+
+# Route to an IVR (destination must be an IVR UUID, not extension)
+curl -X PUT https://your-server:8000/api/v1/dids/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"routing_type":"ivr","routing_destination":"2d7a59e9-4304-4032-a0c1-f8df2429751c"}'
+
+# Forward to an external number
+curl -X PUT https://your-server:8000/api/v1/dids/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"routing_type":"external","routing_destination":"+919944421125"}'
+
+# Hand off to an AI agent
+curl -X PUT https://your-server:8000/api/v1/dids/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"routing_type":"ai_agent","routing_destination":"wss://gateway.astradial.com/ws/bot-id"}'
+```
+
+| `routing_type` | `routing_destination` format |
+|---|---|
+| `extension` | 4-digit extension number (e.g. `1001`) |
+| `queue` | Queue number (e.g. `5001`) |
+| `ivr` | **IVR UUID** — NOT extension. Get from `/api/v1/ivrs`. |
+| `ai_agent` | WebSocket URL or AI agent user UUID |
+| `external` | E.164 phone number (e.g. `+919944421125`) |
+| `intercom` | Extension number for intercom page |
+
+Updates regenerate the dialplan automatically.
+
+<Warning>
+For `routing_type=ivr`, the destination MUST be the IVR's UUID. Using an extension number (e.g. `7001`) will fail silently and calls will get "number not in service". Always pull the UUID from the IVRs list first.
+</Warning>
+
+## Request a DID from the pool
+
+Only admins with available numbers can do this — typically self-serve in the dashboard.
+
+```
+POST /api/v1/did-pool/{id}/request
+```
+
+## Release a DID back to the pool
+
+```
+POST /api/v1/did-pool/{id}/release
+```
+
+## Get DIDs API with full detail
+
+For full admin-scoped operations (release to pool, approve, re-assign), see the DID Pool API endpoints in the admin section of your dashboard.

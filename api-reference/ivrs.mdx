@@ -1,0 +1,308 @@
+---
+title: "IVR API"
+description: "Create, update, publish, and delete IVRs programmatically. Generate TTS greetings via API."
+---
+
+The IVR API lets you provision IVRs, add menu options, generate greetings, and publish — everything the visual builder does in the dashboard, available over HTTP.
+
+## Authentication
+
+All endpoints require a JWT bearer token (from [`/auth/user-login`](/api-reference/authentication)) OR an API key with `ivr.*` permissions.
+
+```
+Authorization: Bearer <jwt>
+# or
+X-API-Key: ak_your_api_key
+```
+
+All responses are scoped to your organization automatically.
+
+## List IVRs
+
+```
+GET /api/v1/ivrs
+```
+
+```bash
+curl -X GET https://your-server:8000/api/v1/ivrs \
+  -H "Authorization: Bearer <jwt>"
+```
+
+**Response:**
+```json
+[
+  {
+    "id": "2d7a59e9-4304-4032-a0c1-f8df2429751c",
+    "org_id": "7f3d2fd5-347e-4cc2-a2d0-a9a5e0f78f79",
+    "name": "Main Menu",
+    "extension": "7001",
+    "greeting_prompt": "greeting_ivr_2d7a59e9-4304-4032-a0c1-f8df2429751c",
+    "greeting_text": "Welcome to Acme. Press 1 for sales, 2 for support.",
+    "greeting_language": "en-IN",
+    "greeting_voice": "en-IN-Wavenet-D",
+    "timeout": 10,
+    "max_retries": 3,
+    "enable_direct_dial": false,
+    "status": "active",
+    "createdAt": "2026-04-23T10:00:00Z",
+    "updatedAt": "2026-04-23T10:30:00Z"
+  }
+]
+```
+
+## Get a single IVR (with menu options)
+
+```
+GET /api/v1/ivrs/{id}
+```
+
+Returns the IVR plus its menu options in the `menuOptions` array.
+
+```bash
+curl -X GET https://your-server:8000/api/v1/ivrs/2d7a59e9-4304-4032-a0c1-f8df2429751c \
+  -H "Authorization: Bearer <jwt>"
+```
+
+## Create an IVR
+
+```
+POST /api/v1/ivrs
+```
+
+```bash
+curl -X POST https://your-server:8000/api/v1/ivrs \
+  -H "Authorization: Bearer <jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Main Menu",
+    "extension": "7001",
+    "description": "Primary reception IVR",
+    "timeout": 10,
+    "max_retries": 3,
+    "enable_direct_dial": false,
+    "greeting_language": "en-IN",
+    "greeting_voice": "en-IN-Wavenet-D"
+  }'
+```
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `name` | string | Yes | |
+| `extension` | string | Yes | 4-digit, unique within org |
+| `description` | string | No | |
+| `timeout` | number | No | Seconds to wait for input. Default 10. `0` = wait forever. |
+| `max_retries` | number | No | Default 3. UI restricts to 1/2/3. |
+| `enable_direct_dial` | boolean | No | Default false. |
+| `greeting_language` | string | No | Default `en-IN` |
+| `greeting_voice` | string | No | Default `en-IN-Wavenet-D` |
+
+Creating an IVR does NOT automatically generate a greeting or publish it. Call [`/generate-greeting`](#generate-a-tts-greeting) and [`/publish`](#publish-an-ivr) separately.
+
+**Response (201):** the created IVR row.
+
+## Update an IVR
+
+```
+PUT /api/v1/ivrs/{id}
+```
+
+Same fields as create. All fields optional.
+
+```bash
+curl -X PUT https://your-server:8000/api/v1/ivrs/<id> \
+  -H "Authorization: Bearer <jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "timeout": 15,
+    "max_retries": 2
+  }'
+```
+
+Updates alone do NOT regenerate the dialplan. Call [`/publish`](#publish-an-ivr) when you're ready.
+
+## Delete an IVR
+
+```
+DELETE /api/v1/ivrs/{id}
+```
+
+```bash
+curl -X DELETE https://your-server:8000/api/v1/ivrs/<id> \
+  -H "Authorization: Bearer <jwt>"
+```
+
+Cascades to menu options. Greeting `.wav` file is also removed. The DID still has routing_type=ivr but the destination UUID is dead — calls will get "number not in service" until you reroute.
+
+## Save menu options
+
+```
+PUT /api/v1/ivrs/{id}/menu
+```
+
+Replaces ALL menu options for the IVR atomically.
+
+```bash
+curl -X PUT https://your-server:8000/api/v1/ivrs/<id>/menu \
+  -H "Authorization: Bearer <jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "options": [
+      {
+        "digit": "1",
+        "action_type": "queue",
+        "action_destination": "5001",
+        "description": "Sales",
+        "order": 1
+      },
+      {
+        "digit": "2",
+        "action_type": "extension",
+        "action_destination": "1001",
+        "description": "Receptionist",
+        "order": 2
+      },
+      {
+        "digit": "0",
+        "action_type": "hangup",
+        "action_destination": null,
+        "description": "End call",
+        "order": 3
+      }
+    ]
+  }'
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `digit` | string | Single char: `0`-`9`, `*`, `#` |
+| `action_type` | string | `extension`, `queue`, `ivr`, `voicemail`, `hangup`, `callback`, `ai_agent` |
+| `action_destination` | string or null | Destination value — format depends on `action_type` (see [Menu routing](/ivr/menu-routing#action-types)) |
+| `description` | string | Optional label |
+| `order` | number | Sort order in the UI |
+
+For `action_type=ivr`, the destination must be another IVR's UUID (not extension).
+For `action_type=hangup` or `callback`, destination is null.
+
+## Generate a TTS greeting
+
+```
+POST /api/v1/ivrs/{id}/generate-greeting
+```
+
+Calls Google Cloud TTS and saves the `.wav` to the server. Updates `greeting_prompt`, `greeting_text`, `greeting_language`, `greeting_voice` on the IVR.
+
+```bash
+curl -X POST https://your-server:8000/api/v1/ivrs/<id>/generate-greeting \
+  -H "Authorization: Bearer <jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Welcome to Acme. Press 1 for sales, 2 for support, 0 for operator.",
+    "language": "en-IN",
+    "voice": "en-IN-Wavenet-D"
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "greeting_prompt": "greeting_ivr_2d7a59e9-4304-4032-a0c1-f8df2429751c",
+  "language": "en-IN",
+  "voice": "en-IN-Wavenet-D"
+}
+```
+
+`text` is required. `language` + `voice` default to the IVR's current settings if omitted.
+
+This does NOT publish — call `/publish` to make the new greeting live.
+
+## Preview the generated audio
+
+```
+GET /api/v1/ivrs/{id}/greeting-audio
+```
+
+Returns the raw `.wav` as `audio/wav`. Useful for UI playback or QA automation.
+
+```bash
+curl -X GET https://your-server:8000/api/v1/ivrs/<id>/greeting-audio \
+  -H "Authorization: Bearer <jwt>" \
+  --output greeting.wav
+```
+
+## Publish an IVR
+
+```
+POST /api/v1/ivrs/{id}/publish
+```
+
+Triggers a full dialplan regeneration for your organization. The IVR and its menu options become live on the Asterisk dialplan. Any DIDs routed to this IVR will start ringing it on the next call.
+
+```bash
+curl -X POST https://your-server:8000/api/v1/ivrs/<id>/publish \
+  -H "Authorization: Bearer <jwt>"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Configuration deployed for organization Acme"
+}
+```
+
+Publish is idempotent. Safe to call multiple times.
+
+<Warning>
+Publishing regenerates the ENTIRE dialplan for your org, not just this IVR. If another user edited a queue or user extension without publishing, their changes will also go live with this publish. Coordinate with your team.
+</Warning>
+
+## Common error responses
+
+| Code | Meaning | Fix |
+|---|---|---|
+| `400` | Missing or invalid field | Check request body shape |
+| `401` | No auth | Add Authorization header |
+| `403` | Permission denied | Check API key permissions or user role |
+| `404` | IVR not found (or not in your org) | Verify UUID is correct |
+| `409` | Extension conflict | Another IVR/queue/extension in your org already uses this number |
+| `500` | Server error (usually TTS quota) | Retry or check TTS credentials |
+
+## End-to-end example: create a working IVR
+
+```bash
+# 1. Create the IVR
+IVR_ID=$(curl -sX POST https://your-server:8000/api/v1/ivrs \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Main","extension":"7099","timeout":10,"max_retries":3}' | jq -r .id)
+
+# 2. Generate the greeting
+curl -X POST https://your-server:8000/api/v1/ivrs/$IVR_ID/generate-greeting \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Welcome. Press 1 for sales, 2 for support.","language":"en-IN","voice":"en-IN-Wavenet-D"}'
+
+# 3. Add menu options
+curl -X PUT https://your-server:8000/api/v1/ivrs/$IVR_ID/menu \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"options":[
+    {"digit":"1","action_type":"queue","action_destination":"5001","description":"Sales","order":1},
+    {"digit":"2","action_type":"queue","action_destination":"5002","description":"Support","order":2}
+  ]}'
+
+# 4. Publish
+curl -X POST https://your-server:8000/api/v1/ivrs/$IVR_ID/publish \
+  -H "Authorization: Bearer $JWT"
+
+# 5. Route a DID to this IVR (use the DID management API)
+DID_ID=$(curl -sX GET https://your-server:8000/api/v1/dids \
+  -H "Authorization: Bearer $JWT" | jq -r '.[0].id')
+curl -X PUT https://your-server:8000/api/v1/dids/$DID_ID \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d "{\"routing_type\":\"ivr\",\"routing_destination\":\"$IVR_ID\"}"
+```
+
+Call the DID from a phone — you should hear your greeting, then routing works on digit press.

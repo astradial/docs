@@ -1,0 +1,139 @@
+---
+title: "Users API"
+description: "CRUD for SIP extensions / users — create, update, delete users and their call-routing settings."
+---
+
+Manage SIP extensions, user accounts, and their call-routing rules.
+
+## Authentication
+
+JWT bearer token or API key with `users.*` permission. See [Authentication](/api-reference/authentication).
+
+## List users
+
+```
+GET /api/v1/users
+```
+
+```bash
+curl -X GET https://your-server:8000/api/v1/users \
+  -H "Authorization: Bearer $JWT"
+```
+
+**Response:**
+```json
+[
+  {
+    "id": "20f84360-3b20-437c-8651-87cd7d36e859",
+    "org_id": "...",
+    "username": "org_example_1001",
+    "extension": "1001",
+    "full_name": "Hari Surya",
+    "email": "hari@example.com",
+    "role": "admin",
+    "status": "active",
+    "call_recording": true,
+    "ring_target": "sip",
+    "phone_number": null,
+    "outbound_did": null,
+    "created_at": "2026-03-01T00:00:00Z"
+  }
+]
+```
+
+## Create a user
+
+```
+POST /api/v1/users
+```
+
+```bash
+curl -X POST https://your-server:8000/api/v1/users \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "extension": "1099",
+    "full_name": "Alice Agent",
+    "email": "alice@example.com",
+    "role": "agent",
+    "ring_target": "sip",
+    "call_recording": true
+  }'
+```
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `extension` | string | Yes | 4-digit, unique within org |
+| `full_name` | string | Yes | |
+| `email` | string | Yes | Must be unique across all Astradial accounts |
+| `role` | string | No | `owner`, `admin`, `supervisor`, `agent`. Default `agent`. |
+| `ring_target` | string | No | `sip` (SIP phone) or `phone` (external number). Default `sip`. |
+| `phone_number` | string | If `ring_target=phone` | E.164 format |
+| `call_recording` | boolean | No | Default inherits org setting |
+| `outbound_did` | string | No | Per-user caller ID override |
+
+**Response (201):** the created user, plus auto-generated SIP credentials you'll use to register a softphone.
+
+## Update a user
+
+```
+PUT /api/v1/users/{id}
+```
+
+All fields optional. Dialplan regenerates automatically on change.
+
+```bash
+curl -X PUT https://your-server:8000/api/v1/users/<id> \
+  -H "Authorization: Bearer $JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"ring_target":"phone","phone_number":"+919944421125"}'
+```
+
+## Delete a user
+
+```
+DELETE /api/v1/users/{id}
+```
+
+```bash
+curl -X DELETE https://your-server:8000/api/v1/users/<id> \
+  -H "Authorization: Bearer $JWT"
+```
+
+Removes the SIP endpoint and regenerates the dialplan. Historical CDR records are preserved.
+
+## Get a user's SIP credentials
+
+```
+GET /api/v1/users/{id}/sip-credentials
+```
+
+Use these to register a softphone against the user's extension.
+
+```bash
+curl -X GET https://your-server:8000/api/v1/users/<id>/sip-credentials \
+  -H "Authorization: Bearer $JWT"
+```
+
+**Response:**
+```json
+{
+  "username": "org_example_1099",
+  "password": "generated-password",
+  "domain": "devsip.astradial.com",
+  "port": 5060,
+  "transport": "UDP"
+}
+```
+
+<Warning>
+SIP passwords are returned in plaintext. Do not log this response. Rotate credentials via the dashboard if exposed.
+</Warning>
+
+## Error responses
+
+| Code | Meaning |
+|---|---|
+| `409` | Extension or email already in use |
+| `422` | Invalid role / ring_target / etc. |
+| `404` | User not in your org |
